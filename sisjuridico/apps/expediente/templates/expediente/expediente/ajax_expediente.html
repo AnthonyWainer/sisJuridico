@@ -1,0 +1,20 @@
+{% for p in expediente %}
+  <tr>
+    <td>{{p.asunto}}</td>
+    <td>{{p.fecha}}</td>
+    <td>{{p.idcategoria__descripcion}}</td>
+    <td>{{p.contenido}}</td>
+    <td></td>
+    {% for i in  estado %}
+    {% if i.editar == 1 %}
+    <td>
+      <a href="#">
+        <i onclick="actualizar({{p.id}},'actualizar_categoria','{{n}}')" class="fa fa-pencil-square-o fa-2x"></i>
+      </a>
+    </td>
+    {% endif %}
+
+  {% endfor %}
+  </tr>
+{% endfor %}
+

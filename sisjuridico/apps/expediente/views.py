@@ -2,8 +2,8 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from apps.seguridad.models import permisos
-from .forms import formCategoria
-from .models import categoria
+from .forms import formCategoria, formExpediente
+from .models import categoria, expedientes
 
 # Crea tus vista aqui.
 def permi(request,url):
@@ -13,7 +13,18 @@ def permi(request,url):
 
 @login_required(login_url='/')
 def registro_expediente(request):
-    return render_to_response('expediente/registro_expediente.html',{'mod':'mod'})    
+    expediente = expedientes.objects.all().order_by('id')
+    estado =  permi(request, "registro_expediente")
+    if request.method == 'POST': 
+        formu = formExpediente(request.POST,request.FILES )
+        print (request.FILES)
+        print (formu)
+        if formu.is_valid():
+            formu.save()
+        return render(request,'expediente/expediente/ajax_expediente.html',{'expediente':expediente,'n':'expedienteU','estado':estado})            
+    else:
+        formu = formExpediente()
+        return render(request,'expediente/expediente/expediente.html',{'formu':formu,'expediente':expediente, 'url':'registro_expediente/','n':'expedienteU','estado':estado})
 
 @login_required(login_url='/')
 def registro_categoria(request):

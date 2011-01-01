@@ -1,0 +1,99 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+    <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li class="active">
+                <strong>Registro de Expedientes</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title form-inline">
+                    <button data-toggle="modal" data-target="#Modal"class="btn btn-sm btn-primary" type="submit"><strong>Nuevo</strong></button>
+                    <input type="search" placeholder="Buscar" class="form-control" style="width: 40%">
+
+                </div>
+                <div class="ibox-content">
+                     <h3 align="center">EXPEDIENTES</h3>    
+                     <table class="table table-bordered">
+                          <thead>
+                              <tr>
+                                {% for i in  estado %}
+                                  <th>Asunto</th>
+                                  <th>Fecha</th>
+                                  <th>Categoría</th>
+                                  <th>Contenido</th>
+                                  <th>N° de Folios</th>
+                                  {% if i.editar == 1 %}
+                                  <th>Hoja de Folios</th>
+                                  <th>Resoluciones</th>
+                                  {% endif %}
+                                  <th>Historial</th>
+                                  <th>Añadir Documentos</th>
+                                {% endfor %}
+                              </tr>
+                          </thead>
+                          <tbody class="{{n}}">
+                            {% include "expediente/expediente/ajax_expediente.html" %}
+                          </tbody>
+                      </table> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% with nombre=formu n=p u=n%}
+<div id="Modal{{n}}" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h5>Formulario <small>llenar todos los campos</small></h5>
+                <form method="post" enctype="multipart/form-data" id="formul">
+                {% csrf_token %}
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Expedientes</h3>
+                                <label for="id_fecha">Fecha:</label>
+                                {{formu.fecha}}
+                                <label for="id_asunto">Asunto:</label>
+                                {{formu.asunto}}
+                                <label for="id_asunto">Categoría:</label>
+                                {{formu.idcategoria}}
+
+                            </div>
+                            <div class="col-sm-6"><h4>Subir Expediente</h4>
+                                <label for="id_asunto">Expediente:</label>
+                                {{formu.contenido}}
+                            </div>
+                        </div>
+                    </div>
+                  </form>
+                </div>
+
+                                
+
+            <div class="modal-footer">
+                <input class="btn btn-sm btn-primary gg" type="button" value= "guardar"/>
+                <button type="button" class="btn btn-sm  btn-danger" data-dismiss="modal"> Cancelar</button>
+            </div>
+            
+
+        </div>
+
+    </div>
+</div>
+{% endwith %}
+                
+{% load static from  staticfiles %}
+<script src="{%static 'js/expediente.js' %}"></script>
+           

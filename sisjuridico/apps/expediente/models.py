@@ -7,7 +7,7 @@ class categoria(models.Model):
 class expedientes(models.Model):
     fecha       = models.DateField()
     asunto      = models.TextField()
-    contenido   = models.TextField()
+    contenido   = models.FileField(upload_to='Expediente/%Y/%m/%d')
     idcategoria = models.ForeignKey(categoria)
     
 

@@ -66,7 +66,7 @@ TEMPLATES = [
         },
     },
 ]
-
+MEDIA_ROOT = BASE_DIR.child('media')
 
 WSGI_APPLICATION = 'sisjuridico.wsgi.application'
 AUTH_USER_MODEL = 'seguridad.User'
