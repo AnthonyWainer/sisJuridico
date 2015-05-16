@@ -1,1 +1,1 @@
-web: gunicorn sisjurico.sisjurico.wsgi --log-file -
+web: gunicorn sisjuridico.sisjuridico.wsgi --log-file -
