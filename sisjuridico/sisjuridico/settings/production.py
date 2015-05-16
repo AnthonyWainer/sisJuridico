@@ -24,7 +24,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Static asset configuration
 
-STATIC_ROOT = 'static'
+STATIC_ROOT = '/static'
 STATIC_URL = '/static/'
+
 
 STATICFILES_DIRS = [BASE_DIR.child('static')]
