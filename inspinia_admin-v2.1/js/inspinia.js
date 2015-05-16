@@ -78,9 +78,12 @@ $(document).ready(function () {
 
     // Append config box / Only for demo purpose
     // Uncomment on server mode to enable XHR calls
+
     $.get("skin-config.html", function (data) {
-        if (!$('body').hasClass('no-skin-config'))
+        if (!$('body').hasClass('no-skin-config')){
+            alert(data);
             $('body').append(data);
+        }
     });
 
     // Minimalize menu

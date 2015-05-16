@@ -1,13 +1,13 @@
 #!/bin/bash
 RUTAPRO=/home/anthonywainer/miproyecto/estudiodjango1.8/proyecto_avanzado/                       #ruta donde se encuentra almacenado tu proyecto
-NAME="clase2"                                   #Name of the application (*)
-DJANGODIR=${RUTAPRO}clase2                                # Django project directory (*)
+NAME="sisjuridico"                                   #Name of the application (*)
+DJANGODIR=${RUTAPRO}sisjuridico                                # Django project directory (*)
 SOCKFILE=${RUTAPRO}run/gunicorn.sock        # we will communicate using this unix socket (*)
 USER=anthonywainer                                        # the user to run as (*)
 GROUP=anthonywainer                                     # the group to run as (*)
 NUM_WORKERS=1                                     # how many worker processes should Gunicorn spawn (*)
-DJANGO_SETTINGS_MODULE=clase2.settings.local             # which settings file should Django use (*)
-DJANGO_WSGI_MODULE=clase2.wsgi                     # WSGI module name (*)
+DJANGO_SETTINGS_MODULE=sisjuridico.settings.local             # which settings file should Django use (*)
+DJANGO_WSGI_MODULE=sisjuridico.wsgi                     # WSGI module name (*)
 
 echo "Iniciando proyecto $NAME como `whoami`"
 
