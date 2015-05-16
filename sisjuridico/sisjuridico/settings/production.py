@@ -8,9 +8,9 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME'  : 'd2c0out1l093pk',
-        'USER'  : 'ieljqjlbokceos',
-        'PASSWORD' : 'laY6dqy3j0lbX8FBoP9z2cwUam',
+        'NAME'  : 'd1q20vi89aouud',
+        'USER'  : 'psdieurbhbvrrj',
+        'PASSWORD' : 'XJivYvsdT9GTKHmM3uIewQBMFh',
         'HOST': '',
         'PORT': '',
     }
@@ -24,7 +24,11 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Static asset configuration
 
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static'
 
-STATICFILES_DIRS = [BASE_DIR.child('static')]
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
