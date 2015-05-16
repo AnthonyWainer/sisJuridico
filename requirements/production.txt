@@ -3,6 +3,7 @@ psycopg2
 PyMySQL
 Unipath
 
+django-toolbelt
 gunicorn
 dj-database-url
 dj-static
