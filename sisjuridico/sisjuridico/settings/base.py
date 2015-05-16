@@ -60,3 +60,5 @@ TEMPLATES = [
         },
     },
 ]
+
+WSGI_APPLICATION = 'sisjuridico.wsgi.application'
