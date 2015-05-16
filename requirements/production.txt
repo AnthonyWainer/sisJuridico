@@ -1,0 +1,10 @@
+Django
+psycopg2
+PyMySQL
+Unipath
+
+gunicorn
+dj-database-url
+dj-static
+static
+wsgiref
