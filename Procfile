@@ -1,1 +1,2 @@
-web: gunicorn sisjuridico.sisjuridico.wsgi --log-file -
+
+web: cd sisjuridico && gunicorn sisjuridico.wsgi --log-file -
