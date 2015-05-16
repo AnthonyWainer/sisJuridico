@@ -8,10 +8,10 @@ staticfiles
 *.so
 
 # Distribution / packaging
-logs/
-run/
-gunicorn/
-inspinia_admin-v2.1/
+logs
+run
+gunicorn
+inspinia_admin-v2.1
 .Python
 env/
 build/
