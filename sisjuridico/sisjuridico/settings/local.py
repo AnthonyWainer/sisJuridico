@@ -10,7 +10,7 @@ WSGI_APPLICATION = 'sisjuridico.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE'   : 'django.db.backends.postgresql_psycopg2',
-        'NAME'     : 'CursoDJango',
+        'NAME'     : 'bdexpediente',
         'USER'     : 'root',
         'PASSWORD' : '123',
         'HOST'     : 'localhost',
