@@ -7,8 +7,7 @@ class perfil(models.Model):
 
 class modulos(models.Model):
     descripcion = models.CharField(max_length=100)
-    padre       = models.CharField(max_length=10)
-    orden       = models.IntegerField()
+    padre       = models.IntegerField()
     url         = models.CharField(max_length=150)
     icon        = models.CharField(max_length=150)
     estado      = models.BooleanField(default=True)
