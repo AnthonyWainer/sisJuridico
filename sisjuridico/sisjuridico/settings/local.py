@@ -4,9 +4,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-WSGI_APPLICATION = 'sisjuridico.wsgi.application'
-
 DATABASES = {
     'default': {
         'ENGINE'   : 'django.db.backends.postgresql_psycopg2',
