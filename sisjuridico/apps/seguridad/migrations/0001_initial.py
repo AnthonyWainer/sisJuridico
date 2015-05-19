@@ -15,10 +15,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='modulos',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('descripcion', models.CharField(max_length=100)),
-                ('padre', models.CharField(max_length=10)),
-                ('orden', models.IntegerField()),
+                ('padre', models.IntegerField()),
                 ('url', models.CharField(max_length=150)),
                 ('icon', models.CharField(max_length=150)),
                 ('estado', models.BooleanField(default=True)),
@@ -27,7 +26,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='perfil',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('descripcion', models.CharField(max_length=100)),
                 ('estado', models.BooleanField(default=True)),
             ],
@@ -35,7 +34,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='permisos',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('buscar', models.BooleanField(default=True)),
                 ('editar', models.BooleanField(default=True)),
                 ('insertar', models.BooleanField(default=True)),
