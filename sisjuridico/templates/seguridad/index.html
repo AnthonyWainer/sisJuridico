@@ -44,13 +44,25 @@
                             UNSM
                         </div>
                     </li>
-                    <li class="">
                     {% for i in mod %}
-                        <a href="{{i.url}}"><i class="{{i.icon}}"></i> <span class="nav-label">{{i.descripcion}}</span> <span class="fa arrow"></span></a>
-                        
+                        {% if i.padre = 0 %} 
+                        <li class="">
+                            <a href="{{i.url}}"><i class="{{i.icon}}"></i>
+                                <span class="nav-label">{{i.descripcion}}</span> 
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                {% for j in mod %}
+                                     {% with submodulo=j.padre  modulo=i.id%} 
+                                        {% if modulo == submodulo %}
+                                            <li ><a href="{{j.url}}">{{j.descripcion}}</a></li>
+                                        {% endif %}
+                                    {% endwith %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endif %}    
                     {% endfor %}
-                    </li>
-
                 </ul>
 
             </div>
