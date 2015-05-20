@@ -6,6 +6,7 @@ class perfil(models.Model):
     estado      = models.BooleanField(default=True)
 
 class modulos(models.Model):
+    id = models.AutoField(primary_key=True)
     descripcion = models.CharField(max_length=100)
     padre       = models.IntegerField()
     url         = models.CharField(max_length=150)
