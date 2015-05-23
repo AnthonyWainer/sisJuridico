@@ -2,10 +2,3 @@ Django
 psycopg2
 PyMySQL
 Unipath
-django-braces
-django-crispy-forms
-django-admin-bootstrapped
-django-debug-toolbar
-django-authtools
-easy-thumbnails
-pudb==2014.1
