@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^', include('apps.expediente.urls')),
     url(r'^', include('apps.matenimiento.urls')),
     url(r'^', include('apps.reportes.urls')),
-    url(r'^', include('apps.seguridad.urls')),
+    url(r'^', include('apps.seguridad.urls',namespace="apps.seguridad")),
+    url(r'^', include('apps.cuentas.urls',namespace="cuentas")),
+    url(r'^users/', include('profiles.urls',namespace="profiles")),
     url(r'^admin/', include(admin.site.urls)),
 ]

@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
+
 
 class perfil(models.Model):
     descripcion = models.CharField(max_length=100)
@@ -20,7 +21,7 @@ class permisos(models.Model):
     eliminar    = models.BooleanField(default=True)
     imprimir    = models.BooleanField(default=True)
     idmodulo    = models.ForeignKey(modulos) 
-    iduser      = models.ForeignKey(User)
+    iduser      = models.ForeignKey(settings.AUTH_USER_MODEL)
     idperfil    = models.ForeignKey(perfil)
     estado      = models.BooleanField(default=True)
 

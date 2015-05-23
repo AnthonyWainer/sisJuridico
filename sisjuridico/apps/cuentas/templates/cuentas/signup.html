@@ -1,0 +1,18 @@
+{% extends "cuentas/auth_base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block titulo %}{{ block.super }}Registrarse{% endblock %}
+
+{% block form_heading %}Registrarse es gratis{% endblock %}
+
+{% block form %}
+  {% crispy form %}
+
+  <div class="form-message">
+    <p>
+      ¿Ya está registrado? <a href="{% url 'cuentas:login' %}">iniciar sesión</a>.
+    </p>
+  </div>
+{% endblock form %}
+

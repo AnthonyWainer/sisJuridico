@@ -1,0 +1,18 @@
+{% extends "cuentas/auth_base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block titulo %}{{ block.super }}Iniciar Sesión{% endblock %}
+
+{% block form_heading %}Bienvenido a Sisjuridico{% endblock %}
+
+{% block form %}
+    {% crispy form %}
+        <p class="m-t">
+            ¿No tienes una cuenta? <a href="{% url 'cuentas:signup' %}">Registrate</a>.
+        </p>
+{% endblock form %}
+
+
+
+

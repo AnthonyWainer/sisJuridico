@@ -13,10 +13,15 @@ DJANGO_APPS = (
     )
 
 THIRD_PARTY_APPS = (
-
+    'authtools',
+    'django_admin_bootstrapped',
+    'crispy_forms',
+    'easy_thumbnails',
+    'profiles',
     )
 
 LOCAL_APPS = (
+    'apps.cuentas',
     'apps.busqueda',
     'apps.expediente',
     'apps.matenimiento',
@@ -65,4 +70,12 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'sisjuridico.wsgi.application'
+
+from django.core.urlresolvers import reverse_lazy
+# Authentication Settings
+AUTH_USER_MODEL = 'authtools.User'
+LOGIN_REDIRECT_URL = reverse_lazy("apps.seguridad:index")
+LOGIN_URL = reverse_lazy("apps.cuentas:login")
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
