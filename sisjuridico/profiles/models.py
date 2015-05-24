@@ -3,7 +3,7 @@ from django.utils.encoding import python_2_unicode_compatible
 import uuid
 from django.db import models
 from django.conf import settings
-
+#from authtools.models import User
 
 class BaseProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,

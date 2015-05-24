@@ -37,7 +37,7 @@ class SignUpView(bracesviews.AnonymousRequiredMixin,
     form_class = forms.SignupForm
     model = User
     template_name = 'cuentas/signup.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('apps.seguridad:index')
     form_valid_message = "Usted está Registrado!"
 
     def form_valid(self, form):
@@ -52,12 +52,12 @@ class SignUpView(bracesviews.AnonymousRequiredMixin,
 class PasswordChangeView(authviews.PasswordChangeView):
     form_class = forms.PasswordChangeForm
     template_name = 'cuentas/password-change.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('apps.seguridad:index')
 
     def form_valid(self, form):
         form.save()
         messages.success(self.request,
-                         "Su contraseña fue cambiada, "
+                         "Su contraseña fue cambiada, ",
                          "por lo tanto, se le ha cerrado la sesión. Por favor, vuelva a entrar")
         return super(PasswordChangeView, self).form_valid(form)
 
