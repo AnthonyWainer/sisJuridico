@@ -1,0 +1,50 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+    <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li class="active">
+                <strong>Registro de Categoría</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title form-inline">
+                    <input type="search" placeholder="Buscar" class="form-control" style="width: 40%">
+                    <button data-toggle="modal" data-target="#Modal" class="btn btn-sm btn-primary"><strong>Nuevo</strong></button>
+                </div>
+                <div class="ibox-content">
+                     <h5>Lista de Categorías</h5>
+                     <table class="table table-bordered">
+                          <thead>
+                              <tr>
+                                  <th>Descripción</th>
+                                  <th>Editar</th>
+                                  <th>Eliminar</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>data</td>
+                                  <td></td>
+                                  <td></td>
+                              </tr>
+                          </tbody>
+                      </table> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>            
+
+{% with form as nombre  %}
+    {% include "seguridad/modal.html" %} 
+{% endwith %}
