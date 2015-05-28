@@ -55,7 +55,7 @@
                                     {% for j in mod %}
                                          {% with submodulo=j.padre  modulo=i.id%} 
                                             {% if modulo == submodulo %}
-                                                <li ><a href="{{j.url}}">{{j.descripcion}}</a></li>
+                                                <li ><a href="#" name="{{j.url}}" class="url">{{j.descripcion}}</a></li>
                                             {% endif %}
                                         {% endwith %}
                                     {% endfor %}
@@ -93,7 +93,7 @@
 
         </nav>
         </div>
-                <div class="row  border-bottom white-bg dashboard-header">
+                <div class="row  border-bottom white-bg dashboard-header" id="result">
 
                     <div class="col-sm-3">
                         <h2>Bienvenido Anthony</h2>
@@ -148,6 +148,6 @@
     <script src="{% static 'js/plugins/metisMenu/jquery.metisMenu.js' %}"></script>
 
     <!--  plugin javascript -->
-    <script src="{% static 'js/inspinia.js' %}"></script>
+    <script src="{% static 'js/sisjuridico.js' %}"></script>
            
 {% endblock %}

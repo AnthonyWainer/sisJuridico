@@ -11,7 +11,6 @@ from . import forms
 
 User = get_user_model()
 
-
 class LoginView(bracesviews.AnonymousRequiredMixin,
                 authviews.LoginView):
     template_name = "cuentas/login.html"
@@ -19,8 +18,8 @@ class LoginView(bracesviews.AnonymousRequiredMixin,
 
     def form_valid(self, form):
         redirect = super(LoginView, self).form_valid(form)
-        remember_me = form.cleaned_data.get('remember_me')
-        if remember_me is True:
+        recordarme = form.cleaned_data.get('recordarme')
+        if recordarme is True:
             ONE_MONTH = 30*24*60*60
             expiry = getattr(settings, "KEEP_LOGGED_DURATION", ONE_MONTH)
             self.request.session.set_expiry(expiry)
@@ -49,31 +48,3 @@ class SignUpView(bracesviews.AnonymousRequiredMixin,
         return r
 
 
-class PasswordChangeView(authviews.PasswordChangeView):
-    form_class = forms.PasswordChangeForm
-    template_name = 'cuentas/password-change.html'
-    success_url = reverse_lazy('apps.seguridad:index')
-
-    def form_valid(self, form):
-        form.save()
-        messages.success(self.request,
-                         "Su contraseña fue cambiada, ",
-                         "por lo tanto, se le ha cerrado la sesión. Por favor, vuelva a entrar")
-        return super(PasswordChangeView, self).form_valid(form)
-
-
-class PasswordResetView(authviews.PasswordResetView):
-    form_class = forms.PasswordResetForm
-    template_name = 'cuentas/password-reset.html'
-    success_url = reverse_lazy('cuentas:password-reset-done')
-    subject_template_name = 'cuentas/emails/password-reset-subject.txt'
-    email_template_name = 'cuentas/emails/password-reset-email.html'
-
-
-class PasswordResetDoneView(authviews.PasswordResetDoneView):
-    template_name = 'cuentas/password-reset-done.html'
-
-
-class PasswordResetConfirmView(authviews.PasswordResetConfirmAndLoginView):
-    template_name = 'cuentas/password-reset-confirm.html'
-    form_class = forms.SetPasswordForm

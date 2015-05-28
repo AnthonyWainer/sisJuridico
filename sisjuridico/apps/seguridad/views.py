@@ -10,3 +10,8 @@ def index(request):
     user = request.user
     return render_to_response('seguridad/index.html',{'mod':mod,'user':user})
 
+@login_required(login_url='/')
+def registro_expediente(request):
+    return render_to_response('seguridad/registro_expediente.html',{'mod':'mod'})    
+
+

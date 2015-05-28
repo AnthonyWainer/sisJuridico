@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    //click en los módulos
+    $(".url").click(function(){
+        li = $(this).attr('name');
+        $( '#result' ).empty().load(li);
+    });
+
     // Add body-small class if window less than 768px
     if ($(this).width() < 769) {
         $('body').addClass('body-small')
