@@ -4,7 +4,6 @@ from django.conf import settings
 
 class perfil(models.Model):
     descripcion = models.CharField(max_length=100)
-    estado      = models.BooleanField(default=True)
 
 class modulos(models.Model):
     id = models.AutoField(primary_key=True)

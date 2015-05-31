@@ -2,10 +2,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                {{nombre}}
+                <form method="get" id="formulario">
+                        {{nombre}}
+                </form>
+                
             </div>
             <div class="modal-footer">
-                <button class="btn btn-sm btn-primary" type="button">guardar</button>
+                <button class="btn btn-sm btn-primary {{clase}}" type="button">guardar</button>
                 <button type="button" class="btn btn-sm  btn-danger" data-dismiss="modal"> Cancelar</button>
             </div>
         </div>

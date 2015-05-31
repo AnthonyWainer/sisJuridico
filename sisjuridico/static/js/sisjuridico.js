@@ -1,9 +1,12 @@
+function cargar(li){
+    $( '#result' ).empty().load(li);
+}
 $(document).ready(function () {
 
     //click en los módulos
     $(".url").click(function(){
         li = $(this).attr('name');
-        $( '#result' ).empty().load(li);
+        cargar(li);
     });
 
     // Add body-small class if window less than 768px
