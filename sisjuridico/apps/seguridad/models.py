@@ -24,11 +24,13 @@ class UserManager(BaseUserManager):
         
 
 class User(AbstractBaseUser, PermissionsMixin):
-    usuario = models.CharField(max_length=50, unique=True)  
-    email = models.EmailField(max_length=50, unique=True)
-    nombres = models.CharField(max_length=100)
-    apellidos = models.CharField(max_length=100)
-    idperfil = models.ForeignKey(perfil,null=True)
+    usuario   = models.CharField(max_length=50, unique=True)  
+    email     = models.EmailField(max_length=50, unique=True)
+    nombres   = models.CharField(max_length=100,null=True)
+    apellidos = models.CharField(max_length=100,null=True)
+    dni       = models.CharField(max_length=20,null=True)  
+    telefono  = models.IntegerField(null=True)
+    idperfil  = models.ForeignKey(perfil,null=True)
 
     objects = UserManager()
 

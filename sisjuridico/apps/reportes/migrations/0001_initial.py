@@ -7,7 +7,6 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('seguridad', '0001_initial'),
         ('expediente', '0001_initial'),
     ]
 
@@ -15,12 +14,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='historial',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
                 ('fecha', models.DateField()),
                 ('hora', models.TimeField()),
                 ('estado', models.BooleanField(default=True)),
                 ('idexpedientes', models.ForeignKey(to='expediente.expedientes')),
-                ('idpermisos', models.ForeignKey(to='seguridad.permisos')),
             ],
         ),
     ]

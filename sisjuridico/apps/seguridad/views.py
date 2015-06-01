@@ -1,12 +1,14 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
-from .models import modulos, permisos, perfil
+from .models import modulos, permisos, perfil, User
 from django.contrib.auth.decorators import login_required
-from .forms import  formPerfil, LoginForm
+from .forms import  formPerfil, LoginForm, formUsuario
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
+from django.conf import settings
 
 # Crea tus vista aqui.
+
 def Login(request):
     if request.method == 'POST':
         formulario = LoginForm(request.POST)
@@ -37,9 +39,8 @@ def LogOut(request):
 
 @login_required(login_url='/')
 def index(request):
-    mod = modulos.objects.all().order_by('id')
-    user = request.user
-    return render(request,'seguridad/index.html',{'mod':mod,'user':user})
+    mod = modulos.objects.all()
+    return render(request,'seguridad/index.html',{'mod':mod})
 
 @login_required(login_url='/')
 def permisos(request):
@@ -75,7 +76,6 @@ def actualizar_perfil(request):
         idp = request.POST.get("id","")
         a=get_object_or_404(perfil,pk=idp)
         form=formPerfil(request.POST, instance=a)
-        print (form)
         if form.is_valid():
             form.save()
             return render(request,'seguridad/perfil/ajax_perfil.html',{'perfil':perfiles,'n':'perfilU'}) 
@@ -84,3 +84,40 @@ def actualizar_perfil(request):
         a=get_object_or_404(perfil,pk=idp)
         form= formPerfil(instance=a)
         return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_perfil/','n':'perfilU'}) 
+
+@login_required(login_url='/')
+def registro_usuario(request):
+    usuarios = User.objects.all().order_by('id')
+    if request.method == 'POST' and request.is_ajax(): 
+        formu = formUsuario(request.POST)
+        if formu.is_valid():
+            formu.save()
+        #else:
+        return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios})            
+    else:
+        formu = formUsuario()
+        return render(request,'seguridad/usuario/usuario.html',{'formu':formu,'usuario':usuarios, 'url':'registro_usuario/','n':'UserU'})
+
+@login_required(login_url='/')
+def eliminar_usuario(request):
+    usuarios = User.objects.all().order_by('id')
+    if request.method == 'GET' and request.is_ajax(): 
+        idb = request.GET.get("id","")
+        get_object_or_404(User,pk=idb).delete()
+        return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU'})     
+
+@login_required(login_url='/')
+def actualizar_usuario(request):
+    usuarios = User.objects.all().order_by('id')
+    if request.method == 'POST' and request.is_ajax(): 
+        idp = request.POST.get("id","")
+        a=get_object_or_404(User,pk=idp)
+        form=formUsuario(request.POST, instance=a)
+        if form.is_valid():
+            form.save()
+            return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU'}) 
+    else:
+        idp = request.GET.get("id","")
+        a=get_object_or_404(User,pk=idp)
+        form= formUsuario(instance=a)
+        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_usuario/','n':'UserU'}) 

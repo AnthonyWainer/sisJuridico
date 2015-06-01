@@ -1,0 +1,22 @@
+{% for p in usuario %}
+  <tr>
+    <td>{{p.usuario}}</td>
+    <td>{{p.nombres}}</td>
+    <td>{{p.apellidos}}</td>
+    <td>{{p.email}}</td>
+    <td>{{p.dni}}</td>
+    <td>{{p.telefono}}</td>
+    <td>{{p.idperfil.descripcion}}</td>
+    <td>
+      <a href="#">
+        <i onclick="actualizar({{p.id}},'actualizar_usuario','{{n}}')" class="fa fa-pencil-square-o fa-2x"></i>
+      </a>
+    </td>
+    <td>
+      <a onclick="eliminar({{p.id}},'eliminar_usuario')" href="#eliminar">
+      <i style="color: red" class="fa fa-trash-o  fa-2x"></i>
+      </a>
+    </td>
+  </tr>
+{% endfor %}
+

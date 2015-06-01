@@ -6,7 +6,7 @@
                 <a href="/">Home</a>
             </li>
             <li class="active">
-                <strong>Registro de Perfiles</strong>
+                <strong>Registro de Usuarios</strong>
             </li>
         </ol>
     </div>
@@ -21,17 +21,23 @@
                     <button data-toggle="modal" data-target="#Modal" class="btn btn-sm btn-primary"><strong>Nuevo</strong></button>
                 </div>
                 <div class="ibox-content">
-                     <h3 align="center">PERFILES</h3>
+                     <h3 align="center">Usuarios</h3>
                      <table class="table table-bordered">
                           <thead>
                               <tr>
-                                  <th>Descripción</th>
+                                  <th>Usuario</th>
+                                  <th>Nombres</th>
+                                  <th>Apellidos</th>
+                                  <th>Email</th>
+                                  <th>Dni</th>
+                                  <th>Teléfono</th>
+                                  <th>Perfil</th>
                                   <th>Editar</th>
                                   <th>Eliminar</th>
                               </tr>
                           </thead>
                           <tbody>
-                            {% include "seguridad/perfil/ajax_perfil.html" %}
+                            {% include "seguridad/usuario/ajax_usuario.html" %}
                           </tbody>
                       </table> 
                 </div>
