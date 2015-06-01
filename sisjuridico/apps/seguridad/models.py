@@ -52,7 +52,6 @@ class modulos(models.Model):
     padre       = models.IntegerField()
     url         = models.CharField(max_length=150)
     icon        = models.CharField(max_length=150)
-    estado      = models.BooleanField(default=True)
 
 class permisos(models.Model):
     buscar      = models.BooleanField(default=True)

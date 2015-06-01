@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import perfil, User
+from .models import perfil, User, modulos
 
 class formPerfil(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -16,6 +16,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget= forms.PasswordInput(attrs={'type':"password", 'id':"inputPassword", 'class':"form-control", 'placeholder':"Contraseña", 'required':''}))
 
 listaPerfiles = [(con.id, con.descripcion) for con in perfil.objects.all()]
+print(listaPerfiles)
 class formUsuario(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
@@ -33,3 +34,16 @@ class formUsuario(forms.ModelForm):
     class Meta:
         model = User
         exclude = ['last_login','is_superuser','is_staff','is_active','groups','user_permissions']    
+
+class formModulo(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(formModulo, self).__init__(*args, **kwargs)
+        self.fields['descripcion'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'descripcion'})
+        self.fields['padre'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'padre'})
+        self.fields['url'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'url'})
+        self.fields['icon'].widget = forms.EmailInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'icon'})
+
+    class Meta:
+        model = modulos
+        exclude = ['']            

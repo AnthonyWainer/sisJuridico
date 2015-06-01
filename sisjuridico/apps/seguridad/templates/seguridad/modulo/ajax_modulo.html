@@ -1,0 +1,19 @@
+{% for p in modulo %}
+  <tr>
+    <td>{{p.descripcion}}</td>
+    <td>{{p.padre}}</td>
+    <td>{{p.url}}</td>
+    <td>{{p.icon}}</td>
+    <td>
+      <a href="#">
+        <i onclick="actualizar({{p.id}},'actualizar_modulo','{{n}}')" class="fa fa-pencil-square-o fa-2x"></i>
+      </a>
+    </td>
+    <td>
+      <a onclick="eliminar({{p.id}},'eliminar_modulo')" href="#eliminar">
+      <i style="color: red" class="fa fa-trash-o  fa-2x"></i>
+      </a>
+    </td>
+  </tr>
+{% endfor %}
+

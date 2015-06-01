@@ -20,6 +20,11 @@ urlpatterns = patterns('apps.seguridad.views',
     url(r'^eliminar_usuario/$', 'eliminar_usuario'),
 
     url(r'^registro_permisos/$', 'permisos'),
+
+        #usuarios
+    url(r'^registro_modulo/$', 'registro_modulo'),
+    url(r'^actualizar_modulo/$', 'actualizar_modulo'),
+    url(r'^eliminar_modulo/$', 'eliminar_modulo'),
     
 
 	)
