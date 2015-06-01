@@ -1,0 +1,44 @@
+{% extends "seguridad/cuentas/auth_base.html" %}
+
+{% block titulo %}{{ block.super }}Iniciar Sesión{% endblock %}
+
+{% block form_heading %}Bienvenido a Sisjuridico{% endblock %}
+
+{% block form %}
+{{msm}}
+
+<form method="POST">
+    {% csrf_token %}
+     <div id="div_id_username" class="form-group">
+        <label for="id_username" class="control-label  requiredField">
+                Dirección de correo electrónico<span class="asteriskField">*</span>
+        </label>
+        <div class="controls ">
+            {{login.username}}
+        </div>
+    </div>
+    
+    <div id="div_id_password" class="form-group">
+        <label for="id_password" class="control-label  requiredField">
+                Contraseña<span class="asteriskField">*</span>
+        </label>
+        <div class="controls ">
+            {{login.password}}
+        </div>
+
+        <div class="form-group">
+            <div id="div_id_recordarme" class="checkbox">
+                <label for="id_recordarme" class="">
+                    <input class="checkboxinput checkbox" id="id_recordarme" name="recordarme" type="checkbox">
+                    Recordarme
+                </label>
+            </div>
+        </div>
+
+        <input type="submit" value="iniciar sesión" class="btn btn-primary btn btn-lg btn-primary btn-block"> 
+</form>
+{% endblock form %}
+
+
+
+

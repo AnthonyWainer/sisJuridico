@@ -1,14 +1,15 @@
-<div id="Modal" class="modal fade" aria-hidden="true">
+<div id="Modal{{n}}" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form method="get" id="formulario">
-                        {{nombre}}
+                <form method="get" id="formulario{{n}}">
+                {% csrf_token %}
+                {{nombre}}
                 </form>
                 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-sm btn-primary {{clase}}" type="button">guardar</button>
+                <button class="btn btn-sm btn-primary guar" onclick="guardar('{{url}}','{{n}}')" type="button">guardar</button>
                 <button type="button" class="btn btn-sm  btn-danger" data-dismiss="modal"> Cancelar</button>
             </div>
         </div>

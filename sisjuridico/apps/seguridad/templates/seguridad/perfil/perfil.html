@@ -31,23 +31,7 @@
                               </tr>
                           </thead>
                           <tbody>
-
-                              {% for p in perfil %}
-                                <tr>
-                                  <td>{{p.descripcion}}</td>
-                                  <td>
-                                    <a href="#">
-                                      <i class="fa fa-pencil-square-o fa-2x"></i>
-                                    </a>
-                                  </td>
-                                  <td>
-                                    <a onclick="eliminarPerfil({{p.id}},'elip')" href="#">
-                                      <i class="fa fa-trash-o  fa-2x"></i>
-                                    </a>
-                                  </td>
-                                </tr>
-                              {% endfor %}
-
+                            {% include "seguridad/perfil/ajax_perfil.html" %}
                           </tbody>
                       </table> 
                 </div>
@@ -55,8 +39,8 @@
         </div>
     </div>
 </div>            
-
-{% with formu as nombre  %}
+<div class="modalP"></div>
+{% with nombre=formu n=p %}
     {% include "seguridad/modal.html" %} 
 {% endwith %}
 

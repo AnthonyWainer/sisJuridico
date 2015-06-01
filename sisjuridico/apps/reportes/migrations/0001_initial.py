@@ -7,15 +7,15 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('expediente', '0003_auto_20150517_1109'),
         ('seguridad', '0001_initial'),
+        ('expediente', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='historial',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('fecha', models.DateField()),
                 ('hora', models.TimeField()),
                 ('estado', models.BooleanField(default=True)),

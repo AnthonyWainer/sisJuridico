@@ -1,0 +1,16 @@
+{% for p in perfil %}
+  <tr>
+    <td>{{p.descripcion}}</td>
+    <td>
+      <a href="#">
+        <i onclick="actualizar({{p.id}},'actualizar_perfil','{{n}}')" class="fa fa-pencil-square-o fa-2x"></i>
+      </a>
+    </td>
+    <td>
+      <a onclick="eliminar({{p.id}},'eliminar_perfil')" href="#eliminar">
+      <i style="color: red" class="fa fa-trash-o  fa-2x"></i>
+      </a>
+    </td>
+  </tr>
+{% endfor %}
+

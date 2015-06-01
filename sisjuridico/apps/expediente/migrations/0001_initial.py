@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='accion',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('accion', models.CharField(max_length=30)),
                 ('estado', models.BooleanField(default=True)),
             ],
@@ -21,21 +21,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='categoria',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('descripcion', models.CharField(max_length=100)),
                 ('estado', models.BooleanField(default=True)),
             ],
         ),
         migrations.CreateModel(
-            name='det_exp_resolucion',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
-            ],
-        ),
-        migrations.CreateModel(
             name='det_hoja_exp',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('fecha_emision', models.DateField()),
                 ('fecha_recepcion', models.DateField()),
                 ('documento_adjun', models.CharField(max_length=250)),
@@ -46,7 +40,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='expedientes',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('fecha', models.DateField()),
                 ('asunto', models.TextField()),
                 ('contenido', models.TextField()),
@@ -57,7 +51,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='hojaEnvio',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('asunto', models.TextField()),
                 ('observaciones', models.TextField()),
                 ('estado', models.BooleanField(default=True)),
@@ -67,7 +61,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='oficina',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('oficina', models.CharField(max_length=30)),
                 ('estado', models.BooleanField(default=True)),
             ],
@@ -75,10 +69,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='resolucion',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('numero', models.CharField(max_length=20)),
                 ('contenido', models.CharField(max_length=100)),
                 ('estado', models.BooleanField(default=True)),
+                ('idexpediente', models.ManyToManyField(to='expediente.expedientes')),
             ],
         ),
         migrations.AddField(
@@ -100,15 +95,5 @@ class Migration(migrations.Migration):
             model_name='det_hoja_exp',
             name='idhojaenvio',
             field=models.ForeignKey(to='expediente.hojaEnvio'),
-        ),
-        migrations.AddField(
-            model_name='det_exp_resolucion',
-            name='ideresolucion',
-            field=models.ForeignKey(to='expediente.resolucion'),
-        ),
-        migrations.AddField(
-            model_name='det_exp_resolucion',
-            name='idexpediente',
-            field=models.ForeignKey(to='expediente.expedientes'),
         ),
     ]

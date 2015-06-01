@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('seguridad', '0001_initial'),
+        ('seguridad', '0002_auto_20150531_1651'),
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='modulos',
-            name='id',
-            field=models.AutoField(serialize=False, primary_key=True),
+        migrations.RenameField(
+            model_name='user',
+            old_name='apelldos',
+            new_name='apellidos',
         ),
     ]

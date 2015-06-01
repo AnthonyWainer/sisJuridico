@@ -7,12 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('seguridad', '0002_auto_20150520_1108'),
+        ('seguridad', '0004_auto_20150531_1659'),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='perfil',
-            name='estado',
+        migrations.AlterField(
+            model_name='user',
+            name='idperfil',
+            field=models.ForeignKey(to='seguridad.perfil', null=True),
         ),
     ]

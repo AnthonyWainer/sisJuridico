@@ -10,3 +10,7 @@ class formPerfil(forms.ModelForm):
     class Meta:
         model = perfil
         exclude = ['']
+
+class LoginForm(forms.Form):
+    username  = forms.CharField(widget= forms.TextInput(attrs={'class':"form-control", 'placeholder':"Username", 'required':'', 'autofocus':''}))
+    password = forms.CharField(widget= forms.PasswordInput(attrs={'type':"password", 'id':"inputPassword", 'class':"form-control", 'placeholder':"Password", 'required':''}))
