@@ -1,9 +1,9 @@
 //csrf_token = $("input[name='csrfmiddlewaretoken']").val();
-function guardar(url,n){
+function guardar(url,n,u){
     $.post(url,$('#formulario'+n).serialize()+'&id='+$(".guar").attr('id'), function(data) {
         $('#Modal'+n).modal('hide');
         $('#Modal'+n).on('hidden.bs.modal', function (e) {
-            $("table tbody").empty().html(data);
+            $("table ."+u).empty().html(data);
             AlSave("guardado con éxito");  
         });
         
@@ -16,9 +16,9 @@ function actualizar(id,u,n){
         $('#Modal'+n).modal('show');
     });
 }
-function eliminar(id,u){
+function eliminar(id,u,n){
     $.get(u,{'id':id}, function(data) {
-       $("table tbody").empty().html(data);    
+       $("table ."+n).empty().html(data);    
        AlDelete("Eliminado");  
     });
 }
@@ -41,3 +41,11 @@ function AlDelete(msm){
         toastr.error(msm);
     }, 300);
 }
+
+function mod(id){
+    $("#"+id+" input").prop( "checked", true );
+    $.get('registro_submodulo',{'id':id}, function(data) {
+       $("table .SubModuloU").empty().html(data);    
+    });
+}
+

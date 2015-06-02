@@ -18,34 +18,64 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title form-inline">
-                    <button data-toggle="modal" data-target="#Modal" class="btn btn-sm btn-primary"><strong>Nuevo</strong></button>
                 </div>
                 <div class="ibox-content">
-                     <h3 align="center">Modulos</h3>
-                     <table class="table table-bordered">
-                          <thead>
-                              <tr>
-                                  <th>descripcion</th>
-                                  <th>padre</th>
-                                  <th>url</th>
-                                  <th>icon</th>
-                                  <th>Editar</th>
-                                  <th>Eliminar</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                            {% include "seguridad/modulo/ajax_modulo.html" %}
-                          </tbody>
-                      </table> 
+                  <div class="row">
+                    <div class="col-md-6 table-responsive">
+                        <button data-toggle="modal" data-target="#Modalmod" class="btn btn-sm btn-primary"><strong>Nuevo Módulo</strong></button>
+
+                       <h3 align="center">Modulos</h3>
+                       <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>padre</th>
+                                    <th>descripcion</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tbody class="{{n}}">
+                              {% include "seguridad/modulo/ajax_modulo.html" %}
+                            </tbody>
+                        </table> 
+                    </div>
+                    <div class="col-md-6 table-responsive">
+                      <button data-toggle="modal" data-target="#Modalsubmod" class="btn btn-sm btn-primary"><strong>Nuevo Submódulo</strong></button>
+
+                       <h3 align="center">SubMódulos</h3>
+                       <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>descripcion</th>
+                                    <th>url</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody class="{{nm}}">
+                            {% with padre='1' %}
+                              {% include "seguridad/modulo/ajax_submodulo.html" %}
+                            {% endwith %}
+                            </tbody>
+                        </table> 
+                    </div>                    
+                  </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>            
 <div class="modalP"></div>
-{% with nombre=formu n=p %}
+{% with nombre=formu n="mod" u=n %}
     {% include "seguridad/modal.html" %} 
 {% endwith %}
+
+{% with nombre=formu n="submod" u=nm url="registro_submodulo/" %}
+    {% include "seguridad/modal.html" %} 
+{% endwith %}
+
 
 {% load static from  staticfiles %}
 <script src="{%static 'js/base.js' %}"></script>

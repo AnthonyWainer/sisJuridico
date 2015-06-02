@@ -1,19 +1,23 @@
 {% for p in modulo %}
-  <tr>
+  {% if p.padre = 0 %}
+  <tr id="{{p.id}}" onclick="mod({{p.id}})" >
+    <td>{{p.id}}</td>
     <td>{{p.descripcion}}</td>
-    <td>{{p.padre}}</td>
-    <td>{{p.url}}</td>
-    <td>{{p.icon}}</td>
     <td>
       <a href="#">
         <i onclick="actualizar({{p.id}},'actualizar_modulo','{{n}}')" class="fa fa-pencil-square-o fa-2x"></i>
       </a>
     </td>
     <td>
-      <a onclick="eliminar({{p.id}},'eliminar_modulo')" href="#eliminar">
+      <a onclick="eliminar({{p.id}},'eliminar_modulo','{{n}}')" href="#eliminar">
       <i style="color: red" class="fa fa-trash-o  fa-2x"></i>
       </a>
     </td>
+    <td>
+      <input type="radio" {% if p.id = 1 %} checked="" {% endif %} value="option2" name="a">
+    </td>
   </tr>
+  {% endif %}
+
 {% endfor %}
 

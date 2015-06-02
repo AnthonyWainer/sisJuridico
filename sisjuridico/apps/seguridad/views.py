@@ -60,7 +60,7 @@ def registrar_perfil(request):
         if formu.is_valid():
             formu.save()
         #else:
-        return render(request,'seguridad/perfil/ajax_perfil.html',{'perfil':perfiles})            
+        return render(request,'seguridad/perfil/ajax_perfil.html',{'perfil':perfiles,'n':'perfilU'})            
     else:
         formu = formPerfil()
         return render(request,'seguridad/perfil/perfil.html',{'formu':formu,'perfil':perfiles, 'url':'registro_perfil/','n':'perfilU'})
@@ -87,7 +87,7 @@ def actualizar_perfil(request):
         idp = request.GET.get("id","")
         a=get_object_or_404(perfil,pk=idp)
         form= formPerfil(instance=a)
-        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_perfil/','n':'perfilU'}) 
+        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_perfil/','n':'perfilU','u':'perfilU'}) 
 
 @login_required(login_url='/')
 def registro_usuario(request):
@@ -97,7 +97,7 @@ def registro_usuario(request):
         if formu.is_valid():
             formu.save()
         #else:
-        return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios})            
+        return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU'})            
     else:
         formu = formUsuario()
         return render(request,'seguridad/usuario/usuario.html',{'formu':formu,'usuario':usuarios, 'url':'registro_usuario/','n':'UserU'})
@@ -124,7 +124,7 @@ def actualizar_usuario(request):
         idp = request.GET.get("id","")
         a=get_object_or_404(User,pk=idp)
         form= formUsuario(instance=a)
-        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_usuario/','n':'UserU'}) 
+        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_usuario/','n':'UserU','u':'UserU'}) 
 
 @login_required(login_url='/')
 def registro_modulo(request):
@@ -134,10 +134,10 @@ def registro_modulo(request):
         if formu.is_valid():
             formu.save()
         #else:
-        return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo})            
+        return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo,'n':'ModuloU'})            
     else:
         formu = formModulo()
-        return render(request,'seguridad/modulo/modulo.html',{'formu':formu,'modulo':modulo, 'url':'registro_modulo/','n':'ModuloU'})
+        return render(request,'seguridad/modulo/modulo.html',{'formu':formu,'modulo':modulo, 'url':'registro_modulo/','n':'ModuloU','nm':'SubModuloU'})
 
 @login_required(login_url='/')
 def eliminar_modulo(request):
@@ -162,3 +162,48 @@ def actualizar_modulo(request):
         a=get_object_or_404(modulos,pk=idp)
         form= formModulo(instance=a)
         return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_modulo/','n':'ModuloU'}) 
+
+@login_required(login_url='/')
+def eliminar_submodulo(request):
+    modulo = modulos.objects.all().order_by('id')
+    if request.method == 'GET' and request.is_ajax(): 
+        idb = request.GET.get("id","")
+        
+        for i in modulos.objects.filter(pk=idb):
+            padre = i.padre 
+
+        get_object_or_404(modulos,pk=idb).delete()
+        return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','padre':str(padre)})     
+
+@login_required(login_url='/')
+def actualizar_submodulo(request):
+    modulo = modulos.objects.all().order_by('id')
+    if request.method == 'POST' and request.is_ajax(): 
+        idp = request.POST.get("id","")
+        a=get_object_or_404(modulos,pk=idp)
+        form=formModulo(request.POST, instance=a)
+        if form.is_valid():
+            form.save()
+            return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU'}) 
+    else:
+        idp = request.GET.get("id","")
+        a=get_object_or_404(modulos,pk=idp)
+        form= formModulo(instance=a)
+        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_submodulo/','n':'SubModuloU'}) 
+
+@login_required(login_url='/')
+def registro_submodulo(request):
+
+    modulo = modulos.objects.all().order_by('id')
+    if request.method == 'POST' and request.is_ajax(): 
+        formu = formModulo(request.POST)
+        padre = request.POST.get("padre","")
+        if formu.is_valid():
+            formu.save()
+        #else:
+        return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','padre':padre}) 
+    else:
+        idp = request.GET.get("id","")
+        modulo = modulos.objects.filter(padre=idp)
+        #print(modulo.query) #imprime las consultas en el terminal
+        return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','padre':idp}) 

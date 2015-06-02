@@ -1,0 +1,20 @@
+{% for p in modulo %}
+  {% if p.padre|slugify = padre %}
+   <tr>
+    <td>{{p.descripcion}}</td>
+    <td>{{p.url}}</td>
+    <td>
+      <a href="#">
+        <i onclick="actualizar({{p.id}},'actualizar_submodulo','{{nm}}')" class="fa fa-pencil-square-o fa-2x"></i>
+      </a>
+    </td>
+    <td>
+      <a onclick="eliminar({{p.id}},'eliminar_submodulo','{{nm}}')" href="#eliminar">
+      <i style="color: red" class="fa fa-trash-o  fa-2x"></i>
+      </a>
+    </td>
+  </tr>
+  {% endif %}
+
+{% endfor %}
+

@@ -16,7 +16,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget= forms.PasswordInput(attrs={'type':"password", 'id':"inputPassword", 'class':"form-control", 'placeholder':"Contraseña", 'required':''}))
 
 listaPerfiles = [(con.id, con.descripcion) for con in perfil.objects.all()]
-print(listaPerfiles)
+#print(listaPerfiles)
 class formUsuario(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):

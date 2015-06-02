@@ -30,7 +30,7 @@
                                   <th>Eliminar</th>
                               </tr>
                           </thead>
-                          <tbody>
+                          <tbody class="{{n}}">
                             {% include "seguridad/perfil/ajax_perfil.html" %}
                           </tbody>
                       </table> 
@@ -40,7 +40,7 @@
     </div>
 </div>            
 <div class="modalP"></div>
-{% with nombre=formu n=p %}
+{% with nombre=formu n=p u=n%}
     {% include "seguridad/modal.html" %} 
 {% endwith %}
 
