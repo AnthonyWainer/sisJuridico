@@ -3,7 +3,8 @@ from django.contrib.auth.views import password_change,password_change_done
 urlpatterns = patterns('apps.seguridad.views',
 
 
-    url(r'^accounts/', include('django.contrib.auth.urls')),
+    #url(r'^accounts/', include('django.contrib.auth.urls')),
+    
     url(r'^password$', password_change, {'template_name': 'seguridad/cuentas/password.html'}),
     url(r'^password-hecho$', password_change_done, {'template_name': 'seguridad/cuentas/password-hecho.html'},name='password_change_done'),
 	#login y logout
