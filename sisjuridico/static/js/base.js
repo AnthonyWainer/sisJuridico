@@ -6,7 +6,6 @@ function guardar(url,n,u){
             $("table ."+u).empty().html(data);
             AlSave("guardado con éxito");  
         });
-        
     });
 }
 function actualizar(id,u,n){
@@ -23,24 +22,6 @@ function eliminar(id,u,n){
     });
 }
 
-function AlSave(msm){
-    setTimeout(function() {
-        toastr.options = {
-         showMethod: 'slideDown',
-         timeOut: 2000
-        };
-        toastr.success(msm);
-    }, 300);
-}
-function AlDelete(msm){
-    setTimeout(function() {
-        toastr.options = {
-         showMethod: 'slideDown',
-         timeOut: 2000
-        };
-        toastr.error(msm);
-    }, 300);
-}
 
 function mod(id){
     $("#"+id+" input").prop( "checked", true );
@@ -48,4 +29,5 @@ function mod(id){
        $("table .SubModuloU").empty().html(data);    
     });
 }
+
 

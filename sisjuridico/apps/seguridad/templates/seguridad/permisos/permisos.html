@@ -18,25 +18,31 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title form-inline">
-                    <input type="search" placeholder="Buscar" class="form-control" style="width: 40%">
-                    <button data-toggle="modal" data-target="#Modal" class="btn btn-sm btn-primary"><strong>Nuevo</strong></button>
                 </div>
                 <div class="ibox-content">
-                     <h5>Permisos</h5>
+                     <h3 align="center">Permisos</h3>
+                    <div class="col-lg-5"></div>
+                    <div class="col-lg-2">
+                    <select name="" class=" form-control">
+                          {% for i in permisos1 %}
+                            <option value="{{i.iduser_id}}">{{i.iduser__usuario}}</option>
+                          {% endfor %}
+                    </select>                       
+                     </div>
+                    <div class="col-lg-5"></div> 
+                    <br><hr>
                      <table class="table table-bordered">
                           <thead>
                               <tr>
-                                  <th>Descripción</th>
-                                  <th>Editar</th>
+                                  <th>buscar</th>
+                                  <th>editar</th>
+                                  <th>insertar</th>
                                   <th>Eliminar</th>
+                                  <th>imprimir</th>
                               </tr>
                           </thead>
-                          <tbody>
-                              <tr>
-                                  <td>data</td>
-                                  <td></td>
-                                  <td></td>
-                              </tr>
+                          <tbody class="{{n}}">
+                            {% include "seguridad/permisos/ajax_permisos.html" %}
                           </tbody>
                       </table> 
                 </div>
@@ -45,6 +51,7 @@
     </div>
 </div>            
 
-{% with form as nombre  %}
-    {% include "seguridad/modal.html" %} 
-{% endwith %}
+
+
+{% load static from  staticfiles %}
+<script src="{%static 'js/base.js' %}"></script>

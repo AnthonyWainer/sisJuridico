@@ -59,7 +59,6 @@ class permisos(models.Model):
     imprimir    = models.BooleanField(default=True)
     idmodulo    = models.ForeignKey(modulos) 
     iduser      = models.ForeignKey(settings.AUTH_USER_MODEL)
-    estado      = models.BooleanField(default=True)
 
 
     

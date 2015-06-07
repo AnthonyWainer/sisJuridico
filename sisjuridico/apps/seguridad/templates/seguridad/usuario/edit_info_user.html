@@ -1,0 +1,7 @@
+<form method="get" id="formulario">
+  {% csrf_token %}
+  {{form}}
+  <hr>
+  <input type="button" onclick="guardarinfo({{user.id}})" class="btn btn-sm btn-primary pull-left m-t-n-xs" value="cambiar">
+  <hr>
+</form>

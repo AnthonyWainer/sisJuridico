@@ -1,6 +1,40 @@
 function cargar(li){
     $( '#result' ).empty().load(li);
 }
+function ccon(li){
+    $('.his').empty().html('<iframe  width="300px" height="700px" frameborder="0" scrolling="" src="'+li+'"></iframe>');
+}
+
+function edi(id){
+    $.get('actualizar_info_usuario',{'id':id}, function(data) {
+        $('.his').empty().html(data);
+    });
+}
+function guardarinfo(id){
+    $.post('actualizar_info_usuario/',$('#formulario').serialize()+'&id='+id, function(data) {
+        AlSave("guardado con éxito"); 
+        cargar(li);
+    });
+}
+function AlSave(msm){
+    setTimeout(function() {
+        toastr.options = {
+         showMethod: 'slideDown',
+         timeOut: 2000
+        };
+        toastr.success(msm);
+    }, 300);
+}
+function AlDelete(msm){
+    setTimeout(function() {
+        toastr.options = {
+         showMethod: 'slideDown',
+         timeOut: 2000
+        };
+        toastr.error(msm);
+    }, 300);
+}
+
 $(document).ready(function () {
 
     //click en los módulos

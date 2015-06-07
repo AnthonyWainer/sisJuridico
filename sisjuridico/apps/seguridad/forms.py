@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import perfil, User, modulos
+from .models import perfil, User, modulos, permisos
 
 class formPerfil(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -35,15 +35,45 @@ class formUsuario(forms.ModelForm):
         model = User
         exclude = ['last_login','is_superuser','is_staff','is_active','groups','user_permissions']    
 
+class formEditUsuario(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(formEditUsuario, self).__init__(*args, **kwargs)
+        self.fields['nombres'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'Nombres'})
+        self.fields['apellidos'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'Apellidos'})
+        self.fields['dni'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'DNI'})
+        self.fields['email'].widget = forms.EmailInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'Email'})
+        self.fields['telefono'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'Telefono'})
+        self.fields['usuario'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'Usuario'})
+
+    class Meta:
+        model = User
+        exclude = ['last_login','is_superuser','is_staff','is_active','groups','user_permissions','password','idperfil']    
+
 class formModulo(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(formModulo, self).__init__(*args, **kwargs)
         self.fields['descripcion'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'descripcion'})
-        self.fields['padre'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'padre'})
-        self.fields['url'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'url'})
+        self.fields['padre'].widget = forms.HiddenInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'padre','value':0})
+        self.fields['url'].widget = forms.HiddenInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'url','value':'#'})
         self.fields['icon'].widget = forms.EmailInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'icon'})
 
     class Meta:
         model = modulos
         exclude = ['']            
+
+listaSubMod = [(con.id, con.descripcion) for con in modulos.objects.filter(padre=0)]
+class formSubModulo(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(formSubModulo, self).__init__(*args, **kwargs)
+        self.fields['descripcion'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'descripcion'})
+        self.fields['padre'].widget = forms.Select( choices=listaSubMod,attrs={'class':'form-control'})
+        self.fields['url'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'url'})
+        self.fields['icon'].widget = forms.EmailInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'icon'})
+
+    class Meta:
+        model = modulos
+        exclude = ['']    
+

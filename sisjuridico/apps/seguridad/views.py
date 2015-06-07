@@ -2,10 +2,11 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
 from .models import modulos, permisos, perfil, User
 from django.contrib.auth.decorators import login_required
-from .forms import  formPerfil, LoginForm, formUsuario, formModulo
+from .forms import  formPerfil, LoginForm, formUsuario, formModulo,formSubModulo,formEditUsuario
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
+from django.db.models import Count
 
 # Crea tus vista aqui.
 def Login(request):
@@ -46,11 +47,7 @@ def index(request):
     mod = modulos.objects.all()
     return render(request,'seguridad/index.html',{'mod':mod})
 
-@login_required(login_url='/')
-def permisos(request):
-    #mod = permisos.objects.all().order_by('id')
-    user = request.user
-    return render(request,'seguridad/permisos.html',{'mod':'mod'})
+
     
 @login_required(login_url='/')
 def registrar_perfil(request):
@@ -127,6 +124,30 @@ def actualizar_usuario(request):
         return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_usuario/','n':'UserU','u':'UserU'}) 
 
 @login_required(login_url='/')
+def actualizar_info_usuario(request):
+    usuarios = User.objects.all().order_by('id')
+    if request.method == 'POST' and request.is_ajax(): 
+        idp = request.POST.get("id","")
+        a=get_object_or_404(User,pk=idp)
+        form=formEditUsuario(request.POST, instance=a)
+        if form.is_valid():
+            form.save()
+            return redirect('/') 
+    else:
+        idp = request.GET.get("id","")
+        a=get_object_or_404(User,pk=idp)
+        form= formEditUsuario(instance=a)
+        return render(request,'seguridad/usuario/edit_info_user.html',{'form':form}) 
+
+#from django.contrib.auth.forms import AdminPasswordChangeForm
+
+@login_required(login_url='/')
+def profile(request):
+    #PasswordChangeForm
+    #ff = PasswordChangeForm(user=request.user)
+    return render(request,'seguridad/usuario/cuenta.html',{'f':'ff'}) 
+
+@login_required(login_url='/')
 def registro_modulo(request):
     modulo = modulos.objects.all().order_by('id')
     if request.method == 'POST' and request.is_ajax(): 
@@ -137,7 +158,9 @@ def registro_modulo(request):
         return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo,'n':'ModuloU'})            
     else:
         formu = formModulo()
-        return render(request,'seguridad/modulo/modulo.html',{'formu':formu,'modulo':modulo, 'url':'registro_modulo/','n':'ModuloU','nm':'SubModuloU'})
+        formu2 = formSubModulo()
+        
+        return render(request,'seguridad/modulo/modulo.html',{'formu':formu,'formu2':formu2,'modulo':modulo, 'url':'registro_modulo/','n':'ModuloU','nm':'SubModuloU'})
 
 @login_required(login_url='/')
 def eliminar_modulo(request):
@@ -181,14 +204,14 @@ def actualizar_submodulo(request):
     if request.method == 'POST' and request.is_ajax(): 
         idp = request.POST.get("id","")
         a=get_object_or_404(modulos,pk=idp)
-        form=formModulo(request.POST, instance=a)
+        form=formSubModulo(request.POST, instance=a)
         if form.is_valid():
             form.save()
             return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU'}) 
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(modulos,pk=idp)
-        form= formModulo(instance=a)
+        form= formSubModulo(instance=a)
         return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_submodulo/','n':'SubModuloU'}) 
 
 @login_required(login_url='/')
@@ -196,7 +219,7 @@ def registro_submodulo(request):
 
     modulo = modulos.objects.all().order_by('id')
     if request.method == 'POST' and request.is_ajax(): 
-        formu = formModulo(request.POST)
+        formu = formSubModulo(request.POST)
         padre = request.POST.get("padre","")
         if formu.is_valid():
             formu.save()
@@ -207,3 +230,36 @@ def registro_submodulo(request):
         modulo = modulos.objects.filter(padre=idp)
         #print(modulo.query) #imprime las consultas en el terminal
         return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','padre':idp}) 
+
+
+@login_required(login_url='/')
+def registro_permisos(request):
+    permiso = permisos.objects.all().order_by('id')
+    permiso1 = permisos.objects.values('iduser__usuario','iduser_id').annotate(Count('iduser'))
+    print(permiso1.query)
+    return render(request,'seguridad/permisos/permisos.html',{'permisos':permiso, 'permisos1':permiso1,'url':'registro_permisos/','n':'PermisosU'})
+
+
+@login_required(login_url='/')
+def eliminar_permisos(request):
+    permisos = permisos.objects.all().order_by('id')
+    if request.method == 'GET' and request.is_ajax(): 
+        idb = request.GET.get("id","")
+        get_object_or_404(permisos,pk=idb).delete()
+        return render(request,'seguridad/permisos/ajax_permisos.html',{'permisos':permisos,'n':'PermisosU'})     
+
+@login_required(login_url='/')
+def actualizar_permisos(request):
+    permisos = permisos.objects.all().order_by('id')
+    if request.method == 'POST' and request.is_ajax(): 
+        idp = request.POST.get("id","")
+        a=get_object_or_404(permisos,pk=idp)
+        form=formPermisos(request.POST, instance=a)
+        if form.is_valid():
+            form.save()
+            return render(request,'seguridad/permisos/ajax_permisos.html',{'permisos':permisos,'n':'PermisosU'}) 
+    else:
+        idp = request.GET.get("id","")
+        a=get_object_or_404(permisos,pk=idp)
+        form= formPermisos(instance=a)
+        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_permisos/','n':'PermisosU','u':'PermisosU'}) 
