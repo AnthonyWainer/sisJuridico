@@ -25,9 +25,15 @@
                      <table class="table table-bordered">
                           <thead>
                               <tr>
+                                {% for i in  estado %}
                                   <th>Descripción</th>
-                                  <th>Editar</th>
+                                  {% if i.editar == 1 %}
+                                  <th>Editar</th>  
+                                  {% endif %}
+                                  {% if i.eliminar == 1 %}
                                   <th>Eliminar</th>
+                                  {% endif %}
+                                {% endfor %}
                               </tr>
                           </thead>
                           <tbody class="{{n}}">

@@ -32,9 +32,15 @@
                                   <th>Dni</th>
                                   <th>Teléfono</th>
                                   <th>Perfil</th>
+                                  {% for i in  estado %}
+                                  {% if i.editar == 1 %}
                                   <th>Contraseña</th>
                                   <th>Editar</th>
-                                  <th>Eliminar</th>
+                                  {% endif %}
+                                  {% if i.eliminar == 1 %}
+                                    <th>Eliminar</th>
+                                  {% endif %}
+                                {% endfor %}
                               </tr>
                           </thead>
                           <tbody class="{{n}}">

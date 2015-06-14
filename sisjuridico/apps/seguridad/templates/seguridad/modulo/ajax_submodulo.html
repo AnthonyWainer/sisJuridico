@@ -3,16 +3,22 @@
    <tr>
     <td>{{p.descripcion}}</td>
     <td>{{p.url}}</td>
+    {% for i in  estado %}
+    {% if i.editar == 1 %}
     <td>
       <a href="#">
         <i onclick="actualizar({{p.id}},'actualizar_submodulo','{{nm}}')" class="fa fa-pencil-square-o fa-2x"></i>
       </a>
     </td>
+    {% endif %}
+    {% if i.eliminar == 1 %}
     <td>
       <a onclick="eliminar({{p.id}},'eliminar_submodulo','{{nm}}')" href="#eliminar">
       <i style="color: red" class="fa fa-trash-o  fa-2x"></i>
       </a>
     </td>
+    {% endif %}
+    {% endfor %}
   </tr>
   {% endif %}
 

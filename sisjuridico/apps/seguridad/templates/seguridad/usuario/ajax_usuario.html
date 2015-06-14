@@ -7,6 +7,8 @@
     <td>{{p.dni}}</td>
     <td>{{p.telefono}}</td>
     <td>{{p.idperfil.descripcion}}</td>
+    {% for i in  estado %}
+    {% if i.editar == 1 %}
     <td align="center">
     {% if p.password == "pbkdf2_sha256$20000$63ijtCdaGIEx$Wcfn0iEAQfno+SMy1v1ttxd6WQZXyAkdjmOacuNHm/4="  %}
       <i class="fa fa-unlock-alt fa-2x"></i> <br>por defecto
@@ -24,11 +26,15 @@
         <i onclick="actualizar({{p.id}},'actualizar_usuario','{{n}}')" class="fa fa-pencil-square-o fa-2x"></i>
       </a>
     </td>
+    {% endif %}
+    {% if i.eliminar == 1 %}
     <td>
       <a onclick="eliminar({{p.id}},'eliminar_usuario','{{n}}')" href="#eliminar">
       <i style="color: red" class="fa fa-trash-o  fa-2x"></i>
       </a>
     </td>
+    {% endif %}
+    {% endfor %}
   </tr>
 {% endfor %}
 
