@@ -3,6 +3,6 @@ psycopg2
 PyMySQL
 Unipath
 
-django-axel
-
+django-axes
+pytz
 
