@@ -13,7 +13,7 @@ DJANGO_APPS = (
     )
 
 THIRD_PARTY_APPS = (
-    'django_admin_bootstrapped',
+    'axes',
     )
 
 LOCAL_APPS = (
@@ -35,6 +35,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
+    'axes.middleware.FailedLoginMiddleware',
 )
 
 ROOT_URLCONF = 'sisjuridico.urls'
@@ -69,9 +71,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'sisjuridico.wsgi.application'
 AUTH_USER_MODEL = 'seguridad.User'
 
-#from django.core.urlresolvers import reverse_lazy
+#configuración de accesos
+AXES_LOGIN_FAILURE_LIMIT = 5
 
-#LOGIN_URL = reverse_lazy("login")
-#LOGIN_REDIRECT_URL = reverse_lazy("login")
 
-#CRISPY_TEMPLATE_PACK = 'bootstrap3'
+#AXES_LOCKOUT_URL = "/opt/sisJuridico2/sisjuridico/templates/"
+#AXES_LOCKOUT_TEMPLATE = 'seguridad/useBlock/block.html'
+#print (AXES_LOCKOUT_TEMPLATE)

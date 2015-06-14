@@ -31,3 +31,9 @@ function mod(id){
 }
 
 
+function passDefault(id) {
+    $.get('passDefault/',{'id':id}, function(data) {
+       $("table .UserU").empty().html(data);    
+       AlSave("Contraseña Cambiada por Defecto");
+    });
+}

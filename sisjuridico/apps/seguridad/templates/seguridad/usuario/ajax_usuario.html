@@ -7,6 +7,18 @@
     <td>{{p.dni}}</td>
     <td>{{p.telefono}}</td>
     <td>{{p.idperfil.descripcion}}</td>
+    <td align="center">
+    {% if p.password == "pbkdf2_sha256$20000$63ijtCdaGIEx$Wcfn0iEAQfno+SMy1v1ttxd6WQZXyAkdjmOacuNHm/4="  %}
+      <i class="fa fa-unlock-alt fa-2x"></i> <br>por defecto
+    {% else %}
+      <a href="#">
+        <i style="color: #1ab394" title="reset" onclick="passDefault({{p.id}})" class="fa fa-unlock fa-2x"></i>
+      </a> <br>Cambiada
+    {% endif %}
+
+      
+      
+    </td>
     <td>
       <a href="#">
         <i onclick="actualizar({{p.id}},'actualizar_usuario','{{n}}')" class="fa fa-pencil-square-o fa-2x"></i>

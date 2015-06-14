@@ -7,8 +7,11 @@ from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from django.db.models import Count
+from axes.models import AccessAttempt
+#from django.utils.decorators import method_decorator
 
 # Crea tus vista aqui.
+
 def Login(request):
     u = request.user
     if u.is_anonymous():
@@ -44,7 +47,9 @@ def LogOut(request):
 
 @login_required(login_url='/')
 def index(request):
-    mod = modulos.objects.all()
+    idp = request.user.idperfil_id
+    mod = permisos.objects.select_related('idmodulo').filter(idperfil_id=idp).values('idmodulo_id','idmodulo__padre','idmodulo__descripcion','idmodulo__icon','idmodulo__url','idperfil_id','buscar','eliminar','editar','insertar','imprimir','ver')
+    #print(mod.query)
     return render(request,'seguridad/index.html',{'mod':mod})
 
 
@@ -54,8 +59,16 @@ def registrar_perfil(request):
     perfiles = perfil.objects.all().order_by('id')
     if request.method == 'POST' and request.is_ajax(): 
         formu = formPerfil(request.POST)
+        listaMod = [(con.id) for con in modulos.objects.all()]
         if formu.is_valid():
             formu.save()
+            idp = perfil.objects.latest('id')
+            for x in listaMod:
+                print (x)
+                m  = permisos()
+                m.idmodulo_id = x
+                m.idperfil_id = idp.id
+                m.save() 
         #else:
         return render(request,'seguridad/perfil/ajax_perfil.html',{'perfil':perfiles,'n':'perfilU'})            
     else:
@@ -98,6 +111,16 @@ def registro_usuario(request):
     else:
         formu = formUsuario()
         return render(request,'seguridad/usuario/usuario.html',{'formu':formu,'usuario':usuarios, 'url':'registro_usuario/','n':'UserU'})
+
+@login_required(login_url='/')
+def passDefault(request):
+    idp = request.GET.get("id","")
+    u = User.objects.get(pk=idp)
+    u.password = "pbkdf2_sha256$20000$63ijtCdaGIEx$Wcfn0iEAQfno+SMy1v1ttxd6WQZXyAkdjmOacuNHm/4="
+    u.save()
+    usuarios = User.objects.all().order_by('id')
+    return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU'})            
+
 
 @login_required(login_url='/')
 def eliminar_usuario(request):
@@ -234,9 +257,17 @@ def registro_submodulo(request):
 
 @login_required(login_url='/')
 def registro_permisos(request):
-    permiso = permisos.objects.all().order_by('id')
-    permiso1 = permisos.objects.values('iduser__usuario','iduser_id').annotate(Count('iduser'))
-    print(permiso1.query)
+    
+    if request.method == 'POST' and request.is_ajax():
+        idb = request.POST.get("id","")
+        permiso = permisos.objects.select_related('idmodulo').filter(idperfil_id=idb).values('id','idmodulo_id','idmodulo__padre','idmodulo__descripcion','idperfil_id','buscar','eliminar','editar','insertar','imprimir')
+        return render(request,'seguridad/permisos/ajax_permisos.html',{'permisos':permiso})
+    else:
+        idb = 2
+
+    permiso = permisos.objects.select_related('idmodulo').filter(idperfil_id=idb).values('id','idmodulo_id','idmodulo__padre','idmodulo__descripcion','idperfil_id','buscar','eliminar','editar','insertar','imprimir')    
+    permiso1 = permisos.objects.values('idperfil__descripcion','idperfil_id').annotate(Count('idperfil'))
+    print(permiso.query)
     return render(request,'seguridad/permisos/permisos.html',{'permisos':permiso, 'permisos1':permiso1,'url':'registro_permisos/','n':'PermisosU'})
 
 
@@ -249,17 +280,64 @@ def eliminar_permisos(request):
         return render(request,'seguridad/permisos/ajax_permisos.html',{'permisos':permisos,'n':'PermisosU'})     
 
 @login_required(login_url='/')
-def actualizar_permisos(request):
-    permisos = permisos.objects.all().order_by('id')
+def cambiarEstadoPermiso(request):
+    if request.method == 'GET' and request.is_ajax(): 
+        idp = request.GET.get("id","")
+        u = request.GET.get("url","")
+        e = request.GET.get("e","")
+        if e == 'true':
+            e= False
+        else:
+            e= True
+
+        a= permisos.objects.get(pk=idp)
+
+        if (u == "v"):
+            a.ver = e
+        if (u == "e"):
+            a.editar = e
+        elif (u == "b"):
+            a.buscar = e
+        elif (u == "i"):
+            a.insertar = e            
+        elif (u == "el"):
+            a.eliminar = e            
+        elif (u == "im"):
+            a.imprimir = e            
+
+        a.save()
+        return HttpResponse('ok')
+
+@login_required(login_url='/')
+def cambiarEstadoPermiso2(request):
+    if request.method == 'GET' and request.is_ajax(): 
+        idp = request.GET.get("id","")
+        e = request.GET.get("e","")
+        if e == 'true':
+            e= False
+        else:
+            e= True
+
+        a= permisos.objects.get(pk=idp)
+
+        a.ver = e
+        a.editar = e
+        a.buscar = e
+        a.insertar = e            
+        a.eliminar = e            
+        a.imprimir = e            
+
+        a.save()
+        return HttpResponse('ok')
+
+@login_required(login_url='/')
+def user_block(request):
+    userBlock = AccessAttempt.objects.all()
     if request.method == 'POST' and request.is_ajax(): 
         idp = request.POST.get("id","")
-        a=get_object_or_404(permisos,pk=idp)
-        form=formPermisos(request.POST, instance=a)
-        if form.is_valid():
-            form.save()
-            return render(request,'seguridad/permisos/ajax_permisos.html',{'permisos':permisos,'n':'PermisosU'}) 
+        u = AccessAttempt.objects.get(pk=idp)
+        u.failures_since_start = 0
+        u.save()
+        return render(request,'seguridad/userBlock/ajax_user_block.html',{'userBlock':userBlock}) 
     else:
-        idp = request.GET.get("id","")
-        a=get_object_or_404(permisos,pk=idp)
-        form= formPermisos(instance=a)
-        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_permisos/','n':'PermisosU','u':'PermisosU'}) 
+        return render(request,'seguridad/userBlock/user_block.html',{'userBlock':userBlock})     

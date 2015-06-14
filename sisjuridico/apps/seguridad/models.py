@@ -52,13 +52,14 @@ class modulos(models.Model):
     icon        = models.CharField(max_length=150)
 
 class permisos(models.Model):
+    ver         = models.BooleanField(default=True)
     buscar      = models.BooleanField(default=True)
     editar      = models.BooleanField(default=True)
     insertar    = models.BooleanField(default=True)
     eliminar    = models.BooleanField(default=True)
     imprimir    = models.BooleanField(default=True)
     idmodulo    = models.ForeignKey(modulos) 
-    iduser      = models.ForeignKey(settings.AUTH_USER_MODEL)
+    idperfil    = models.ForeignKey(perfil)
 
 
     

@@ -71,7 +71,7 @@ class formSubModulo(forms.ModelForm):
         self.fields['descripcion'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'descripcion'})
         self.fields['padre'].widget = forms.Select( choices=listaSubMod,attrs={'class':'form-control'})
         self.fields['url'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'url'})
-        self.fields['icon'].widget = forms.EmailInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'icon'})
+        self.fields['icon'].widget = forms.HiddenInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'icon','value':'#'})
 
     class Meta:
         model = modulos

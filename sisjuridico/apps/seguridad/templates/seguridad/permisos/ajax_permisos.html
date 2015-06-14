@@ -1,10 +1,112 @@
+{% load static from  staticfiles %}
+<link href="{% static 'css/plugins/iCheck/custom.css'%}" rel="stylesheet">
 {% for p in permisos %}
-  <tr>
-    <td>{{p.buscar}}</td>
-    <td>{{p.editar}}</td>
-    <td>{{p.insertar}}</td>
-    <td>{{p.eliminar}}</td>
-    <td>{{p.imprimir}}</td>
-  </tr>
+    {% if p.idmodulo__padre == 0 %}
+        <h3>{{p.idmodulo__descripcion}}</h3>
+
+        <label class="i-checks">
+        <input type="checkbox" class="cambiarEstadoPermiso2/" id="{{p.id}}" name="b" 
+            {% if p.buscar == 1 %}
+                checked="checked"          
+            {% endif %}           
+        />
+        </label>
+        <table class="table table-bordered">
+         
+            <thead>
+                <tr>                                  
+                    <th>SubMódulos</th>
+                    <th>ver</th>
+                    <th>buscar</th>
+                    <th>editar</th>
+                    <th>insertar</th>
+                    <th>Eliminar</th>
+                    <th>imprimir</th>
+                </tr>
+            </thead>
+            <tbody >
+                {% for j in permisos %}
+                    {% with submodulo=j.idmodulo__padre  modulo=p.idmodulo_id%} 
+                        {% if modulo == submodulo %}
+                            <tr>
+                                <td>{{j.idmodulo__descripcion}}</td>
+                                <td>
+                                <label class="i-checks">
+                                <input type="checkbox" class="cambiarEstadoPermiso/" id="{{j.id}}" name="v" 
+                                {% if j.buscar == 1 %}
+                                    checked="checked"          
+                                {% endif %}           
+                                />  
+                                </label>       
+                                </td>                    
+                                <td>
+                                <label class="i-checks">
+                                <input type="checkbox" class="cambiarEstadoPermiso/" id="{{j.id}}" name="b" 
+                                {% if j.buscar == 1 %}
+                                    checked="checked"          
+                                {% endif %}           
+                                />  
+                                </label>       
+                                </td>
+                                <td>
+                                <label class="i-checks">
+                                <input type="checkbox" class="cambiarEstadoPermiso/" id="{{j.id}}" name="e"
+                                {% if j.editar == 1 %}
+                                    checked="checked"          
+                                {% endif %}           
+                                />
+                                </label>                  
+                                </td>
+                                <td>
+                                <label class="i-checks">
+                                <input type="checkbox" class="cambiarEstadoPermiso/" id="{{j.id}}" name="i"
+                                {% if j.insertar == 1 %}
+                                    checked="checked"          
+                                {% endif %} 
+                                />
+                                </label>                 
+                                </td>
+                                <td>
+                                <label class="i-checks">
+                                <input type="checkbox" class="cambiarEstadoPermiso/" id="{{j.id}}" name="el"
+                                {% if j.eliminar == 1 %}
+                                    checked="checked"          
+                                {% endif %} 
+                                />                  
+                                </label>
+                                </td>
+                                <td>
+                                <label class="i-checks">
+                                <input type="checkbox" class="cambiarEstadoPermiso/" id="{{j.id}}" name="im"
+                                {% if j.imprimir == 1 %}
+                                    checked="checked"          
+                                {% endif %}
+                                />                  
+                                </label>
+                                </td>
+                            </tr>                                            
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}     
+            </tbody>
+        </table>
+    {% endif %}
 {% endfor %}
 
+<script src="{% static 'js/plugins/iCheck/icheck.min.js' %}"></script>   
+<script>
+   $(document).ready(function () {
+      $('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+      });
+   });
+$('input').on('ifClicked', function(event){
+  es = $(this).prop( "checked");
+  url = $(this).attr('name');
+  id = $(this).attr('id');
+  u = $(this).attr('class');
+
+  cambiar(u,es,url,id);
+});   
+
+</script>

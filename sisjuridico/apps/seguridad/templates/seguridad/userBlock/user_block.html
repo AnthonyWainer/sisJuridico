@@ -1,0 +1,54 @@
+{% load static from  staticfiles %}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+    <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li class="active">
+                <strong>Usuarios bloqueados</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+ 
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+                     <h3 align="center">Usuarios Bloqueados</h3>
+                     <table class="table table-bordered">
+                          <thead>
+                              <tr>
+                                  <th>Usuario</th>
+                                  <th>IP</th>
+                                  <th>Maquina</th>
+                                  <th>Tiempo de Entrada</th>
+                                  <th>Número de Intentos de Sesión</th>
+                                  <th>Estado</th>
+                                  
+                              </tr>
+                          </thead>
+                          <tbody class="ublock">
+                            {% include "seguridad/userBlock/ajax_user_block.html" %}
+                          </tbody>
+                      </table> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>            
+
+<script>
+  function userBlock(id){
+    $.post('user_block/','csrfmiddlewaretoken='+$("[name='csrfmiddlewaretoken']").val()+'&id='+id, function(data) {
+      $("table .ublock").empty().html(data);
+      AlSave("usuario desbloqueado"); 
+    });
+  }
+</script>

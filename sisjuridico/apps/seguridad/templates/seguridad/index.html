@@ -47,17 +47,17 @@
                         </div>
                     </li>
                     {% for i in mod %}
-                        {% if i.padre = 0 %} 
+                        {% if i.idmodulo__padre = 0  and i.ver == 1 %} 
                             <li class="">
-                                <a href="{{i.url}}"><i class="{{i.icon}}"></i>
-                                    <span class="nav-label">{{i.descripcion}}</span> 
+                                <a href="{{i.idmodulo__url}}"><i class="{{i.idmodulo__icon}}"></i>
+                                    <span class="nav-label">{{i.idmodulo__descripcion}}</span> 
                                     <span class="fa arrow"></span>
                                 </a>
                                 <ul class="nav nav-second-level">
                                     {% for j in mod %}
-                                         {% with submodulo=j.padre  modulo=i.id%} 
-                                            {% if modulo == submodulo %}
-                                                <li ><a href="#{{j.url}}" name="{{j.url}}" class="url">{{j.descripcion}}</a></li>
+                                         {% with submodulo=j.idmodulo__padre  modulo=i.idmodulo_id%} 
+                                            {% if modulo == submodulo and j.ver == 1 %}
+                                                <li ><a href="#{{j.idmodulo__url}}" name="{{j.idmodulo__url}}" class="url">{{j.idmodulo__descripcion}}</a></li>
                                             {% endif %}
                                         {% endwith %}
                                     {% endfor %}

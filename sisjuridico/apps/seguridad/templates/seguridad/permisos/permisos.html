@@ -1,3 +1,4 @@
+
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
     <br>
@@ -23,35 +24,29 @@
                      <h3 align="center">Permisos</h3>
                     <div class="col-lg-5"></div>
                     <div class="col-lg-2">
-                    <select name="" class=" form-control">
+                    <select name="" class="form-control input-sm selPer" >
                           {% for i in permisos1 %}
-                            <option value="{{i.iduser_id}}">{{i.iduser__usuario}}</option>
+                            <option value="{{i.idperfil_id}}" 
+                            {% if i.idperfil_id == 2  %}
+                                selected="selected"
+                            {% endif %} >{{i.idperfil__descripcion}}</option>
                           {% endfor %}
                     </select>                       
                      </div>
                     <div class="col-lg-5"></div> 
                     <br><hr>
-                     <table class="table table-bordered">
-                          <thead>
-                              <tr>
-                                  <th>buscar</th>
-                                  <th>editar</th>
-                                  <th>insertar</th>
-                                  <th>Eliminar</th>
-                                  <th>imprimir</th>
-                              </tr>
-                          </thead>
-                          <tbody class="{{n}}">
-                            {% include "seguridad/permisos/ajax_permisos.html" %}
-                          </tbody>
-                      </table> 
+                    {% csrf_token %}
+                    <div class="{{n}}">
+                      {% include "seguridad/permisos/ajax_permisos.html" %}
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-</div>            
+</div>           
+{% load static from  staticfiles %} 
+<script src="{%static 'js/permisos.js' %}"></script>
 
 
 
-{% load static from  staticfiles %}
-<script src="{%static 'js/base.js' %}"></script>
