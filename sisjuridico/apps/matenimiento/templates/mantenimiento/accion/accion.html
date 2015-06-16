@@ -1,0 +1,54 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+    <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li class="active">
+                <strong>Registro de Acciones</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title form-inline">
+                    <button data-toggle="modal" data-target="#Modal" class="btn btn-sm btn-primary"><strong>Nuevo</strong></button>
+                </div>
+                <div class="ibox-content">
+                     <h3 align="center">ACCIONES</h3>
+                     <table class="table table-bordered">
+                          <thead>
+                              <tr>
+                                {% for i in  estado %}
+                                  <th>accion</th>
+                                  {% if i.editar == 1 %}
+                                  <th>Editar</th>  
+                                  {% endif %}
+                                  {% if i.eliminar == 1 %}
+                                  <th>Eliminar</th>
+                                  {% endif %}
+                                {% endfor %}
+                              </tr>
+                          </thead>
+                          <tbody class="{{n}}">
+                            {% include "mantenimiento/accion/ajax_accion.html" %}
+                          </tbody>
+                      </table> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>            
+<div class="modalP"></div>
+{% with nombre=formu n=p u=n%}
+    {% include "seguridad/modal.html" %} 
+{% endwith %}
+
+{% load static from  staticfiles %}
+<script src="{%static 'js/base.js' %}"></script>

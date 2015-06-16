@@ -49,7 +49,7 @@ def LogOut(request):
 def index(request):
     idp = request.user.idperfil_id
     mod = permisos.objects.filter(idperfil_id=idp).values('idmodulo_id','idmodulo__padre','idmodulo__descripcion','idmodulo__icon','idmodulo__url','idperfil_id','buscar','eliminar','editar','insertar','imprimir','ver')
-    print(mod.query)
+    #print(mod.query)
     return render(request,'seguridad/index.html',{'mod':mod})
 
 def permi(request,url):
@@ -183,7 +183,6 @@ def registro_modulo(request):
         formu = formModulo(request.POST)
         if formu.is_valid():
             formu.save()
-        #else:
         return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo,'n':'ModuloU','estado':estado})            
     else:
         formu = formModulo()
@@ -342,11 +341,12 @@ def cambiarEstadoPermiso2(request):
 @login_required(login_url='/')
 def user_block(request):
     userBlock = AccessAttempt.objects.all()
+    estado =  permi(request, "registro_modulo")
     if request.method == 'POST' and request.is_ajax(): 
         idp = request.POST.get("id","")
         u = AccessAttempt.objects.get(pk=idp)
         u.failures_since_start = 0
         u.save()
-        return render(request,'seguridad/userBlock/ajax_user_block.html',{'userBlock':userBlock}) 
+        return render(request,'seguridad/userBlock/ajax_user_block.html',{'userBlock':userBlock,'estado':estado}) 
     else:
-        return render(request,'seguridad/userBlock/user_block.html',{'userBlock':userBlock})     
+        return render(request,'seguridad/userBlock/user_block.html',{'userBlock':userBlock,'estado':estado})     

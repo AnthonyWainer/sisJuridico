@@ -5,6 +5,8 @@
     <td>{{p.user_agent}}</td>
     <td>{{p.attempt_time}}</td>
     <td>{{p.failures_since_start}}</td>
+    {% for i in  estado %}
+    {% if i.editar == 1 %}
     <td>
         {% csrf_token %}
         {% if p.failures_since_start >= 5 %}
@@ -15,6 +17,8 @@
           <i style="color: #1ab394" class="fa fa-unlock fa-2x"></i>
         {% endif %}
     </td>
+    {% endif %}
+    {% endfor %}
 
   </tr>
 {% endfor %}

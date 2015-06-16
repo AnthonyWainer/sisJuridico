@@ -8,17 +8,19 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('expediente', '0001_initial'),
+        ('seguridad', '0008_permisos_ver'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='historial',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
                 ('fecha', models.DateField()),
                 ('hora', models.TimeField()),
                 ('estado', models.BooleanField(default=True)),
                 ('idexpedientes', models.ForeignKey(to='expediente.expedientes')),
+                ('idpermisos', models.ForeignKey(to='seguridad.permisos')),
             ],
         ),
     ]

@@ -7,79 +7,55 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('matenimiento', '0002_auto_20150615_0934'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='accion',
-            fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('accion', models.CharField(max_length=30)),
-                ('estado', models.BooleanField(default=True)),
-            ],
-        ),
-        migrations.CreateModel(
             name='categoria',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
                 ('descripcion', models.CharField(max_length=100)),
-                ('estado', models.BooleanField(default=True)),
             ],
         ),
         migrations.CreateModel(
             name='det_hoja_exp',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
                 ('fecha_emision', models.DateField()),
                 ('fecha_recepcion', models.DateField()),
                 ('documento_adjun', models.CharField(max_length=250)),
                 ('num_follos', models.IntegerField()),
-                ('estado', models.BooleanField(default=True)),
             ],
         ),
         migrations.CreateModel(
             name='expedientes',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
                 ('fecha', models.DateField()),
                 ('asunto', models.TextField()),
                 ('contenido', models.TextField()),
-                ('estado', models.BooleanField(default=True)),
                 ('idcategoria', models.ForeignKey(to='expediente.categoria')),
             ],
         ),
         migrations.CreateModel(
             name='hojaEnvio',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
                 ('asunto', models.TextField()),
                 ('observaciones', models.TextField()),
-                ('estado', models.BooleanField(default=True)),
-                ('idaccion', models.ForeignKey(to='expediente.accion')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='oficina',
-            fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('oficina', models.CharField(max_length=30)),
-                ('estado', models.BooleanField(default=True)),
+                ('idaccion', models.ForeignKey(to='matenimiento.accion')),
+                ('idoficina', models.ForeignKey(to='matenimiento.oficina')),
             ],
         ),
         migrations.CreateModel(
             name='resolucion',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
                 ('numero', models.CharField(max_length=20)),
                 ('contenido', models.CharField(max_length=100)),
-                ('estado', models.BooleanField(default=True)),
                 ('idexpediente', models.ManyToManyField(to='expediente.expedientes')),
             ],
-        ),
-        migrations.AddField(
-            model_name='hojaenvio',
-            name='idoficina',
-            field=models.ForeignKey(to='expediente.oficina'),
         ),
         migrations.AddField(
             model_name='det_hoja_exp',

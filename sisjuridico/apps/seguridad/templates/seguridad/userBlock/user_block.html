@@ -30,7 +30,11 @@
                                   <th>Maquina</th>
                                   <th>Tiempo de Entrada</th>
                                   <th>Número de Intentos de Sesión</th>
+                                  {% for i in  estado %}
+                                  {% if i.editar == 1 %}
                                   <th>Estado</th>
+                                  {% endif %}
+                                  {% endfor %}
                                   
                               </tr>
                           </thead>
