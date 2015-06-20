@@ -14,14 +14,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='categoria',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('descripcion', models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
             name='det_hoja_exp',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('fecha_emision', models.DateField()),
                 ('fecha_recepcion', models.DateField()),
                 ('documento_adjun', models.CharField(max_length=250)),
@@ -31,17 +31,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='expedientes',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('nro', models.IntegerField()),
                 ('fecha', models.DateField()),
                 ('asunto', models.TextField()),
-                ('contenido', models.TextField()),
+                ('contenido', models.FileField(upload_to='Expediente/%Y/%m/%d')),
                 ('idcategoria', models.ForeignKey(to='expediente.categoria')),
             ],
         ),
         migrations.CreateModel(
             name='hojaEnvio',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('asunto', models.TextField()),
                 ('observaciones', models.TextField()),
                 ('idaccion', models.ForeignKey(to='matenimiento.accion')),
@@ -51,7 +52,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='resolucion',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('numero', models.CharField(max_length=20)),
                 ('contenido', models.CharField(max_length=100)),
                 ('idexpediente', models.ManyToManyField(to='expediente.expedientes')),

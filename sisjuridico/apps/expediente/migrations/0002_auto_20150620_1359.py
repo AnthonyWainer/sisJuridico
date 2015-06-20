@@ -13,7 +13,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='expedientes',
+            name='nro',
+            field=models.CharField(max_length=20),
+        ),
+        migrations.AlterField(
+            model_name='resolucion',
             name='contenido',
-            field=models.FileField(upload_to='Expediente/%Y/%m/%d'),
+            field=models.FileField(upload_to='Resolucion/%Y/%m/%d'),
         ),
     ]

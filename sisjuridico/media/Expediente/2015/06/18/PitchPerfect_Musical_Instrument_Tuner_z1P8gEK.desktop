@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=PitchPerfect Musical Instrument Tuner
+Exec=env WINEPREFIX="/home/anthonywainer/.wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/anthonywainer/.wine/dosdevices/c:/users/Public/Escritorio/PitchPerfect\\ Musical\\ Instrument\\ Tuner.lnk
+Type=Application
+StartupNotify=true
+Comment=Launch PitchPerfect Musical Instrument Tuner
+Icon=AFB6_pitchperfect.0

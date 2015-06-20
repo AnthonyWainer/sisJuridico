@@ -5,6 +5,7 @@ class categoria(models.Model):
     descripcion = models.CharField(max_length=100)
 
 class expedientes(models.Model):
+    nro         = models.CharField(max_length=20)
     fecha       = models.DateField()
     asunto      = models.TextField()
     contenido   = models.FileField(upload_to='Expediente/%Y/%m/%d')
@@ -13,7 +14,7 @@ class expedientes(models.Model):
 
 class resolucion(models.Model):
     numero    = models.CharField(max_length=20)
-    contenido = models.CharField(max_length=100)
+    contenido = models.FileField(upload_to='Resolucion/%Y/%m/%d')
     idexpediente = models.ManyToManyField(expedientes)
 
 

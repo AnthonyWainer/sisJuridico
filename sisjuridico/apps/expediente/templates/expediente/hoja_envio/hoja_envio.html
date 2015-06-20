@@ -6,7 +6,7 @@
                 <a href="/">Home</a>
             </li>
             <li class="active">
-                <strong>Registro de Expedientes</strong>
+                <strong>Registro de Hoja de Envio</strong>
             </li>
         </ol>
     </div>
@@ -28,22 +28,18 @@
                           <thead>
                               <tr>
                                 {% for i in  estado %}
-                                  <th>Número</th>
+                                  <th>oficina</th>
+                                  <th>accion</th>
                                   <th>Asunto</th>
-                                  <th>Fecha</th>
-                                  <th>Categoría</th>
-                                  <th>Contenido</th>
+                                  <th>Observaciones</th>
                                   {% if i.editar == 1 %}
-                                  <th>Editar</th>
-                                  {% endif %}
-                                  {% if i.eliminar == 1 %}
-                                    <th>Eliminar</th>
+                                  <th>Hoja de Folios</th>
                                   {% endif %}
                                 {% endfor %}
                               </tr>
                           </thead>
                           <tbody class="{{n}}">
-                            {% include "expediente/expediente/ajax_expediente.html" %}
+                            {% include "expediente/hoja_envio/ajax_hoja_envio.html" %}
                           </tbody>
                       </table> 
                 </div>
@@ -51,12 +47,13 @@
         </div>
     </div>
 </div>
-<div class="modalP"></div>
+
 {% with nombre=formu n=p u=n%}
 <div id="Modal{{n}}" class="modal fade" aria-hidden="true">
     
     <div class="modal-dialog">
-    
+    <form method="post" enctype="multipart/form-data" id="formul">
+    {% csrf_token %}
         <div class="modal-content">
             <div class="modal-body">
                 <h5>Formulario <small>llenar todos los campos</small></h5>
@@ -64,7 +61,7 @@
   <div class="panel-heading">
     <div class="panel-options">
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-1" data-toggle="tab">Expediente</a></li>
+        <li class="active"><a href="#tab-1" data-toggle="tab">Hoja de Envio</a></li>
       </ul>
     </div>
   </div>
@@ -74,35 +71,33 @@
       <div class="tab-content">
       
         <div class="tab-pane active" id="tab-1">
-                
-                    <div class="ibox-content">
-                        <div class="row">
-                            <form method="post" enctype="multipart/form-data" id="formul">
-                            {% csrf_token %}
-                            <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Expedientes</h3>
-                                <label for="id_asunto">Categoría:</label>
-                                <select name="idcategoria" class="form-control" id="id_idcategoria" >
-                                {% for c in  idcategoria %}
-                                    <option value="{{c.id}}">{{c.descripcion}}</option>
-                                {% endfor %}
-                                </select>                            
-                                <label for="id_nro">Nro de Expediente:</label>
-                                {{formu.nro}}
-                                <label for="id_fecha">Fecha:</label>
-                                {{formu.fecha}}
-                                <label for="id_asunto">Asunto:</label>
-                                {{formu.asunto}}
+          <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Hoja de Accion</h3>
+                  <label for="id_oficina">Oficina:</label>
+                  <select name="idoficina" class="form-control" id="id_idoficina" >
+                    {% for c in  idoficina %}
+                        <option value="{{c.id}}">{{c.oficina}}</option>
+                    {% endfor %}
+                  </select>
+                  <label for="id_accion">Accion:</label>
+                   <select name="idaccion" class="form-control" id="id_idaccion" >
+                    {% for c in  idaccion %}
+                        <option value="{{c.id}}">{{c.accion}}</option>
+                    {% endfor %}
+                  </select>
+                  <label for="asunto">Asunto:</label>
+                  {{formuH.asunto}}
+                </div>
 
-
-                            </div>
-                            <div class="col-sm-6"><h4>Subir Expediente</h4>
-                                <label for="id_asunto">Expediente:</label>
-                                {{formu.contenido}}
-                            </div>
-                            </form> 
-                        </div>
-                    </div>
+                <div class="col-sm-6"><h4>Observaciones</h4>
+                  <label for="observaciones">Observaciones:</label>
+                  {{formuH.observaciones}}
+                </div>
+            </div>
+          </div>
         </div>
+                             
     </div>
     
   </div>
@@ -116,7 +111,7 @@
             
 
         </div>
-
+</form> 
     </div>
 </div>
 {% endwith %}
@@ -125,6 +120,5 @@
 
             
 {% load static from  staticfiles %}
-<script src="{%static 'js/base.js' %}"></script>
 <script src="{%static 'js/expediente.js' %}"></script>
            
