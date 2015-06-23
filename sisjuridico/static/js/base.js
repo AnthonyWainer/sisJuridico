@@ -37,3 +37,28 @@ function passDefault(id) {
        AlSave("Contraseña Cambiada por Defecto");
     });
 }
+
+//para subir archivos con ajax
+function guardarF(url,n,u){
+    formData = new FormData($('#formulario'+n)[0]);
+    formData.append('id', $(".guar").attr('id'));
+        $.ajax({
+            url: url,  
+            type: 'POST',
+            data: formData,
+            //necesario para subir archivos via ajax
+            cache: false,
+            contentType: false,
+            processData: false,
+
+            success: function(data){
+                $('#Modal'+n).modal('hide');
+                $('#Modal'+n).on('hidden.bs.modal', function (e) {
+                    $("table ."+u).empty().html(data);
+                    AlSave("guardado con éxito");  
+                });
+            }
+
+        });
+
+}

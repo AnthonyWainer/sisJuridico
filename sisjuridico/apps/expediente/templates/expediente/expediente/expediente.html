@@ -20,18 +20,27 @@
                 <div class="ibox-title form-inline">
                     <button data-toggle="modal" data-target="#Modal"class="btn btn-sm btn-primary" type="submit"><strong>Nuevo</strong></button>
                     <input type="search" placeholder="Buscar" class="form-control" style="width: 40%">
-
+                    <select class="form-control selEx" >
+                      {% for c in  idcategoria %}
+                        <option value="{{c.id}}"
+                        {% if c.id == 1  %}
+                                selected="selected"
+                        {% endif %} >{{c.descripcion}}</option>
+                      {% endfor %}
+                    </select>   
                 </div>
                 <div class="ibox-content">
                      <h3 align="center">EXPEDIENTES</h3>    
+
                      <table class="table table-bordered">
                           <thead>
                               <tr>
                                 {% for i in  estado %}
+                                  <th>#</th>
                                   <th>Número</th>
                                   <th>Asunto</th>
                                   <th>Fecha</th>
-                                  <th>Categoría</th>
+                                  <th>Fecha de Expediente</th>
                                   <th>Contenido</th>
                                   {% if i.editar == 1 %}
                                   <th>Editar</th>
@@ -77,7 +86,7 @@
                 
                     <div class="ibox-content">
                         <div class="row">
-                            <form method="post" enctype="multipart/form-data" id="formul">
+                            <form method="post" enctype="multipart/form-data" id="formulario{{n}}">
                             {% csrf_token %}
                             <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Expedientes</h3>
                                 <label for="id_asunto">Categoría:</label>
@@ -90,6 +99,8 @@
                                 {{formu.nro}}
                                 <label for="id_fecha">Fecha:</label>
                                 {{formu.fecha}}
+                                <label for="id_fecha_expediente">Fecha de Expediente:</label>
+                                {{formu.fecha_expediente}}
                                 <label for="id_asunto">Asunto:</label>
                                 {{formu.asunto}}
 
@@ -98,7 +109,16 @@
                             <div class="col-sm-6"><h4>Subir Expediente</h4>
                                 <label for="id_asunto">Expediente:</label>
                                 {{formu.contenido}}
+                                <br>
+                                <label for="id_resolucion">Resolucion:</label>
+                                <br>
+                                <select name="idresolucion" multiple class="form-control" id="id_idresolucion" >
+                                {% for c in  idresolucion %}
+                                    <option value="{{c.id}}">{{forloop.counter}} → <strong>{{c.numero}} </strong> </option>
+                                {% endfor %}
+                                </select>                                
                             </div>
+
                             </form> 
                         </div>
                     </div>
@@ -110,7 +130,7 @@
             </div>
 
             <div class="modal-footer">
-                <input class="btn btn-sm btn-primary gg" type="button" value= "guardar"/>
+                <input class="btn btn-sm btn-primary" onclick="guardarF('{{url}}','{{n}}','{{u}}')"  type="button" value= "guardar"/>
                 <button type="button" class="btn btn-sm  btn-danger" data-dismiss="modal"> Cancelar</button>
             </div>
             
@@ -120,8 +140,6 @@
     </div>
 </div>
 {% endwith %}
-
-
 
             
 {% load static from  staticfiles %}

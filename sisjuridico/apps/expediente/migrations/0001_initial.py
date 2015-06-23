@@ -7,70 +7,39 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('matenimiento', '0002_auto_20150615_0934'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='categoria',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('descripcion', models.CharField(max_length=100)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='det_hoja_exp',
-            fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
-                ('fecha_emision', models.DateField()),
-                ('fecha_recepcion', models.DateField()),
-                ('documento_adjun', models.CharField(max_length=250)),
-                ('num_follos', models.IntegerField()),
             ],
         ),
         migrations.CreateModel(
             name='expedientes',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
-                ('nro', models.IntegerField()),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
+                ('nro', models.CharField(max_length=20)),
                 ('fecha', models.DateField()),
+                ('fecha_expediente', models.DateField()),
                 ('asunto', models.TextField()),
                 ('contenido', models.FileField(upload_to='Expediente/%Y/%m/%d')),
                 ('idcategoria', models.ForeignKey(to='expediente.categoria')),
             ],
         ),
         migrations.CreateModel(
-            name='hojaEnvio',
-            fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
-                ('asunto', models.TextField()),
-                ('observaciones', models.TextField()),
-                ('idaccion', models.ForeignKey(to='matenimiento.accion')),
-                ('idoficina', models.ForeignKey(to='matenimiento.oficina')),
-            ],
-        ),
-        migrations.CreateModel(
             name='resolucion',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('numero', models.CharField(max_length=20)),
-                ('contenido', models.CharField(max_length=100)),
-                ('idexpediente', models.ManyToManyField(to='expediente.expedientes')),
+                ('contenido', models.FileField(upload_to='Resolucion/%Y/%m/%d')),
             ],
         ),
         migrations.AddField(
-            model_name='det_hoja_exp',
-            name='ideresolucion',
-            field=models.ForeignKey(to='expediente.resolucion'),
-        ),
-        migrations.AddField(
-            model_name='det_hoja_exp',
-            name='idexpediente',
-            field=models.ForeignKey(to='expediente.expedientes'),
-        ),
-        migrations.AddField(
-            model_name='det_hoja_exp',
-            name='idhojaenvio',
-            field=models.ForeignKey(to='expediente.hojaEnvio'),
+            model_name='expedientes',
+            name='idresolucion',
+            field=models.ManyToManyField(to='expediente.resolucion'),
         ),
     ]

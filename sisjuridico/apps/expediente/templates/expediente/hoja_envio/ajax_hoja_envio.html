@@ -1,18 +1,24 @@
 {% for p in hoja_envio %}
   <tr>
+    <td>{{p.idoficina}}</td>
+    <td>{{p.idaccion}}</td>
     <td>{{p.asunto}}</td>
     <td>{{p.observaciones}}</td>
-    <td>{{p.idoficina__oficina}}</td>
-    <td>{{p.idaccion__accion}}</td>
-    <td></td>
     {% for i in  estado %}
     {% if i.editar == 1 %}
     <td>
       <a href="#">
-        <i onclick="actualizar({{p.id}},'actualizar_categoria','{{n}}')" class="fa fa-pencil-square-o fa-2x"></i>
+        <i onclick="actualizar({{p.id}},'actualizar_hoja_envio','{{n}}')" class="fa fa-pencil-square-o fa-2x"></i>
       </a>
     </td>
     {% endif %}
+    {% if i.eliminar == 1 %}
+    <td>
+      <a onclick="eliminar({{p.id}},'eliminar_hoja_envio','{{n}}')" href="#eliminar">
+      <i style="color: red" class="fa fa-trash-o  fa-2x"></i>
+      </a>
+    </td>
+    {% endif %}    
 
   {% endfor %}
   </tr>

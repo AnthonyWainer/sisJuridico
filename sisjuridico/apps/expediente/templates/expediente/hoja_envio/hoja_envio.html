@@ -23,7 +23,7 @@
 
                 </div>
                 <div class="ibox-content">
-                     <h3 align="center">EXPEDIENTES</h3>    
+                     <h3 align="center">HOJA DE ENVIO</h3>    
                      <table class="table table-bordered">
                           <thead>
                               <tr>
@@ -33,8 +33,11 @@
                                   <th>Asunto</th>
                                   <th>Observaciones</th>
                                   {% if i.editar == 1 %}
-                                  <th>Hoja de Folios</th>
+                                  <th>editar</th>
                                   {% endif %}
+                                  {% if i.eliminar == 1 %}
+                                  <th>eliminar</th>
+                                  {% endif %}                                  
                                 {% endfor %}
                               </tr>
                           </thead>
@@ -47,13 +50,12 @@
         </div>
     </div>
 </div>
-
+<div class="modalP"></div>
 {% with nombre=formu n=p u=n%}
 <div id="Modal{{n}}" class="modal fade" aria-hidden="true">
     
     <div class="modal-dialog">
-    <form method="post" enctype="multipart/form-data" id="formul">
-    {% csrf_token %}
+    
         <div class="modal-content">
             <div class="modal-body">
                 <h5>Formulario <small>llenar todos los campos</small></h5>
@@ -72,8 +74,18 @@
       
         <div class="tab-pane active" id="tab-1">
           <div class="ibox-content">
+          <form method="post" enctype="multipart/form-data" id="formulario{{n}}">
+          {% csrf_token %}
             <div class="row">
                 <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Hoja de Accion</h3>
+                  <label for="id_accion">Expediente:</label>
+                   <select name="idexpediente" class="form-control" id="id_idexpediente" >
+                    {% for c in  idexpediente %}
+                        <option value="{{c.id}}">{{c.nro}}</option>
+                    {% endfor %}
+                  </select>    
+                  <label for="num_follos">Nro de Folios:</label>
+                  {{formuH.num_follos}}            
                   <label for="id_oficina">Oficina:</label>
                   <select name="idoficina" class="form-control" id="id_idoficina" >
                     {% for c in  idoficina %}
@@ -90,11 +102,20 @@
                   {{formuH.asunto}}
                 </div>
 
-                <div class="col-sm-6"><h4>Observaciones</h4>
+                <div class="col-sm-6">
+                  <label for="fecha_emision">Fecha de Emisión:</label>
+                  {{formuH.fecha_emision}}
+                  <label for="fecha_recepcion">Fecha de Recepción:</label>
+                  {{formuH.fecha_recepcion}}
+
                   <label for="observaciones">Observaciones:</label>
                   {{formuH.observaciones}}
+                  <label for="documento_adjun">Doc. Adjunto:</label>
+                  {{formuH.documento_adjun}}
+
                 </div>
             </div>
+            </form> 
           </div>
         </div>
                              
@@ -105,13 +126,13 @@
             </div>
 
             <div class="modal-footer">
-                <input class="btn btn-sm btn-primary gg" type="button" value= "guardar"/>
+                <input class="btn btn-sm btn-primary" type="button" onclick="guardarF('{{url}}','{{n}}','{{u}}')"  value= "guardar"/>
                 <button type="button" class="btn btn-sm  btn-danger" data-dismiss="modal"> Cancelar</button>
             </div>
             
 
         </div>
-</form> 
+
     </div>
 </div>
 {% endwith %}
@@ -120,5 +141,5 @@
 
             
 {% load static from  staticfiles %}
-<script src="{%static 'js/expediente.js' %}"></script>
+<script src="{%static 'js/base.js' %}"></script>
            

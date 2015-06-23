@@ -28,11 +28,14 @@
                           <thead>
                               <tr>
                                 {% for i in  estado %}
-                                  <th>nro</th>
+                                  <th>número</th>
                                   <th>Resolucion</th>
                                   {% if i.editar == 1 %}
-                                  <th>Hoja de Folios</th>
+                                  <th>editar</th>
                                   {% endif %}
+                                  {% if i.eliminar == 1 %}
+                                  <th>eliminar</th>
+                                  {% endif %}                                  
                                 {% endfor %}
                               </tr>
                           </thead>
@@ -45,13 +48,12 @@
         </div>
     </div>
 </div>
-
+<div class="modalP"></div>
 {% with nombre=formu n=p u=n%}
 <div id="Modal{{n}}" class="modal fade" aria-hidden="true">
     
     <div class="modal-dialog">
-    <form method="post" enctype="multipart/form-data" id="formul">
-    {% csrf_token %}
+    
         <div class="modal-content">
             <div class="modal-body">
                 <h5>Formulario <small>llenar todos los campos</small></h5>
@@ -71,6 +73,8 @@
         <div class="tab-pane active" id="tab-1">
           <div class="ibox-content">
             <div class="row">
+            <form method="post" enctype="multipart/form-data" id="formulario{{n}}">
+            {% csrf_token %}
                 <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Resolución</h3>
                   <label for="numero">Número de Resolución:</label>
                   {{formuH.numero}}
@@ -80,6 +84,7 @@
                     <label for="id_resolucion">Resolución:</label>
                     {{formuH.contenido}}
                   </div>
+            </form> 
             </div>
             </div>
           </div>
@@ -90,13 +95,13 @@
             </div>
 
             <div class="modal-footer">
-                <input class="btn btn-sm btn-primary gg" type="button" value= "guardar"/>
+                <input class="btn btn-sm btn-primary" onclick="guardarF('{{url}}','{{n}}','{{u}}')" type="button" value= "guardar"/>
                 <button type="button" class="btn btn-sm  btn-danger" data-dismiss="modal"> Cancelar</button>
             </div>
             
 
         </div>
-</form> 
+
     </div>
 </div>
 {% endwith %}
@@ -105,5 +110,5 @@
 
             
 {% load static from  staticfiles %}
-<script src="{%static 'js/expediente.js' %}"></script>
+<script src="{%static 'js/base.js' %}"></script>
            

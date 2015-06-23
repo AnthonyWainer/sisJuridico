@@ -14,9 +14,13 @@ urlpatterns = patterns('apps.expediente.views',
 
     #hoja de envio
     url(r'^registro_hoja_envio/$', 'registro_hoja_envio'),
+    url(r'^actualizar_hoja_envio/$', 'actualizar_hoja_envio'),
+    url(r'^eliminar_hoja_envio/$', 'eliminar_hoja_envio'),
 
     #resolucion
     url(r'^registro_resolucion/$', 'registro_resolucion'),
+    url(r'^actualizar_resolucion/$', 'actualizar_resolucion'),
+    url(r'^eliminar_resolucion/$', 'eliminar_resolucion'),
 
 
 

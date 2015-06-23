@@ -1,9 +1,10 @@
 {% for p in expediente %}
   <tr>
+    <th>{{forloop.counter}}</th>
     <td>{{p.nro}}</td>
     <td>{{p.asunto}}</td>
     <td>{{p.fecha}}</td>
-    <td>{{p.idcategoria__descripcion}}</td>
+    <td>{{p.fecha_expediente}}</td>
     <td>
     <a href="media/{{p.contenido}}" target="_blank">ver</a>
     </td>
