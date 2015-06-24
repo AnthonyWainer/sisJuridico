@@ -1,0 +1,31 @@
+<nav class="form-inline">
+    <ul class="pagination">
+        {% if paginacion.has_previous %}
+            <li>
+                <a href="#" onclick="paginacion('{{url}}',{{ paginacion.previous_page_number }})">&laquo;</a>
+            </li>
+        {% else %}
+            <li class="disabled">
+                <a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+            </li>
+        {% endif %}
+        {% for a in  range %}
+            {% if a <= paginacion.paginator.num_pages %}
+                 <li {% if a == paginacion.number %} class="active" {% endif %}><a href="#" onclick="paginacion('{{url}}',{{ a }})">{{ a }} <span class="sr-only">(current)</span></a></li>
+            {% endif %}
+        {% endfor %}
+        {% if paginacion.has_next %}
+            <li><a href="#" onclick="paginacion('{{url}}',{{ paginacion.next_page_number }})">&raquo;</a></li>
+        {% else %}
+            <li class="disabled"  >
+                <a href="#"  aria-label="Previous"><span aria-hidden="true">&raquo;</span></a>
+            </li>
+        {% endif %}
+        <input type="number" class="form-control input-sm" style="width: 70px; font-size: 12px; border: dashed 2px #F5F5F6" onblur="pag(this,'{{url}}')"   value="{{ paginacion.number }}"/>
+        <p>Página {{ paginacion.number }} de {{ paginacion.paginator.num_pages }}</p>
+
+    </ul>
+<ul>
+
+</ul>
+</nav>

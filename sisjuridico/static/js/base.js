@@ -62,3 +62,19 @@ function guardarF(url,n,u){
         });
 
 }
+
+function paginacion(url,nro){
+    pag=$('#selP').val();
+    $.get(url,{'page':nro,'pag':pag}, function(data){
+        $( '#result' ).empty().html(data);
+    });
+}
+function pag(a,url){
+    paginacion(url,$(a).val());
+}
+
+function nroPag(a,url){
+    $.get(url,{'pag':$(a).val()}, function(data){
+        $( '#result' ).empty().html(data);
+    });
+}

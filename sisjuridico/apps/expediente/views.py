@@ -1,9 +1,12 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Max, Q
 from apps.seguridad.models import permisos
 from .forms import formCategoria, formExpediente, formHojadeEnvio, formResolucion, formExpedienteA, formHojadeEnvioU,formResolucionA
 from .models import categoria, expedientes, hojaEnvio, accion, oficina, resolucion
+from apps.paginacion import paginacion
+
 
 # Crea tus vista aqui.
 def permi(request,url):
@@ -28,16 +31,14 @@ def registro_expediente(request):
         else:
             idc = request.POST.get("idc","")
         
-        expediente = expedientes.objects.filter(idcategoria= idc).order_by('id')    
-
-        return render(request,'expediente/expediente/ajax_expediente.html',{'expediente':expediente,'n':'expedienteU','estado':estado})            
+        expediente = expedientes.objects.filter(idcategoria= idc).order_by('id')  
+        return render(request,'expediente/expediente/ajax_expediente.html',{'lista':expediente,'n':'expedienteU','estado':estado})            
     else:
         idc= 1
         expediente = expedientes.objects.filter(idcategoria= idc).order_by('id')
         formu = formExpediente()
-        #print (formu.as_p())
-
-        return render(request,'expediente/expediente/expediente.html',{'formu':formu,'expediente':expediente, 'url':'registro_expediente/','n':'expedienteU','estado':estado,'idcategoria':listaCategoria, 'idresolucion':listaResolucion})
+        modulo = {'formu':formu, 'url':'registro_expediente/','n':'expedienteU','estado':estado,'idcategoria':listaCategoria, 'idresolucion':listaResolucion}
+        return paginacion(request,expediente, modulo, 'expediente/expediente/expediente.html' )        
 
 @login_required(login_url='/')
 def actualizar_expediente(request):
@@ -49,7 +50,7 @@ def actualizar_expediente(request):
         form=formExpedienteA(request.POST, request.FILES, instance=a)
         if form.is_valid():
             form.save()
-            return render(request,'expediente/expediente/ajax_expediente.html',{'expediente':expediente,'n':'expedienteU','estado':estado}) 
+            return render(request,'expediente/expediente/ajax_expediente.html',{'lista':expediente,'n':'expedienteU','estado':estado}) 
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(expedientes,pk=idp)
@@ -65,21 +66,36 @@ def eliminar_expediente(request):
         get_object_or_404(expedientes,pk=idb).delete()
         return render(request,'expediente/expediente/ajax_expediente.html',{'expediente':expediente,'n':'expedienteU','estado':estado})     
 
+def busq_ajax_exp(request):
+    dat = request.GET.get('datos')
+    estado =  permi(request, "registro_expediente")
+    e = expedientes.objects.filter( Q(nro__contains=dat))[:10]
+    modulo = {'lista':e,'n':'expedienteU','estado':estado}
+    return render(request,'expediente/expediente/ajax_expediente.html', modulo)
 
 @login_required(login_url='/')
 def registro_hoja_envio(request):
-    hojaEnvios = hojaEnvio.objects.all().order_by('id')
+    
     estado =  permi(request, "registro_hoja_envio")
     listaAccion = [{'id':con.id,'accion':con.accion} for con in accion.objects.all()]
     listaOficina = [{'id':con.id,'oficina':con.oficina} for con in oficina.objects.all()]
     listaExpediente = [{'id':con.id,'nro': con.nro} for con in expedientes.objects.all()]
 
     if request.method == 'POST': 
-        formH = formHojadeEnvio(request.POST,request.FILES )
-        if formH.is_valid():
-            formH.save()
+        idd = request.POST.get("id","")
+        if idd == "undefined":
+            idc = 1
+            formH = formHojadeEnvio(request.POST,request.FILES )
+            if formH.is_valid():
+                formH.save()
+        else:
+            idc = request.POST.get("idc","")  
+        
+        hojaEnvios = hojaEnvio.objects.values('id','idaccion__accion','idoficina__oficina','asunto','observaciones','fecha_emision','fecha_recepcion','documento_adjun','num_follos').filter(idexpediente=idc).order_by('id')            
         return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'hoja_envio':hojaEnvios,'n':'hoja_envioU','estado':estado})            
     else:
+        idc = 1
+        hojaEnvios = hojaEnvio.objects.values('id','idaccion__accion','idoficina__oficina','asunto','observaciones','fecha_emision','fecha_recepcion','documento_adjun','num_follos').filter(idexpediente=idc).order_by('id')            
         formH = formHojadeEnvio()
         return render(request,'expediente/hoja_envio/hoja_envio.html',{'formuH':formH,'hoja_envio':hojaEnvios, 'url':'registro_hoja_envio/','n':'hoja_envioU','estado':estado,'idaccion':listaAccion,'idoficina':listaOficina,'idexpediente':listaExpediente})
 
@@ -108,6 +124,7 @@ def eliminar_hoja_envio(request):
         idb = request.GET.get("id","")
         get_object_or_404(hojaEnvio,pk=idb).delete()
         return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'hoja_envio':hojaEnvios,'n':'hoja_envioU','estado':estado})     
+
 
 
 @login_required(login_url='/')

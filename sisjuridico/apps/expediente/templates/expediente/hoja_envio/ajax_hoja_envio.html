@@ -1,9 +1,15 @@
 {% for p in hoja_envio %}
   <tr>
-    <td>{{p.idoficina}}</td>
-    <td>{{p.idaccion}}</td>
+    <td>{{p.idoficina__oficina}}</td>
+    <td>{{p.idaccion__accion}}</td>
+    <td>{{p.fecha_emision}}</td>
+    <td>{{p.fecha_recepcion}}</td>
+    <td>{{p.num_follos}}</td>
     <td>{{p.asunto}}</td>
     <td>{{p.observaciones}}</td>
+    <td>
+      <a href="media/{{p.documento_adjun}}" target="_blank">ver</a>
+    </td>    
     {% for i in  estado %}
     {% if i.editar == 1 %}
     <td>

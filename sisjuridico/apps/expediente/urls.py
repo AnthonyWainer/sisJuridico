@@ -6,6 +6,8 @@ urlpatterns = patterns('apps.expediente.views',
     url(r'^registro_expediente/$', 'registro_expediente'),
     url(r'^actualizar_expediente/$', 'actualizar_expediente'),
     url(r'^eliminar_expediente/$', 'eliminar_expediente'),
+    url(r'^busq_ajax_exp/$', 'busq_ajax_exp'),
+    
 
     #categoria
     url(r'^registro_categoria/$', 'registro_categoria'),
