@@ -1,0 +1,48 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+    <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li class="active">
+                <strong>Reportes Consolidados</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title form-inline">
+                    <button data-toggle="modal" data-target="#Modal" class="btn btn-sm btn-primary"><strong>Nuevo</strong></button>
+                </div>
+                <div class="ibox-content">
+                     <h3 align="center">REPORTES CONSOLIDADOS</h3>
+                     <br>
+                      <div class="col-md-3"></div>
+                      <div class="col-md-6">
+                        <div class="form-inline">
+                          <label>Desde:</label>
+                          <input type="date" id="fecha_ini" value="{{fecha}}"class="form-control input-sm">
+                          <label>Hasta:</label>
+                          <input type="date" id="fecha_ter" onblur="repor(this)" class="form-control input-sm">  
+                        </div>
+                      </div>
+                      <div class="col-md-3"></div>
+                      <hr>
+                    <div class="ibox-content rep">
+                      {% include "reportes/reportes_consolidados/ajax_reportes_consolidados.html" %}
+                    </div>                      
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>            
+
+{% load static from  staticfiles %}
+<script src="{%static 'js/reportes.js' %}"></script>

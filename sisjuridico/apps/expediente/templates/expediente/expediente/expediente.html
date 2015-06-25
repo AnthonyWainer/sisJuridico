@@ -44,6 +44,7 @@
                                   <th>Fecha de Expediente</th>
                                   <th>Contenido</th>
                                   <th>Resolucion</th>
+                                  <th>Estado</th>
                                   {% if i.editar == 1 %}
                                   <th>Editar</th>
                                   {% endif %}
@@ -121,7 +122,10 @@
                                 {% for c in  idresolucion %}
                                     <option value="{{c.id}}">{{forloop.counter}} → <strong>{{c.numero}} </strong> </option>
                                 {% endfor %}
-                                </select>                                
+                                </select>   
+                                
+                                <label for="estado">Estado:</label>
+                                {{formu.estado}}                            
                             </div>
 
                             </form> 

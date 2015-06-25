@@ -1,0 +1,36 @@
+                        <div class="row">
+                            <div class="col-sm-4 b-r"><h3 class="m-t-none m-b">Respuesta</h3>
+                            {% csrf_token %}
+                             <table class="table table-bordered" style="  margin-bottom: -5px;">
+                                  <thead>
+                                      <tr>
+                                          <th>#</th>
+                                          <th>Estado</th>
+                                          <th>Cantidad</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                     <tr>
+                                       <td>1</td>
+                                       <td>En Proceso</td>
+                                       <td>{{ep}}</td>
+                                     </tr>
+                                     <tr>
+                                       <td>2</td>
+                                       <td>Aprobado</td>
+                                       <td>{{ap}}</td>
+                                     </tr>
+                                     <tr>
+                                       <td>3</td>
+                                       <td>No aprobado</td>
+                                       <td>{{na}}</td>
+                                     </tr>                                     
+                                  </tbody>
+                              </table>
+
+                            </div>
+                            <div class="col-sm-8"><h4>Reporte Gráfico</h4>
+
+                            </div>
+
+                        </div>

@@ -17,6 +17,7 @@ hora   = today.strftime("%Y-%m-%d")
 
 listaCategoria = [(con.id, con.descripcion) for con in categoria.objects.all()]
 listaResolucion = [(con.id, con.numero) for con in resolucion.objects.all()]
+listaEstado = (('en proceso','1 → En Proceso'),('aprobado','2 → Aprobado'),('no aprobado','3 → No Aprobado'))
 #print (listaCategoria)
 class formExpediente(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -28,12 +29,12 @@ class formExpediente(forms.ModelForm):
         self.fields['contenido'].widget = forms.FileInput(attrs={'class':'form-control input-sm', 'required':''})
         self.fields['idcategoria'].widget = forms.Select( choices=listaCategoria,attrs={'class':'form-control'})
         self.fields['idresolucion'].widget = forms.SelectMultiple( choices=listaResolucion,attrs={'class':'form-control'})
+        self.fields['estado'].widget = forms.Select( choices=listaEstado,attrs={'class':'form-control'})
 
     class Meta:
         model = expedientes
         exclude = [""]        
 
-listaCategoria = [(con.id, con.descripcion) for con in categoria.objects.all()]
 class formExpedienteA(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(formExpedienteA, self).__init__(*args, **kwargs)
@@ -44,6 +45,7 @@ class formExpedienteA(forms.ModelForm):
         self.fields['asunto'].widget = forms.Textarea(attrs={'class':'form-control input-sm', 'required':'','rows':5})
         #self.fields['contenido'].widget = forms.FileInput(attrs={'class':'form-control input-sm', 'required':''})
         self.fields['idresolucion'].widget = forms.SelectMultiple( choices=listaResolucion,attrs={'class':'form-control'})
+        self.fields['estado'].widget = forms.Select( choices=listaEstado,attrs={'class':'form-control'})
         
 
     class Meta:

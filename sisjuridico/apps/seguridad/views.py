@@ -121,11 +121,12 @@ def registro_usuario(request):
 @login_required(login_url='/')
 def passDefault(request):
     idp = request.GET.get("id","")
+    estado =  (permi(request, "registro_usuario"))
     u = User.objects.get(pk=idp)
     u.password = "pbkdf2_sha256$20000$63ijtCdaGIEx$Wcfn0iEAQfno+SMy1v1ttxd6WQZXyAkdjmOacuNHm/4="
     u.save()
     usuarios = User.objects.all().order_by('id')
-    return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU'})            
+    return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU','estado':estado})            
 
 
 @login_required(login_url='/')

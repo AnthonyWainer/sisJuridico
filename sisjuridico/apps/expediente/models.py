@@ -16,7 +16,8 @@ class expedientes(models.Model):
     asunto           = models.TextField()
     contenido        = models.FileField(upload_to='Expediente/%Y/%m/%d')
     idcategoria      = models.ForeignKey(categoria)
-    idresolucion     = models.ManyToManyField(resolucion)    
+    idresolucion     = models.ManyToManyField(resolucion) 
+    estado           = models.TextField()   
 
 class hojaEnvio(models.Model):
     idaccion      = models.ForeignKey(accion)

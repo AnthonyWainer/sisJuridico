@@ -14,7 +14,8 @@
         <li>{{a.numero}} → <a href="media/{{a.contenido}}" target="_blank">ver</a></li>
     {% endfor %}
     </ol>
-    </td>      
+    </td>
+    <td>{{p.estado}}</td>      
     {% for i in  estado %}
     {% if i.editar == 1 %}
     <td>
