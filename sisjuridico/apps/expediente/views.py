@@ -20,6 +20,7 @@ def registro_expediente(request):
         print (request.FILES)
         print (formu)
         if formu.is_valid():
+            #a = expedientes( idcategoria = formu.cleaned_data['idcategoria'], fecha = request.POST['fecha'],asunto = request.POST['asunto'],contenido = request.FILES['contenido'])
             formu.save()
         return render(request,'expediente/expediente/ajax_expediente.html',{'expediente':expediente,'n':'expedienteU','estado':estado})            
     else:
