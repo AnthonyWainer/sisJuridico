@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from apps.seguridad.models import permisos
 from apps.expediente.models import expedientes
+import json as simplejson
 import datetime
 today  = datetime.datetime.now()
 fecha   = today.strftime("%Y-%m-%d") 
@@ -28,7 +29,13 @@ def reportes_consolidados(request):
                 a += 1
             elif i.estado == "no aprobado":
                 na += 1
-
+        if request.POST["v"] == "v":
+            data = []
+            data.append({"label":"Aprobado","data":a,"color": "#d3d3d3",})
+            data.append({"label":"No Aprobado","data":na,"color": "#79d2c0",})
+            data.append({"label":"En Proceso","data":ep,"color": "#1ab394",})
+            #print data
+            return HttpResponse(simplejson.dumps(data), content_type="application/json" )
         return render(request,"reportes/reportes_consolidados/ajax_reportes_consolidados.html",{'ep':ep,'ap':a,'na':na})
 
     return render(request,"reportes/reportes_consolidados/reportes_consolidados.html",{'fecha':fecha})
