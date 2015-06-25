@@ -4,6 +4,7 @@ urlpatterns = patterns('apps.busqueda.views',
 
 	#busqueda_especifica
 	url(r'^busqueda_especifica/$', 'busqueda_especifica'),
+    url(r'^busqueda/$', 'busqueda'),
 
 
 

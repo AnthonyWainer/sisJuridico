@@ -8,6 +8,13 @@
     <td>
     <a href="media/{{p.contenido}}" target="_blank">ver</a>
     </td>
+    <td>
+    <ol>
+    {% for a in p.idresolucion.all  %}
+        <li>{{a.numero}} → <a href="media/{{a.contenido}}" target="_blank">ver</a></li>
+    {% endfor %}
+    </ol>
+    </td>      
     {% for i in  estado %}
     {% if i.editar == 1 %}
     <td>

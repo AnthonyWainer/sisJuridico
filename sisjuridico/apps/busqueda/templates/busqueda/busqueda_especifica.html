@@ -39,7 +39,7 @@
                             {% csrf_token %}
                             <div class="col-sm-3 b-r"><h3 class="m-t-none m-b">Expedientes</h3>
                                 <label for="id_asunto">Categoría:</label>
-                                <select class="form-control selEx" >
+                                <select class="form-control input-sm" name="idcategoria">
                                   {% for c in  idcategoria %}
                                     <option value="{{c.id}}"
                                     {% if c.id == 1  %}
@@ -47,21 +47,23 @@
                                     {% endif %} >{{c.descripcion}}</option>
                                   {% endfor %}
                                 </select>  
-                                </select>                            
                                 <label for="id_nro">Nro de Expediente:</label>
-                                <input type="text" class="form-control" value="" placeholder="">
-                                <label for="id_fecha">Fecha:</label>
-                                <input class="form-control input-sm" id="id_fecha" name="fecha" required="" type="date" value="{{fecha}}">
+                                <input type="text" name="nro" class="form-control input-sm" value="" placeholder="">
+
 
                                 <label for="id_fecha_expediente">Fecha de Expediente:</label>
                                 <input class="form-control input-sm" id="id_fecha" name="fecha" required="" type="date" >
-                                <!--<label for="id_asunto">Asunto:</label>
+                                <!--
+                                                                <label for="id_fecha">Fecha Subida:</label>
+                                <input class="form-control input-sm" id="id_fecha" name="fecha" required="" type="date" value="{{fecha}}">
+                                <label for="id_asunto">Asunto:</label>
                                 <input type="text" class="form-control" value="" placeholder=""> -->
                                 
                                 <hr>
-                                <input class="btn btn-sm btn-primary" onclick="guardarF('{{url}}','{{n}}','{{u}}')"  type="button" value= "Buscar"/>
+                                <input class="btn btn-sm btn-primary" onclick="Buscar('busqueda/','{{n}}')"  type="button" value= "Buscar"/>
 
                             </div>
+                            </form> 
                             <div class="col-sm-9">
                 <div class="ibox-content table-responsive">
                      <h3 align="center">EXPEDIENTES</h3>    
@@ -72,10 +74,10 @@
                                   <th>#</th>
                                   <th>Número</th>
                                   <th>Asunto</th>
-                                  <th>Fecha</th>
+                                  <th>Fecha Subida</th>
                                   <th>Fecha de Expediente</th>
                                   <th>Contenido</th>
-
+                                  <th>resolucion</th>
                               </tr>
                           </thead>
                           <tbody class="{{n}}">
@@ -85,7 +87,7 @@
                 </div>                                                          
                             </div>
 
-                            </form> 
+
                         </div>
                     </div>
         </div>
@@ -104,6 +106,5 @@
 
             
 {% load static from  staticfiles %}
-<script src="{%static 'js/base.js' %}"></script>
-<script src="{%static 'js/expediente.js' %}"></script>
+<script src="{%static 'js/buscar.js' %}"></script>
            
