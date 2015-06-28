@@ -28,6 +28,8 @@ def registro_expediente(request):
             formu = formExpediente(request.POST,request.FILES )
             if formu.is_valid():
                 formu.save()
+            else:
+                HttpResponse(formu)
         else:
             idc = request.POST.get("idc","")
         
@@ -51,11 +53,14 @@ def actualizar_expediente(request):
         if form.is_valid():
             form.save()
             return render(request,'expediente/expediente/ajax_expediente.html',{'lista':expediente,'n':'expedienteU','estado':estado}) 
+        else:
+            return render(request,'expediente/expediente/form_exp.html',{'formu':form})             
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(expedientes,pk=idp)
         form= formExpedienteA(instance=a)
-        return render(request,'expediente/modal.html',{'nombre':form,'url':'actualizar_expediente/','n':'expedienteU','u':'expedienteU','estado':estado})  
+        return render(request,'expediente/modal.html',{'formu':form,'url':'actualizar_expediente/','n':'expedienteU','u':'expedienteU','estado':estado})  
+
 
 @login_required(login_url='/')
 def eliminar_expediente(request):

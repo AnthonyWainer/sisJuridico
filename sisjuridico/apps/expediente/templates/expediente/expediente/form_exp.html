@@ -1,0 +1,26 @@
+{% csrf_token %}
+<div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Expedientes</h3>
+    <label for="id_asunto">Categoría:</label>
+    {{formu.idcategoria}}                                                           
+    <label for="id_nro">Nro de Expediente:</label>
+    {{formu.nro}}
+    <label for="id_fecha">Fecha:</label>
+    {{formu.fecha}}
+    <label for="id_fecha_expediente">Fecha de Expediente:</label>
+    {{formu.fecha_expediente}}
+    <label for="id_asunto">Asunto:</label>
+    {{ formu.asunto.errors }}
+    {{formu.asunto}}
+
+</div>
+<div class="col-sm-6"><h4>Subir Expediente</h4>
+    <label for="id_asunto">Expediente:</label>
+    {{formu.contenido}}
+    <br>
+    <label for="id_resolucion">Resolucion:</label>
+    <br>
+    {{formu.idresolucion}}  
+                                           
+    <label for="estado">Estado:</label>
+    {{formu.estado}}                            
+</div>

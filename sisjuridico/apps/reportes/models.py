@@ -7,6 +7,5 @@ class historial(models.Model):
     hora          = models.TimeField()
     idexpedientes = models.ForeignKey(expedientes)
     idpermisos    = models.ForeignKey(permisos)
-    estado        = models.BooleanField(default=True)
 
 

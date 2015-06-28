@@ -52,11 +52,18 @@ function guardarF(url,n,u){
             processData: false,
 
             success: function(data){
-                $('#Modal'+n).modal('hide');
-                $('#Modal'+n).on('hidden.bs.modal', function (e) {
-                    $("table ."+u).empty().html(data);
-                    AlSave("guardado con éxito");  
-                });
+                $("table ."+u).empty().html(data);
+                if($('.'+n+' ul').hasClass('errorlist')){
+                    $('#formulario'+n).empty().html(data);
+                    AlDelete("error al guardar");
+                }else{
+                    $('#Modal'+n).modal('hide');
+                    $('#Modal'+n).on('hidden.bs.modal', function (e) {
+                        $("table ."+u).empty().html(data);
+                        AlSave("guardado con éxito");  
+                    });
+                }
+
             }
 
         });
