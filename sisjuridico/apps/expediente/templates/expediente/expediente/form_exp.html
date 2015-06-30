@@ -1,26 +1,84 @@
 {% csrf_token %}
 <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Expedientes</h3>
-    <label for="id_asunto">Categoría:</label>
+    <label for="id_asunto" 
+    {% if formu.idcategoria.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    "
+    {% endif %}
+    >Categoría:</label>
+    {{formu.idcategoria.errors}}
     {{formu.idcategoria}}                                                           
-    <label for="id_nro">Nro de Expediente:</label>
+    <label for="id_nro" 
+    {% if formu.nro.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    "
+    {% endif %}
+    >Nro de Expediente:</label>
+    {{formu.nro.errors}}
     {{formu.nro}}
-    <label for="id_fecha">Fecha:</label>
+    <label for="id_fecha" 
+    {% if formu.fecha.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    
+    "
+    {% endif %}
+    >Fecha:</label>
+    {{formu.fecha.errors}}
     {{formu.fecha}}
-    <label for="id_fecha_expediente">Fecha de Expediente:</label>
+    <label for="id_fecha_expediente"
+    {% if formu.fecha_expediente.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    
+    "
+    {% endif %}
+    >Fecha de Expediente:</label>
+    {{formu.fecha_expediente.errors}}
     {{formu.fecha_expediente}}
-    <label for="id_asunto">Asunto:</label>
+    <label for="id_asunto" 
+    {% if formu.asunto.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    
+    "
+    {% endif %}
+    >Asunto:</label>
     {{ formu.asunto.errors }}
     {{formu.asunto}}
 
 </div>
 <div class="col-sm-6"><h4>Subir Expediente</h4>
-    <label for="id_asunto">Expediente:</label>
+    <label for="id_asunto" 
+    {% if formu.contenido.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    "
+    {% endif %}
+    >Expediente:</label>
+    {{formu.contenido.errors}}
     {{formu.contenido}}
     <br>
-    <label for="id_resolucion">Resolucion:</label>
-    <br>
+    <label for="id_resolucion" 
+    {% if formu.idresolucion.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    "
+    {% endif %}
+    >Resolucion:</label>
+    {{formu.idresolucion.errors}}
     {{formu.idresolucion}}  
                                            
-    <label for="estado">Estado:</label>
+    <label for="estado" 
+    {% if formu.estado.errors %}
+    data-html="true" data-toggle="popover" 
+    data-content="    
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    "
+    {% endif %}
+    >Estado:</label>
+    {{formu.estado.errors}}
     {{formu.estado}}                            
 </div>

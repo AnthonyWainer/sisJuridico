@@ -1,0 +1,97 @@
+{% csrf_token %}
+<div class="row">
+  <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Hoja de Accion</h3>
+    <label for="id_idexpediente"
+    {% if formuH.idexpediente.errors %}
+      data-html="true" data-toggle="popover" data-content="
+          <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+      "
+    {% endif %}
+    >Expediente:</label>
+    {{formuH.idexpediente.errors}}
+    {{formuH.idexpediente}}    
+    
+    <label for="num_follos"
+    {% if formuH.num_follos.errors %}
+      data-html="true" data-toggle="popover" data-content="
+          <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+      "
+    {% endif %}
+    >Nro de Folios:</label>
+    {{formuH.num_follos.errors}}
+    {{formuH.num_follos}}            
+      
+    <label for="id_idoficina"
+    {% if formuH.idoficina.errors %}
+      data-html="true" data-toggle="popover" data-content="
+          <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+      "
+    {% endif %}
+    >Oficina:</label>
+    {{formuH.idoficina.errors}}
+    {{formuH.idoficina}}    
+
+    <label for="id_accion"
+    {% if formuH.idaccion.errors %}
+      data-html="true" data-toggle="popover" data-content="
+          <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+      "
+    {% endif %}
+    >Accion:</label>
+    {{formuH.idaccion.errors}}
+    {{formuH.idaccion}}     
+
+    <label for="asunto"
+    {% if formuH.asunto.errors %}
+      data-html="true" data-toggle="popover" data-content="
+          <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+      "
+    {% endif %}
+    >Asunto:</label>
+    {{formuH.asunto.errors}}
+    {{formuH.asunto}}
+  </div>
+
+  <div class="col-sm-6">
+    <label for="fecha_emision"
+    {% if formuH.fecha_emision.errors %}
+      data-html="true" data-toggle="popover" data-content="
+          <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+      "
+    {% endif %}
+    >Fecha de Emisión:</label>
+    {{formuH.fecha_emision.errors}}
+    {{formuH.fecha_emision}}
+
+    <label for="fecha_recepcion"
+    {% if formuH.fecha_recepcion.errors %}
+      data-html="true" data-toggle="popover" data-content="
+          <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+      "
+    {% endif %}
+    >Fecha de Recepción:</label>
+    {{formuH.fecha_recepcion.errors}}
+    {{formuH.fecha_recepcion}}
+
+    <label for="observaciones"
+    {% if formuH.observaciones.errors %}
+      data-html="true" data-toggle="popover" data-content="
+          <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+      "
+    {% endif %}
+    >Observaciones:</label>
+    {{formuH.observaciones.errors}}
+    {{formuH.observaciones}}
+
+    <label for="documento_adjun"
+    {% if formuH.documento_adjun.errors %}
+      data-html="true" data-toggle="popover" data-content="
+          <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+      "
+    {% endif %}
+    >Doc. Adjunto:</label>
+    {{formuH.documento_adjun.errors}}
+    {{formuH.documento_adjun}}
+
+  </div>
+</div>

@@ -52,9 +52,16 @@ function guardarF(url,n,u){
             processData: false,
 
             success: function(data){
-                $("table ."+u).empty().html(data);
-                if($('.'+n+' ul').hasClass('errorlist')){
+                $('.modalP').append("<div id='h' ></div>");
+                $("#h").css("display","none");
+                $("#h").empty().html(data);
+                if($('#h ul').hasClass('errorlist')){
+                    $("#h").empty();
                     $('#formulario'+n).empty().html(data);
+                    $('.errorlist').css("display","none");
+                    $('[data-toggle="popover"]').popover('show');
+                    $('.popover').css('border','1px dashed red');
+                    $('.popover-content').css('padding','2px 4px');
                     AlDelete("error al guardar");
                 }else{
                     $('#Modal'+n).modal('hide');

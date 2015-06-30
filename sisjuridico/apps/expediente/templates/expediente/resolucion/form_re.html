@@ -1,0 +1,23 @@
+                    {% csrf_token %}
+                        <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Resolución</h3>
+                          <label for="numero"
+                          {% if formuH.numero.errors %}
+                            data-html="true" data-toggle="popover" data-content="
+                                <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+                            "
+                          {% endif %}
+                          >Número de Resolución:</label>
+                          {{formuH.numero.errors}}
+                          {{formuH.numero}}
+                        </div>
+
+                        <div class="col-sm-6"><h4>Subir Resolución</h4>
+                            <label for="id_resolucion"
+                            {% if formuH.contenido.errors %}
+                              data-html="true" data-toggle="popover" data-content="
+                                  <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+                              "
+                            {% endif %}
+                            >Resolución:</label>
+                            {{formuH.contenido.errors}}
+                            {{formuH.contenido}}

@@ -29,7 +29,7 @@ def registro_expediente(request):
             if formu.is_valid():
                 formu.save()
             else:
-                HttpResponse(formu)
+                return render(request,'expediente/expediente/form_exp.html',{'formu':formu})
         else:
             idc = request.POST.get("idc","")
         
@@ -59,7 +59,7 @@ def actualizar_expediente(request):
         idp = request.GET.get("id","")
         a=get_object_or_404(expedientes,pk=idp)
         form= formExpedienteA(instance=a)
-        return render(request,'expediente/modal.html',{'formu':form,'url':'actualizar_expediente/','n':'expedienteU','u':'expedienteU','estado':estado})  
+        return render(request,'expediente/expediente/modal.html',{'formu':form,'url':'actualizar_expediente/','n':'expedienteU','u':'expedienteU','estado':estado})  
 
 
 @login_required(login_url='/')
@@ -93,6 +93,8 @@ def registro_hoja_envio(request):
             formH = formHojadeEnvio(request.POST,request.FILES )
             if formH.is_valid():
                 formH.save()
+            else:
+                return render(request,'expediente/hoja_envio/form_hoj.html',{'formuH':formH})                
         else:
             idc = request.POST.get("idc","")  
         
@@ -106,7 +108,7 @@ def registro_hoja_envio(request):
 
 @login_required(login_url='/')
 def actualizar_hoja_envio(request):
-    hojaEnvios = hojaEnvio.objects.all().order_by('id')
+    hojaEnvios = hojaEnvio.objects.values('id','idaccion__accion','idoficina__oficina','asunto','observaciones','fecha_emision','fecha_recepcion','documento_adjun','num_follos').order_by('id')
     estado =  permi(request, "registro_hoja_envio")
     if request.method == 'POST' and request.is_ajax(): 
         idp = request.POST.get("id","")
@@ -115,11 +117,15 @@ def actualizar_hoja_envio(request):
         if form.is_valid():
             form.save()
             return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'hoja_envio':hojaEnvios,'n':'hoja_envioU','estado':estado})            
+        else:
+            return render(request,'expediente/hoja_envio/form_hoj.html',{'formuH':form})            
+        
+        
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(hojaEnvio,pk=idp)
         form= formHojadeEnvioU(instance=a)
-        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_hoja_envio/','n':'hoja_envioU','u':'hoja_envioU','estado':estado})  
+        return render(request,'expediente/hoja_envio/modal.html',{'formuH':form,'url':'actualizar_hoja_envio/','n':'hoja_envioU','u':'hoja_envioU','estado':estado})  
 
 @login_required(login_url='/')
 def eliminar_hoja_envio(request):
@@ -139,10 +145,13 @@ def registro_resolucion(request):
 
     if request.method == 'POST': 
         formH = formResolucion(request.POST,request.FILES )
-        print (formH)
+        #print (formH)
         if formH.is_valid():
             formH.save()
-        return render(request,'expediente/resolucion/ajax_resolucion.html',{'resolucion':resoluciones,'n':'resolucionU','estado':estado})            
+            return render(request,'expediente/resolucion/ajax_resolucion.html',{'resolucion':resoluciones,'n':'resolucionU','estado':estado})            
+        else:
+            return render(request,'expediente/resolucion/form_re.html',{'formuH':formH})                        
+        
     else:
         formH = formResolucion()
         return render(request,'expediente/resolucion/resolucion.html',{'formuH':formH,'resolucion':resoluciones, 'url':'registro_resolucion/','n':'resolucionU','estado':estado})
@@ -158,11 +167,13 @@ def actualizar_resolucion(request):
         if form.is_valid():
             form.save()
             return render(request,'expediente/resolucion/ajax_resolucion.html',{'resolucion':resolucion,'n':'resolucionU','estado':estado}) 
+        else:
+            return render(request,'expediente/resolucion/form_re.html',{'formuH':form})              
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(resolucion,pk=idp)
         form= formResolucionA(instance=a)
-        return render(request,'expediente/modal.html',{'nombre':form,'url':'actualizar_resolucion/','n':'resolucionU','u':'resolucionU','estado':estado})  
+        return render(request,'expediente/resolucion/modal.html',{'formuH':form,'url':'actualizar_resolucion/','n':'resolucionU','u':'resolucionU','estado':estado})  
 
 
 @login_required(login_url='/')

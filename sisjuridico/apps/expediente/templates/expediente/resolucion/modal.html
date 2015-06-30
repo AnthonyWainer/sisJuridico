@@ -1,0 +1,44 @@
+<div id="Modal{{n}}" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h5>Formulario <small>llenar todos los campos</small></h5>    
+                <div class="ibox-content">
+                    <div class="row">
+                    <form method="post" id="formulario{{n}}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Resolución</h3>
+                          <label for="numero"
+                          {% if formuH.numero.errors %}
+                            data-html="true" data-toggle="popover" data-content="
+                                <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+                            "
+                          {% endif %}
+                          >Número de Resolución:</label>
+                          {{formuH.numero.errors}}
+                          {{formuH.numero}}
+                        </div>
+
+                        <div class="col-sm-6"><h4>Subir Resolución</h4>
+                            <label for="id_resolucion"
+                            {% if formuH.contenido.errors %}
+                              data-html="true" data-toggle="popover" data-content="
+                                  <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+                              "
+                            {% endif %}
+                            >Resolución:</label>
+                            {{formuH.contenido.errors}}
+                            {{formuH.contenido}}
+                          </div>
+                      </form> 
+                      </div>
+                </div>
+        </div>
+                
+        <div class="modal-footer">
+                <button class="btn btn-sm btn-primary guar" onclick="guardarF('{{url}}','{{n}}','{{u}}')" type="button">guardar</button>
+                <button type="button" class="btn btn-sm  btn-danger" data-dismiss="modal"> Cancelar</button>
+        </div>
+    </div>
+   </div>
+</div>

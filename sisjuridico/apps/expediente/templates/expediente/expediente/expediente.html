@@ -18,8 +18,13 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title form-inline">
-                    <button data-toggle="modal" data-target="#Modal"class="btn btn-sm btn-primary" type="submit"><strong>Nuevo</strong></button>
+                    {% for i in  estado %}
+                    {% if i.insertar == 1 %}
+                      <button data-toggle="modal" data-target="#Modal"class="btn btn-sm btn-primary" type="submit"><strong>Nuevo</strong></button>
+                    {% endif %}
+                    {% if i.buscar == 1 %}
                     <input type="search" placeholder="Buscar" class="form-control Bex" style="width: 40%">
+                    {% endif %}
                     <select class="form-control selEx" >
                       {% for c in  idcategoria %}
                         <option value="{{c.id}}"
@@ -36,7 +41,7 @@
                      <table class="table table-bordered" style="  margin-bottom: -5px;">
                           <thead>
                               <tr>
-                                {% for i in  estado %}
+                                
                                   <th>#</th>
                                   <th>Número</th>
                                   <th>Asunto</th>
@@ -67,6 +72,8 @@
     </div>
 </div>
 <div class="modalP"></div>
+
+
 {% with nombre=formu n=p u=n%}
 <div id="Modal{{n}}" class="modal fade" aria-hidden="true">
     
@@ -75,20 +82,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <h5>Formulario <small>llenar todos los campos</small></h5>
-<div class="panel blank-panel">
-  <div class="panel-heading">
-    <div class="panel-options">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-1" data-toggle="tab">Expediente</a></li>
-      </ul>
-    </div>
-  </div>
 
-  <div class="panel-body">
-
-      <div class="tab-content">
-      
-        <div class="tab-pane active" id="tab-1">
                 
                     <div class="ibox-content">
                         <div class="row">
@@ -132,11 +126,7 @@
                         </div>
                     </div>
         </div>
-    </div>
-    
-  </div>
-</div>
-            </div>
+
 
             <div class="modal-footer">
                 <input class="btn btn-sm btn-primary" onclick="guardarF('{{url}}','{{n}}','{{u}}')"  type="button" value= "guardar"/>
