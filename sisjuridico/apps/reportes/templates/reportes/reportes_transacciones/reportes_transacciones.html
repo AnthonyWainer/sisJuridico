@@ -1,0 +1,87 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+    <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li class="active">
+                <strong>Reportes De Transacciones</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title form-inline">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <form method="post" enctype="multipart/form-data" id="formulario{{n}}">
+                            {% csrf_token %}
+                            <div class="col-sm-3 b-r"><h3 class="m-t-none m-b">Transacciones</h3>
+                                <label for="id_Usuario">Usuario:</label>
+                                <select class="form-control input-sm" name="idusuario">
+                                  {% for c in  idusuario %}
+                                    <option value="{{c.id}}"
+                                    {% if c.id == 1  %}
+                                            selected="selected"
+                                    {% endif %} >{{c.usuario}}</option>
+                                  {% endfor %}
+                                </select>  <br><br>
+
+                                <label for="id_fecha">Fecha:</label>
+                                <input class="form-control input-sm" id="id_fecha" name="fecha" required="" value="{{fecha}}" type="date" >
+
+                                <hr>
+                                <input class="btn btn-sm btn-primary" onclick="Buscar('reportesT/','{{n}}')"  type="button" value= "Buscar"/>
+
+                            </div>
+                            </form> 
+                            <div class="col-sm-9">
+                <div class="ibox-content table-responsive ">
+                      <h3 align="center">TRANSACCIONES</h3>    
+                      <input class="form-control input-sm" onblur="nroPag(this,'{{url}}')" style="width:70px" type="number" id="selP" value="{{pag}}">                      
+                 
+                     <table class="table table-bordered" style="  margin-bottom: -5px;">
+                          <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>Usuario</th>
+                                  <th>Fecha</th>
+                                  <th>Hora</th>
+                                  <th>Equipo</th>
+                                  <th>IP</th>
+                                  <th>Modulo</th>
+                                  <th>Acción</th>
+                              </tr>
+                          </thead>
+                          <tbody class="{{n}}">
+                            {% include "reportes/reportes_transacciones/ajax_reportes_transacciones.html" %}
+                          </tbody>
+                      </table> 
+                      {% with lista as paginacion  %}
+                          {% include "paginacion.html" %}
+                      {% endwith %}                      
+                </div>                                                          
+                            </div>
+
+
+                        </div>
+                    </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            
+{% load static from  staticfiles %}
+<script src="{%static 'js/base.js' %}"></script>
+<script src="{%static 'js/buscar.js' %}"></script>
+           

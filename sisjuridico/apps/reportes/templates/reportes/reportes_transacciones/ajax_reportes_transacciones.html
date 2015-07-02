@@ -1,0 +1,13 @@
+{% for p in lista %}
+  <tr>
+    <th>{{forloop.counter}}</th>
+    <td>{{p.idusuario}}</td>
+    <td>{{p.fecha|date:"d/m/Y"}}</td>
+    <td>{{p.hora}}</td>
+    <td>{{p.equipo}}</td>
+    <td>{{p.ip}}</td>
+    <td>{{p.modulo}}</td>
+    <td>{{p.accion}}</td>
+  </tr>
+{% endfor %}
+

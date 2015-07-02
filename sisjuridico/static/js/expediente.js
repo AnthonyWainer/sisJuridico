@@ -3,6 +3,8 @@ function sel(id){
         $(".expedienteU").empty().html(data);
     });
 }
+$(".chosen-select").chosen(); 
+$(".chosen-container").css("width","100%");
 
 $(".selEx").change(function(){
     sel($(this).val());

@@ -27,8 +27,8 @@ class formExpediente(forms.ModelForm):
         self.fields['fecha_expediente'].widget = forms.DateInput(attrs={'class':'form-control input-sm', 'type':'date' ,'required':''})
         self.fields['asunto'].widget = forms.Textarea(attrs={'class':'form-control input-sm', 'required':'','rows':5})
         self.fields['contenido'].widget = forms.FileInput(attrs={'class':'form-control input-sm', 'required':''})
-        self.fields['idcategoria'].widget = forms.Select( choices=listaCategoria,attrs={'class':'form-control'})
-        self.fields['idresolucion'].widget = forms.SelectMultiple( choices=listaResolucion,attrs={'class':'form-control'})
+        self.fields['idcategoria'].widget = forms.Select( choices=listaCategoria,attrs={'class':'form-control chosen-select'})
+        self.fields['idresolucion'].widget = forms.SelectMultiple( choices=listaResolucion,attrs={'class':'form-control chosen-select'})
         self.fields['estado'].widget = forms.Select( choices=listaEstado,attrs={'class':'form-control'})
 
     class Meta:
@@ -38,13 +38,13 @@ class formExpediente(forms.ModelForm):
 class formExpedienteA(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(formExpedienteA, self).__init__(*args, **kwargs)
-        self.fields['idcategoria'].widget = forms.Select( choices=listaCategoria,attrs={'class':'form-control'})
+        self.fields['idcategoria'].widget = forms.Select( choices=listaCategoria,attrs={'class':'form-control chosen-select'})
         self.fields['nro'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':''})
         self.fields['fecha_expediente'].widget = forms.DateInput(attrs={'class':'form-control input-sm','required':''})
         self.fields['fecha'].widget = forms.DateInput(attrs={'class':'form-control input-sm', 'required':''})
         self.fields['asunto'].widget = forms.Textarea(attrs={'class':'form-control input-sm', 'required':'','rows':5})
         #self.fields['contenido'].widget = forms.FileInput(attrs={'class':'form-control input-sm', 'required':''})
-        self.fields['idresolucion'].widget = forms.SelectMultiple( choices=listaResolucion,attrs={'class':'form-control'})
+        self.fields['idresolucion'].widget = forms.SelectMultiple( choices=listaResolucion,attrs={'class':'form-control chosen-select'})
         self.fields['estado'].widget = forms.Select( choices=listaEstado,attrs={'class':'form-control'})
         
 

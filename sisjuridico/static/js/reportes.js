@@ -1,8 +1,8 @@
-function repor(a){
-    $.post("reportes_consolidados/", {'fecha_ter':$(a).val(),'fecha_ini':$("#fecha_ini").val(),'csrfmiddlewaretoken':$("[name='csrfmiddlewaretoken']").val(),'v':'c'}, function(data){
+function repor(){
+    $.post("reportes_consolidados/", {'fecha_ter':$("#fecha_ter").val(),'fecha_ini':$("#fecha_ini").val(),'csrfmiddlewaretoken':$("[name='csrfmiddlewaretoken']").val(),'v':'c'}, function(data){
         $(".rep").empty().html(data);
     }); 
-    $.post("reportes_consolidados/", {'fecha_ter':$(a).val(),'fecha_ini':$("#fecha_ini").val(),'csrfmiddlewaretoken':$("[name='csrfmiddlewaretoken']").val(),'v':'v'}, function(data){
+    $.post("reportes_consolidados/", {'fecha_ter':$("#fecha_ter").val(),'fecha_ini':$("#fecha_ini").val(),'csrfmiddlewaretoken':$("[name='csrfmiddlewaretoken']").val(),'v':'v'}, function(data){
         var plotObj = $.plot($("#flot-pie-chart"), data, {
             series: {
                 pie: {

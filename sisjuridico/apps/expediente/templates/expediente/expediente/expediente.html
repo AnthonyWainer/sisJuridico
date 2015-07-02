@@ -90,7 +90,7 @@
                             {% csrf_token %}
                             <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Expedientes</h3>
                                 <label for="id_asunto">Categoría:</label>
-                                <select name="idcategoria" class="form-control" id="id_idcategoria" >
+                                <select name="idcategoria" class="form-control chosen-select" id="id_idcategoria" >
                                 {% for c in  idcategoria %}
                                     <option value="{{c.id}}">{{c.descripcion}}</option>
                                 {% endfor %}
@@ -112,7 +112,7 @@
                                 <br>
                                 <label for="id_resolucion">Resolucion:</label>
                                 <br>
-                                <select name="idresolucion" multiple class="form-control" id="id_idresolucion" >
+                                <select data-placeholder="resolucion..." name="idresolucion" multiple class="form-control chosen-select" id="id_idresolucion" >
                                 {% for c in  idresolucion %}
                                     <option value="{{c.id}}">{{forloop.counter}} → <strong>{{c.numero}} </strong> </option>
                                 {% endfor %}

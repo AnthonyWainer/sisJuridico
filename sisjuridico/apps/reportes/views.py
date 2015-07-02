@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Q
-from apps.seguridad.models import permisos
+from apps.seguridad.models import permisos, User
 from apps.expediente.models import expedientes, categoria, resolucion
+from apps.paginacion import paginacion
+from .models import historial
 import json as simplejson
 import datetime
 today  = datetime.datetime.now()
@@ -54,11 +56,28 @@ def reportes_detallados(request):
     else:    
         idc= 1
         expediente = expedientes.objects.filter(idcategoria= idc).order_by('id')
-        modulo = {'lista':expediente, 'url':'reportes_detallados/','n':'reportesU','estado':estado,'idcategoria':listaCategoria, 'idresolucion':listaResolucion,'fecha' :fecha}
-        return render(request,  'reportes/reportes_detallados/reportes_detallados.html',modulo )        
+        modulo = {'url':'reportes_detallados/','n':'reportesU','estado':estado,'idcategoria':listaCategoria, 'idresolucion':listaResolucion,'fecha' :fecha}
+        return paginacion(request,expediente, modulo, 'reportes/reportes_detallados/reportes_detallados.html' ) 
 
 def busqueda(request):
     e = expedientes.objects.filter( Q(nro__contains=request.POST["nro"]), Q(idcategoria__id__contains=request.POST["idcategoria"]), Q(fecha__contains=request.POST["fecha"]), Q(estado__contains=request.POST["estado"]) )[:10]
-    print (e.query)
+    #print (e.query)
     modulo = {'lista':e}
     return render(request,'reportes/reportes_detallados/ajax_reportes_detallados.html', modulo)
+
+
+@login_required(login_url='/')
+def reportes_transacciones(request):
+    estado =  permi(request, "reportes_transacciones")
+    listaUsuarios = [{'id':con.id,'usuario':con.usuario} for con in User.objects.all()]
+
+    if request.method == 'GET': 
+        idc= 1
+        historias = historial.objects.all().order_by('id')
+        modulo = { 'url':'reportes_transacciones/','n':'reportesU','estado':estado,'idusuario':listaUsuarios,'fecha' :fecha}
+        return paginacion(request,historias, modulo, 'reportes/reportes_transacciones/reportes_transacciones.html' )    
+
+def transacciones(request):
+    e = historial.objects.filter( idusuario_id=request.POST["idusuario"]).filter(Q(fecha__contains=request.POST["fecha"]))[:10]
+    modulo = {'lista':e}
+    return render(request,'reportes/reportes_transacciones/ajax_reportes_transacciones.html', modulo)

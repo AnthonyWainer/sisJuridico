@@ -24,15 +24,16 @@
                      <h3 align="center">REPORTES CONSOLIDADOS</h3>
                      <br>
                       <div class="col-md-3"></div>
-                      <div class="col-md-6">
+                      <div class="col-md-7">
                         <div class="form-inline">
                           <label>Desde:</label>
-                          <input type="date" id="fecha_ini" value="{{fecha}}"class="form-control input-sm">
+                          <input type="date" id="fecha_ini" onblur="repor()" class="form-control input-sm">
                           <label>Hasta:</label>
-                          <input type="date" id="fecha_ter" onblur="repor(this)" class="form-control input-sm">  
+                          <input type="date" id="fecha_ter" onblur="repor()" value="{{fecha}}"class="form-control input-sm">  
+                          <input class="btn btn-sm btn-primary " onclick="repor()"  type="button" value= "Ver"/>
                         </div>
                       </div>
-                      <div class="col-md-3"></div>
+                      <div class="col-md-2"></div>
                       <hr>
                     <div class="ibox-content rep">
                       {% include "reportes/reportes_consolidados/ajax_reportes_consolidados.html" %}

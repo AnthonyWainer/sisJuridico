@@ -8,7 +8,7 @@ def paginacion(request,tab,modulo,url):
         pag=request.GET.get('pag')
         pag=int(pag)
     else:
-        pag=10
+        pag=3
     paginator = Paginator(tab,pag)
     page = 1
     if request.is_ajax():  
