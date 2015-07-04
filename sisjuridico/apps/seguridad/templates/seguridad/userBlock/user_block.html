@@ -52,7 +52,13 @@
   function userBlock(id,ni){
     $.post('user_block/','csrfmiddlewaretoken='+$("[name='csrfmiddlewaretoken']").val()+'&id='+id+'&ni='+ni, function(data) {
       $("table .ublock").empty().html(data);
-      AlSave("usuario desbloqueado"); 
+      if(ni != 5){
+        AlSave("usuario desbloqueado");
+      }else{
+        AlDelete("usuario bloqueado");
+      }
+       
     });
+      
   }
 </script>
