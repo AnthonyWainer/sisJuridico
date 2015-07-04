@@ -10,11 +10,13 @@
     <td>
         {% csrf_token %}
         {% if p.failures_since_start >= 5 %}
-         <a href="#" onclick="userBlock({{p.id}})">
+         <a href="#" onclick="userBlock({{p.id}},0)" title="desbloquear">
            <i style="color: red" title="unblock"  class="fa fa-unlock-alt fa-2x"></i>
         </a>
         {% else %}
-          <i style="color: #1ab394" class="fa fa-unlock fa-2x"></i>
+          <a href="#" onclick="userBlock({{p.id}},5)" title="bloquear">
+            <i style="color: #1ab394" class="fa fa-unlock fa-2x"></i>
+          </a>
         {% endif %}
     </td>
     {% endif %}

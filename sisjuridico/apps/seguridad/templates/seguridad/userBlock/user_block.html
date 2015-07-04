@@ -20,7 +20,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
 
-                <div class="ibox-content">
+                <div class="ibox-content table-responsive">
                      <h3 align="center">Usuarios Bloqueados</h3>
                      <table class="table table-bordered">
                           <thead>
@@ -49,8 +49,8 @@
 </div>            
 
 <script>
-  function userBlock(id){
-    $.post('user_block/','csrfmiddlewaretoken='+$("[name='csrfmiddlewaretoken']").val()+'&id='+id, function(data) {
+  function userBlock(id,ni){
+    $.post('user_block/','csrfmiddlewaretoken='+$("[name='csrfmiddlewaretoken']").val()+'&id='+id+'&ni='+ni, function(data) {
       $("table .ublock").empty().html(data);
       AlSave("usuario desbloqueado"); 
     });

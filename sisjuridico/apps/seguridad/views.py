@@ -346,7 +346,7 @@ def user_block(request):
     if request.method == 'POST' and request.is_ajax(): 
         idp = request.POST.get("id","")
         u = AccessAttempt.objects.get(pk=idp)
-        u.failures_since_start = 0
+        u.failures_since_start = request.POST["ni"]
         u.save()
         return render(request,'seguridad/userBlock/ajax_user_block.html',{'userBlock':userBlock,'estado':estado}) 
     else:

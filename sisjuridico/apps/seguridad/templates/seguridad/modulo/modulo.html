@@ -22,7 +22,11 @@
                 <div class="ibox-content">
                   <div class="row">
                     <div class="col-md-6 table-responsive">
+                        {% for i in  estado %}
+                        {% if i.insertar == 1 %}
                         <button data-toggle="modal" data-target="#Modalmod" class="btn btn-sm btn-primary"><strong>Nuevo Módulo</strong></button>
+                        {% endif %}
+                        {% endfor %}
 
                        <h3 align="center">Modulos</h3>
                        <table class="table table-bordered table-hover">
@@ -47,7 +51,11 @@
                         </table> 
                     </div>
                     <div class="col-md-6 table-responsive">
+                        {% for i in  estado %}
+                        {% if i.insertar == 1 %}                    
                       <button data-toggle="modal" data-target="#Modalsubmod" class="btn btn-sm btn-primary"><strong>Nuevo Submódulo</strong></button>
+                        {% endif %}
+                        {% endfor %}                      
 
                        <h3 align="center">SubMódulos</h3>
                        <table class="table table-bordered">
