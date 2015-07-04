@@ -1,5 +1,6 @@
 {% for p in accion %}
   <tr>
+    <td>{{forloop.counter}}</td>
     <td>{{p.accion}}</td>
     {% for i in  estado %}
     {% if i.editar == 1 %}

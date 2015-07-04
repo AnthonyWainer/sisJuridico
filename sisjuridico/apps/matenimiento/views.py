@@ -19,7 +19,9 @@ def registro_oficina(request):
         formu = formOficina(request.POST)
         if formu.is_valid():
             formu.save()
-        return render(request,'mantenimiento/oficina/ajax_oficina.html',{'oficina':oficinas,'n':'oficinaU','estado':estado})            
+            return render(request,'mantenimiento/oficina/ajax_oficina.html',{'oficina':oficinas,'n':'oficinaU','estado':estado})            
+        else:
+            return render(request,'mantenimiento/oficina/form_of.html',{'formu':formu})            
     else:
         formu = formOficina()
         return render(request,'mantenimiento/oficina/oficina.html',{'formu':formu,'oficina':oficinas, 'url':'registro_oficina/','n':'oficinaU','estado':estado})
@@ -44,6 +46,8 @@ def actualizar_oficina(request):
         if form.is_valid():
             form.save()
             return render(request,'mantenimiento/oficina/ajax_oficina.html',{'oficina':oficinas,'n':'oficinaU','estado':estado}) 
+        else:
+            return render(request,'mantenimiento/oficina/form_of.html',{'formu':form})             
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(oficina,pk=idp)
@@ -58,7 +62,9 @@ def registro_accion(request):
         formu = formAccion(request.POST)
         if formu.is_valid():
             formu.save()
-        return render(request,'mantenimiento/accion/ajax_accion.html',{'accion':accions,'n':'accionU','estado':estado})            
+            return render(request,'mantenimiento/accion/ajax_accion.html',{'accion':accions,'n':'accionU','estado':estado})            
+        else:
+            return render(request,'mantenimiento/accion/form_ac.html',{'formu':formu})         
     else:
         formu = formAccion()
         return render(request,'mantenimiento/accion/accion.html',{'formu':formu,'accion':accions, 'url':'registro_accion/','n':'accionU','estado':estado})
@@ -83,6 +89,8 @@ def actualizar_accion(request):
         if form.is_valid():
             form.save()
             return render(request,'mantenimiento/accion/ajax_accion.html',{'accion':accions,'n':'accionU','estado':estado}) 
+        else:
+            return render(request,'mantenimiento/accion/form_ac.html',{'formu':form})             
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(accion,pk=idp)

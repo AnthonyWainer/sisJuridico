@@ -1,5 +1,6 @@
 {% for p in oficina %}
   <tr>
+    <td>{{forloop.counter}}</td>
     <td>{{p.oficina}}</td>
     {% for i in  estado %}
     {% if i.editar == 1 %}

@@ -18,7 +18,11 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title form-inline">
-                    <button data-toggle="modal" data-target="#Modal" class="btn btn-sm btn-primary"><strong>Nuevo</strong></button>
+                    {% for i in  estado %}
+                    {% if i.insertar == 1 %}
+                      <button data-toggle="modal" data-target="#Modal"class="btn btn-sm btn-primary" type="submit"><strong>Nuevo</strong></button>
+                    {% endif %}
+                    {% endfor %}
                 </div>
                 <div class="ibox-content">
                      <h3 align="center">OFICINAS</h3>
@@ -26,6 +30,7 @@
                           <thead>
                               <tr>
                                 {% for i in  estado %}
+                                  <th>#</th>
                                   <th>Oficina</th>
                                   {% if i.editar == 1 %}
                                   <th>Editar</th>  
