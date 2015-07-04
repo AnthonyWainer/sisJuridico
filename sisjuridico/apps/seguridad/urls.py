@@ -32,6 +32,8 @@ urlpatterns = patterns('apps.seguridad.views',
 
     #usuarios bloqueados
     url(r'user_block/','user_block'),
+    url(r'busq_ajax_us/','busq_ajax_us'),
+    
 
 
     #modulos

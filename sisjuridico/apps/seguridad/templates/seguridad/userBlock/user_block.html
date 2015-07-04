@@ -19,9 +19,21 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
-
+                <div class="ibox-title form-inline">
+                    <h3 align="center">Usuarios Bloqueados</h3>
+                    {% for i in  estado %}
+                    {% if i.buscar == 1 %}
+                    <input type="search" placeholder="Buscar" class="form-control Bo" style="width: 40%">
+                    {% endif %}
+                    {% endfor %}
+                    <select class="form-control selus" >
+                        <option value="0">desbloqueado</option>
+                        <option value="5">bloqueado</option>
+                    </select>                      
+                    <input class="form-control" onblur="nroPag(this,'{{url}}')" style="width:70px" type="number" id="selP" value="{{pag}}"> 
+                </div>
                 <div class="ibox-content table-responsive">
-                     <h3 align="center">Usuarios Bloqueados</h3>
+                       
                      <table class="table table-bordered">
                           <thead>
                               <tr>
@@ -42,6 +54,9 @@
                             {% include "seguridad/userBlock/ajax_user_block.html" %}
                           </tbody>
                       </table> 
+                      {% with lista as paginacion  %}
+                          {% include "paginacion.html" %}
+                      {% endwith %}                           
                 </div>
             </div>
         </div>
@@ -61,4 +76,14 @@
     });
       
   }
+  $(".Bo").keyup(function(){
+    $.get('busq_ajax_us/',{'datos':$(this).val().toLowerCase(),'d':'v'}, function(data){
+        $(".ublock").empty().html(data);
+    });
+  });
+  $(".selus").change(function(){
+    $.get('busq_ajax_us/',{'datos':$(this).val().toLowerCase(),'d':'b'}, function(data){
+        $(".ublock").empty().html(data);
+    });
+  });
 </script>

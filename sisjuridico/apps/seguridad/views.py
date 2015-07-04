@@ -6,8 +6,9 @@ from .forms import  formPerfil, LoginForm, formUsuario, formModulo,formSubModulo
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
-from django.db.models import Count
+from django.db.models import Count,Max, Q
 from axes.models import AccessAttempt
+from apps.paginacion import paginacion
 #from django.utils.decorators import method_decorator
 
 # Crea tus vista aqui.
@@ -348,6 +349,18 @@ def user_block(request):
         u = AccessAttempt.objects.get(pk=idp)
         u.failures_since_start = request.POST["ni"]
         u.save()
-        return render(request,'seguridad/userBlock/ajax_user_block.html',{'userBlock':userBlock,'estado':estado}) 
+        return render(request,'seguridad/userBlock/ajax_user_block.html',{'lista':userBlock,'estado':estado}) 
     else:
-        return render(request,'seguridad/userBlock/user_block.html',{'userBlock':userBlock,'estado':estado})     
+        modulo = {'estado':estado,'url':'user_block/'}
+        return paginacion(request,userBlock, modulo, 'seguridad/userBlock/user_block.html' )         
+
+def busq_ajax_us(request):
+    dat = request.GET.get('datos')
+    estado =  permi(request, "user_block")
+    if request.GET.get('d') == "v":
+        e = AccessAttempt.objects.filter( Q(ip_address__contains=dat))[:10]
+    elif request.GET.get('d') == "b":
+        e = AccessAttempt.objects.filter(failures_since_start=dat)[:10]           
+
+    modulo = {'lista':e,'estado':estado}
+    return render(request,'seguridad/userBlock/ajax_user_block.html', modulo)
