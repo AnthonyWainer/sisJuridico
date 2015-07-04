@@ -1,5 +1,6 @@
-{% for p in hoja_envio %}
+{% for p in lista %}
   <tr>
+    <td>{{forloop.counter}}</td>
     <td>{{p.idoficina__oficina}}</td>
     <td>{{p.idaccion__accion}}</td>
     <td>{{p.fecha_emision}}</td>

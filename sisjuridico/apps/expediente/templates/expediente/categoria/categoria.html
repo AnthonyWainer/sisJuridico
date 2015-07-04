@@ -18,13 +18,22 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title form-inline">
+                    {% for i in  estado %}
+                    {% if i.insertar == 1 %}
                     <button data-toggle="modal" data-target="#Modal" class="btn btn-sm btn-primary"><strong>Nuevo</strong></button>
+                    {% endif %}
+                    {% if i.buscar == 1 %}
+                    <input type="search" placeholder="Buscar" class="form-control Bct">
+                    {% endif %}                    
+                    {% endfor %}                    
+                    <input class="form-control" onblur="nroPag(this,'{{url}}')" style="width:70px" type="number" id="selP" value="{{pag}}">                     
                 </div>
                 <div class="ibox-content">
                      <h3 align="center">CATEGORIAS</h3>
                      <table class="table table-bordered">
                           <thead>
                               <tr>
+                                  <th>#</th>
                                 {% for i in  estado %}
                                   <th>Descripción</th>
                                   {% if i.editar == 1 %}
@@ -40,6 +49,9 @@
                             {% include "expediente/categoria/ajax_categoria.html" %}
                           </tbody>
                       </table> 
+                      {% with lista as paginacion  %}
+                          {% include "paginacion.html" %}
+                      {% endwith %}                       
                 </div>
             </div>
         </div>
@@ -52,3 +64,4 @@
 
 {% load static from  staticfiles %}
 <script src="{%static 'js/base.js' %}"></script>
+<script src="{%static 'js/categoria.js' %}"></script>

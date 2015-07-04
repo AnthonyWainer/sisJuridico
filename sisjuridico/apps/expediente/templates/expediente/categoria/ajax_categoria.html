@@ -1,5 +1,6 @@
-{% for p in categoria %}
+{% for p in lista %}
   <tr>
+    <td>{{forloop.counter}}</td>
     <td>{{p.descripcion}}</td>
     {% for i in  estado %}
     {% if i.editar == 1 %}

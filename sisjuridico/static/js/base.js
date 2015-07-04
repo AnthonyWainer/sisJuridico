@@ -10,6 +10,8 @@ function vali(data,n,u){
                     $('.popover').css('border','1px dashed red');
                     $('.popover-content').css('padding','2px 4px');
                     AlDelete("error al guardar");
+        $(".chosen-select").chosen(); 
+        $(".chosen-container").css("width","100%");                    
                 }else{
                     $('#Modal'+n).modal('hide');
                     $('#Modal'+n).on('hidden.bs.modal', function (e) {
@@ -31,6 +33,8 @@ function actualizar(id,u,n){
         $(".modalP").empty().html(data);
         $(".guar").attr('id',id)
         $('#Modal'+n).modal('show');
+        $(".chosen-select").chosen(); 
+        $(".chosen-container").css("width","100%");
     });
 }
 function eliminar(id,u,n){

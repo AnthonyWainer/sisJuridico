@@ -1,5 +1,6 @@
-{% for p in resolucion %}
+{% for p in lista %}
   <tr>
+    <td>{{forloop.counter}}</td>
     <td>{{p.numero}}</td>
     <td>
     <a href="media/{{p.contenido}}" target="_blank">ver</a>

@@ -13,6 +13,7 @@ urlpatterns = patterns('apps.expediente.views',
     url(r'^registro_categoria/$', 'registro_categoria'),
     url(r'^actualizar_categoria/$', 'actualizar_categoria'),
     url(r'^eliminar_categoria/$', 'eliminar_categoria'),
+    url(r'^busq_ajax_ct/$', 'busq_ajax_ct'),
 
     #hoja de envio
     url(r'^registro_hoja_envio/$', 'registro_hoja_envio'),
@@ -23,6 +24,8 @@ urlpatterns = patterns('apps.expediente.views',
     url(r'^registro_resolucion/$', 'registro_resolucion'),
     url(r'^actualizar_resolucion/$', 'actualizar_resolucion'),
     url(r'^eliminar_resolucion/$', 'eliminar_resolucion'),
+    url(r'^busq_ajax_re/$', 'busq_ajax_re'),
+    
 
 
 

@@ -47,32 +47,33 @@ def registro_expediente(request):
             formu = formExpediente(request.POST,request.FILES )
             if formu.is_valid():
                 formu.save()
-                historiales(request,["expediente","registrar"])
+                idp = expedientes.objects.latest('id')
+                historiales(request,["expediente","registrar",idp.id])
             else:
                 return render(request,'expediente/expediente/form_exp.html',{'formu':formu})
         else:
             idc = request.POST.get("idc","")
         
-        expediente = expedientes.objects.filter(idcategoria= idc).order_by('id')  
+        expediente = expedientes.objects.filter(idcategoria= idc).order_by('-id')  
         return render(request,'expediente/expediente/ajax_expediente.html',{'lista':expediente,'n':'expedienteU','estado':estado})            
     else:
         idc= 1
-        expediente = expedientes.objects.filter(idcategoria= idc).order_by('id')
+        expediente = expedientes.objects.filter(idcategoria= idc).order_by('-id')
         formu = formExpediente()
         modulo = {'formu':formu, 'url':'registro_expediente/','n':'expedienteU','estado':estado,'idcategoria':listaCategoria, 'idresolucion':listaResolucion}
         return paginacion(request,expediente, modulo, 'expediente/expediente/expediente.html' )        
 
 @login_required(login_url='/')
 def actualizar_expediente(request):
-    expediente = expedientes.objects.all().order_by('id')
+    expediente = expedientes.objects.all().order_by('-id')
     estado =  permi(request, "registro_expediente")
     if request.method == 'POST': 
         idp = request.POST.get("id","")
         a=get_object_or_404(expedientes,pk=idp)
         form=formExpedienteA(request.POST, request.FILES, instance=a)
         if form.is_valid():
-            form.save()
-            historiales(request,["expediente","actualizar"])
+            form.save()       
+            historiales(request,["expediente","actualizar",idp])
             return render(request,'expediente/expediente/ajax_expediente.html',{'lista':expediente,'n':'expedienteU','estado':estado}) 
         else:
             return render(request,'expediente/expediente/form_exp.html',{'formu':form})             
@@ -85,13 +86,13 @@ def actualizar_expediente(request):
 
 @login_required(login_url='/')
 def eliminar_expediente(request):
-    expediente = expedientes.objects.all().order_by('id')
+    expediente = expedientes.objects.all().order_by('-id')
     estado =  permi(request, "registro_expediente")
     if request.method == 'GET' and request.is_ajax(): 
         idb = request.GET.get("id","")
         get_object_or_404(expedientes,pk=idb).delete()
-        historiales(request,["expediente","eliminar"])
-        return render(request,'expediente/expediente/ajax_expediente.html',{'expediente':expediente,'n':'expedienteU','estado':estado})     
+        historiales(request,["expediente","eliminar",idb])
+        return render(request,'expediente/expediente/ajax_expediente.html',{'lista':expediente,'n':'expedienteU','estado':estado})     
 
 def busq_ajax_exp(request):
     dat = request.GET.get('datos')
@@ -115,7 +116,8 @@ def registro_hoja_envio(request):
             formH = formHojadeEnvio(request.POST,request.FILES )
             if formH.is_valid():
                 formH.save()
-                historiales(request,["hojaEnvio","registrar"])
+                idp = hojaEnvio.objects.latest('id')                                
+                historiales(request,["hojaEnvio","registrar",idp.id])
             else:
                 return render(request,'expediente/hoja_envio/form_hoj.html',{'formuH':formH})                
         else:
@@ -127,7 +129,8 @@ def registro_hoja_envio(request):
         idc = 1
         hojaEnvios = hojaEnvio.objects.values('id','idaccion__accion','idoficina__oficina','asunto','observaciones','fecha_emision','fecha_recepcion','documento_adjun','num_follos').filter(idexpediente=idc).order_by('id')            
         formH = formHojadeEnvio()
-        return render(request,'expediente/hoja_envio/hoja_envio.html',{'formuH':formH,'hoja_envio':hojaEnvios, 'url':'registro_hoja_envio/','n':'hoja_envioU','estado':estado,'idaccion':listaAccion,'idoficina':listaOficina,'idexpediente':listaExpediente})
+        modulo = {'formuH':formH,'url':'registro_hoja_envio/','n':'hoja_envioU','estado':estado,'idaccion':listaAccion,'idoficina':listaOficina,'idexpediente':listaExpediente}
+        return paginacion(request,hojaEnvios, modulo, 'expediente/hoja_envio/hoja_envio.html' )        
 
 @login_required(login_url='/')
 def actualizar_hoja_envio(request):
@@ -139,7 +142,7 @@ def actualizar_hoja_envio(request):
         form=formHojadeEnvioU(request.POST, instance=a)
         if form.is_valid():
             form.save()
-            historiales(request,["hojaEnvio","actualizar"])
+            historiales(request,["hojaEnvio","actualizar",idp])
             return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'hoja_envio':hojaEnvios,'n':'hoja_envioU','estado':estado})            
         else:
             return render(request,'expediente/hoja_envio/form_hoj.html',{'formuH':form})            
@@ -158,7 +161,7 @@ def eliminar_hoja_envio(request):
     if request.method == 'GET' and request.is_ajax(): 
         idb = request.GET.get("id","")
         get_object_or_404(hojaEnvio,pk=idb).delete()
-        historiales(request,["hojaEnvio","eliminar"])
+        historiales(request,["hojaEnvio","eliminar",idb])
         return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'hoja_envio':hojaEnvios,'n':'hoja_envioU','estado':estado})     
 
 
@@ -166,7 +169,7 @@ def eliminar_hoja_envio(request):
 @login_required(login_url='/')
 def registro_resolucion(request):
 
-    resoluciones = resolucion.objects.all().order_by('id')
+    resoluciones = resolucion.objects.all().order_by('-id')
     estado =  permi(request, "registro_resolucion")
 
     if request.method == 'POST': 
@@ -174,18 +177,20 @@ def registro_resolucion(request):
         #print (formH)
         if formH.is_valid():
             formH.save()
-            historiales(request,["resolucion","registrar"])
-            return render(request,'expediente/resolucion/ajax_resolucion.html',{'resolucion':resoluciones,'n':'resolucionU','estado':estado})            
+            idp = resolucion.objects.latest('id')
+            historiales(request,["resolucion","registrar",idp.id])
+            return render(request,'expediente/resolucion/ajax_resolucion.html',{'lista':resoluciones,'n':'resolucionU','estado':estado})            
         else:
             return render(request,'expediente/resolucion/form_re.html',{'formuH':formH})                        
         
     else:
         formH = formResolucion()
-        return render(request,'expediente/resolucion/resolucion.html',{'formuH':formH,'resolucion':resoluciones, 'url':'registro_resolucion/','n':'resolucionU','estado':estado})
+        modulo = {'formuH':formH,'url':'registro_resolucion/','n':'resolucionU','estado':estado}
+        return paginacion(request,resoluciones, modulo, 'expediente/resolucion/resolucion.html' )
 
 @login_required(login_url='/')
 def actualizar_resolucion(request):
-    resoluciones = resolucion.objects.all().order_by('id')
+    resoluciones = resolucion.objects.all().order_by('-id')
     estado =  permi(request, "registro_resolucion")
     if request.method == 'POST': 
         idp = request.POST.get("id","")
@@ -193,8 +198,8 @@ def actualizar_resolucion(request):
         form=formResolucionA(request.POST, request.FILES, instance=a)
         if form.is_valid():
             form.save()
-            historiales(request,["resolucion","actualizar"])
-            return render(request,'expediente/resolucion/ajax_resolucion.html',{'resolucion':resoluciones,'n':'resolucionU','estado':estado}) 
+            historiales(request,["resolucion","actualizar",idp])
+            return render(request,'expediente/resolucion/ajax_resolucion.html',{'lista':resoluciones,'n':'resolucionU','estado':estado}) 
         else:
             return render(request,'expediente/resolucion/form_re.html',{'formuH':form})              
     else:
@@ -206,43 +211,54 @@ def actualizar_resolucion(request):
 
 @login_required(login_url='/')
 def eliminar_resolucion(request):
-    resoluciones = resolucion.objects.all().order_by('id')
+    resoluciones = resolucion.objects.all().order_by('-id')
     estado =  permi(request, "registro_resolucion")
     if request.method == 'GET' and request.is_ajax(): 
         idb = request.GET.get("id","")
         get_object_or_404(resolucion,pk=idb).delete()
-        historiales(request,["resolucion","eliminar"])
-        return render(request,'expediente/resolucion/ajax_resolucion.html',{'resolucion':resoluciones,'n':'resolucionU','estado':estado})     
+        historiales(request,["resolucion","eliminar",idb])
+        return render(request,'expediente/resolucion/ajax_resolucion.html',{'lista':resoluciones,'n':'resolucionU','estado':estado})     
 
+
+def busq_ajax_re(request):
+    dat = request.GET.get('datos')
+    estado =  permi(request, "registro_resolucion")
+    e = resolucion.objects.filter( Q(numero__contains=dat))[:10]
+    modulo = {'lista':e,'n':'resolucionU','estado':estado}
+    return render(request,'expediente/resolucion/ajax_resolucion.html', modulo)
 
 
 @login_required(login_url='/')
 def registro_categoria(request):
-    categorias = categoria.objects.all().order_by('id')
+    categorias = categoria.objects.all().order_by('-id')
     estado =  permi(request, "registro_categoria")
     if request.method == 'POST' and request.is_ajax(): 
         formu = formCategoria(request.POST)
         if formu.is_valid():
             formu.save()
-            historiales(request,["categoria","registrar"])
-        return render(request,'expediente/categoria/ajax_categoria.html',{'categoria':categorias,'n':'categoriaU','estado':estado})            
+            idp = categoria.objects.latest('id')            
+            historiales(request,["categoria","registrar",idp.id])
+            return render(request,'expediente/categoria/ajax_categoria.html',{'lista':categorias,'n':'categoriaU','estado':estado})            
+        else:
+            return render(request,'expediente/categoria/form_cat.html',{'formu':formu})         
     else:
         formu = formCategoria()
-        return render(request,'expediente/categoria/categoria.html',{'formu':formu,'categoria':categorias, 'url':'registro_categoria/','n':'categoriaU','estado':estado})
+        modulo = {'formu':formu, 'url':'registro_categoria/','n':'categoriaU','estado':estado}
+        return paginacion(request,categorias, modulo, 'expediente/categoria/categoria.html' )          
 
 @login_required(login_url='/')
 def eliminar_categoria(request):
-    categorias = categoria.objects.all().order_by('id')
+    categorias = categoria.objects.all().order_by('-id')
     estado =  permi(request, "registro_categoria")
     if request.method == 'GET' and request.is_ajax(): 
         idb = request.GET.get("id","")
         get_object_or_404(categoria,pk=idb).delete()
-        historiales(request,["categoria","eliminar"])
-        return render(request,'expediente/categoria/ajax_categoria.html',{'categoria':categorias,'n':'categoriaU','estado':estado})     
+        historiales(request,["categoria","eliminar",idb])
+        return render(request,'expediente/categoria/ajax_categoria.html',{'lista':categorias,'n':'categoriaU','estado':estado})     
 
 @login_required(login_url='/')
 def actualizar_categoria(request):
-    categorias = categoria.objects.all().order_by('id')
+    categorias = categoria.objects.all().order_by('-id')
     estado =  permi(request, "registro_categoria")
     if request.method == 'POST' and request.is_ajax(): 
         idp = request.POST.get("id","")
@@ -250,10 +266,20 @@ def actualizar_categoria(request):
         form=formCategoria(request.POST, instance=a)
         if form.is_valid():
             form.save()
-            historiales(request,["categoria","actualizar"])
-            return render(request,'expediente/categoria/ajax_categoria.html',{'categoria':categorias,'n':'categoriaU','estado':estado}) 
+            historiales(request,["categoria","actualizar",idp])
+            return render(request,'expediente/categoria/ajax_categoria.html',{'lista':categorias,'n':'categoriaU','estado':estado}) 
+        else:
+            return render(request,'expediente/categoria/form_cat.html',{'formu':formu})            
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(categoria,pk=idp)
         form= formCategoria(instance=a)
         return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_categoria/','n':'categoriaU','u':'categoriaU','estado':estado})  
+
+
+def busq_ajax_ct(request):
+    dat = request.GET.get('datos')
+    estado =  permi(request, "registro_categoria")
+    e = categoria.objects.filter( Q(descripcion__contains=dat))[:10]
+    modulo = {'lista':e,'n':'categoriaU','estado':estado}
+    return render(request,'expediente/categoria/ajax_categoria.html', modulo)

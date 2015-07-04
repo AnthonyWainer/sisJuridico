@@ -64,9 +64,9 @@ class formHojadeEnvio(forms.ModelForm):
         self.fields['fecha_recepcion'].widget = forms.DateInput(attrs={'class':'form-control input-sm','type':'date','required':''})
         self.fields['documento_adjun'].widget = forms.FileInput(attrs={'class':'form-control input-sm', 'required':''})
         self.fields['num_follos'].widget = forms.NumberInput(attrs={'class':'form-control input-sm', 'required':''})
-        self.fields['idoficina'].widget = forms.Select( choices=listaOficina,attrs={'class':'form-control'})
-        self.fields['idaccion'].widget = forms.Select( choices=listaAccion,attrs={'class':'form-control'})
-        self.fields['idexpediente'].widget = forms.Select( choices=listaAccion,attrs={'class':'form-control'})
+        self.fields['idoficina'].widget = forms.Select( choices=listaOficina,attrs={'class':'form-control chosen-select'})
+        self.fields['idaccion'].widget = forms.Select( choices=listaAccion,attrs={'class':'form-control chosen-select'})
+        self.fields['idexpediente'].widget = forms.Select( choices=listaAccion,attrs={'class':'form-control chosen-select'})
 
     class Meta:
         model = hojaEnvio
@@ -82,9 +82,9 @@ class formHojadeEnvioU(forms.ModelForm):
         self.fields['fecha_recepcion'].widget = forms.DateInput(attrs={'class':'form-control input-sm','required':''})
         #self.fields['documento_adjun'].widget = forms.FileInput(attrs={'class':'form-control input-sm', 'required':''})
         self.fields['num_follos'].widget = forms.NumberInput(attrs={'class':'form-control input-sm', 'required':''})
-        self.fields['idoficina'].widget = forms.Select( choices=listaOficina,attrs={'class':'form-control'})
-        self.fields['idaccion'].widget = forms.Select( choices=listaAccion,attrs={'class':'form-control'})
-        self.fields['idexpediente'].widget = forms.Select( choices=listaAccion,attrs={'class':'form-control'})
+        self.fields['idoficina'].widget = forms.Select( choices=listaOficina,attrs={'class':'form-control chosen-select'})
+        self.fields['idaccion'].widget = forms.Select( choices=listaAccion,attrs={'class':'form-control chosen-select'})
+        self.fields['idexpediente'].widget = forms.Select( choices=listaExpediente,attrs={'class':'form-control chosen-select'})
 
     class Meta:
         model = hojaEnvio

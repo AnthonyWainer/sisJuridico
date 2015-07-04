@@ -18,9 +18,15 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title form-inline">
-                    <button data-toggle="modal" data-target="#Modal"class="btn btn-sm btn-primary" type="submit"><strong>Nuevo</strong></button>
-                    <input type="search" placeholder="Buscar" class="form-control" style="width: 40%">
-                    <select class="form-control selEx" >
+                    {% for i in  estado %}
+                    <div class="col-md-1">
+                    {% if i.insertar == 1 %}
+                    <button data-toggle="modal" data-target="#Modal" class="btn btn-sm btn-primary"><strong>Nuevo</strong></button>
+                    {% endif %}
+                    </div>
+                    {% endfor %}  
+                    <div class="col-md-3">
+                    <select class="form-control selEx chosen-select" >
                       {% for c in  idexpediente %}
                         <option value="{{c.id}}"
                         {% if c.id == 1  %}
@@ -28,6 +34,8 @@
                         {% endif %} >{{c.nro}}</option>
                       {% endfor %}
                     </select> 
+                    </div>
+                    <input class="form-control" onblur="nroPag(this,'{{url}}')" style="width:70px" type="number" id="selP" value="{{pag}}">                      
                 </div>
                 <div class="ibox-content">
                      <h3 align="center">HOJA DE ENVIO</h3>    
@@ -35,6 +43,7 @@
                           <thead>
                               <tr>
                                 {% for i in  estado %}
+                                  <th>#</th>
                                   <th>oficina</th>
                                   <th>accion</th>
                                   <th>Fecha Emision</th>
@@ -56,7 +65,9 @@
                             {% include "expediente/hoja_envio/ajax_hoja_envio.html" %}
                           </tbody>
                       </table> 
-                    
+                      {% with lista as paginacion  %}
+                          {% include "paginacion.html" %}
+                      {% endwith %} 
                 </div>
             </div>
         </div>
@@ -91,7 +102,7 @@
             <div class="row">
                 <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Hoja de Accion</h3>
                   <label for="id_accion">Expediente:</label>
-                   <select name="idexpediente" class="form-control" id="id_idexpediente" >
+                   <select name="idexpediente" class="form-control chosen-select" id="id_idexpediente" >
                     {% for c in  idexpediente %}
                         <option value="{{c.id}}">{{c.nro}}</option>
                     {% endfor %}
@@ -99,13 +110,13 @@
                   <label for="num_follos">Nro de Folios:</label>
                   {{formuH.num_follos}}            
                   <label for="id_oficina">Oficina:</label>
-                  <select name="idoficina" class="form-control" id="id_idoficina" >
+                  <select name="idoficina" class="form-control chosen-select" id="id_idoficina" >
                     {% for c in  idoficina %}
                         <option value="{{c.id}}">{{c.oficina}}</option>
                     {% endfor %}
                   </select>
                   <label for="id_accion">Accion:</label>
-                   <select name="idaccion" class="form-control" id="id_idaccion" >
+                   <select name="idaccion" class="form-control chosen-select" id="id_idaccion" >
                     {% for c in  idaccion %}
                         <option value="{{c.id}}">{{c.accion}}</option>
                     {% endfor %}

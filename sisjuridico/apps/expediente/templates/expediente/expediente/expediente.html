@@ -18,14 +18,21 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title form-inline">
+                    
                     {% for i in  estado %}
+                    <div class="col-md-1">
                     {% if i.insertar == 1 %}
                       <button data-toggle="modal" data-target="#Modal"class="btn btn-sm btn-primary" type="submit"><strong>Nuevo</strong></button>
                     {% endif %}
+                    </div>
+                    <div class="col-md-3">
                     {% if i.buscar == 1 %}
-                    <input type="search" placeholder="Buscar" class="form-control Bex" style="width: 40%">
+                    <input type="search" placeholder="Buscar" class="form-control Bex">
                     {% endif %}
-                    <select class="form-control selEx" >
+                    </div>
+                    
+                    <div class="col-md-4">
+                    <select class="form-control selEx chosen-select" >
                       {% for c in  idcategoria %}
                         <option value="{{c.id}}"
                         {% if c.id == 1  %}
@@ -33,6 +40,7 @@
                         {% endif %} >{{c.descripcion}}</option>
                       {% endfor %}
                     </select>  
+                    </div>
                     <input class="form-control" onblur="nroPag(this,'{{url}}')" style="width:70px" type="number" id="selP" value="{{pag}}"> 
                 </div>
                 <div class="ibox-content table-responsive">
