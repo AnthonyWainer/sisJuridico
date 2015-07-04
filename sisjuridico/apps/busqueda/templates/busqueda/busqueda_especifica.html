@@ -67,7 +67,7 @@
                             <div class="col-sm-9">
                 <div class="ibox-content table-responsive">
                      <h3 align="center">EXPEDIENTES</h3>    
-
+                      <input class="form-control input-sm" onblur="nroPag(this,'{{url}}')" style="width:70px" type="number" id="selP" value="{{pag}}">   
                      <table class="table table-bordered" style="  margin-bottom: -5px;">
                           <thead>
                               <tr>
@@ -84,6 +84,9 @@
                             {% include "busqueda/ajax_busqueda_especifica.html" %}
                           </tbody>
                       </table> 
+                      {% with lista as paginacion  %}
+                          {% include "paginacion.html" %}
+                      {% endwith %}                         
                 </div>                                                          
                             </div>
 
@@ -106,5 +109,6 @@
 
             
 {% load static from  staticfiles %}
+<script src="{%static 'js/base.js' %}"></script>
 <script src="{%static 'js/buscar.js' %}"></script>
            
