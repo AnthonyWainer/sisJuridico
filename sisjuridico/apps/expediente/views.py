@@ -24,7 +24,9 @@ def historiales(request,mod):
     a.ip            = ip 
     a.modulo        = mod[0]
     a.accion        = mod[1]
+    a.idaccion      = mod[2]
     a.save()
+
 
 def permi(request,url):
     idp = request.user.idperfil_id

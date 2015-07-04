@@ -16,9 +16,11 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
                 ('fecha', models.DateField()),
                 ('hora', models.TimeField()),
-                ('equipo', models.CharField(max_length=100)),
+                ('equipo', models.CharField(max_length=10)),
+                ('ip', models.CharField(max_length=255)),
                 ('modulo', models.CharField(max_length=50)),
                 ('accion', models.CharField(max_length=50)),
+                ('idaccion', models.IntegerField()),
             ],
         ),
     ]

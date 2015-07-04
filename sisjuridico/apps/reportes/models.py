@@ -9,4 +9,5 @@ class historial(models.Model):
     ip            = models.CharField(max_length = 255)
     modulo        = models.CharField(max_length = 50)
     accion        = models.CharField(max_length = 50)
+    idaccion      = models.IntegerField()
 

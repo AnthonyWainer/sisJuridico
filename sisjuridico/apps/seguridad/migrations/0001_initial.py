@@ -16,17 +16,17 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
                 ('password', models.CharField(verbose_name='password', max_length=128)),
-                ('last_login', models.DateTimeField(verbose_name='last login', null=True, blank=True)),
-                ('is_superuser', models.BooleanField(help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status', default=False)),
-                ('usuario', models.CharField(max_length=50, unique=True)),
-                ('email', models.EmailField(max_length=50, unique=True)),
+                ('last_login', models.DateTimeField(verbose_name='last login', blank=True, null=True)),
+                ('is_superuser', models.BooleanField(verbose_name='superuser status', help_text='Designates that this user has all permissions without explicitly assigning them.', default=False)),
+                ('usuario', models.CharField(unique=True, max_length=50)),
+                ('email', models.EmailField(unique=True, max_length=50)),
                 ('nombres', models.CharField(null=True, max_length=100)),
                 ('apellidos', models.CharField(null=True, max_length=100)),
                 ('dni', models.CharField(null=True, max_length=20)),
                 ('telefono', models.IntegerField(null=True)),
                 ('is_active', models.BooleanField(default=True)),
                 ('is_staff', models.BooleanField(default=False)),
-                ('groups', models.ManyToManyField(help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', blank=True, verbose_name='groups')),
+                ('groups', models.ManyToManyField(verbose_name='groups', help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', to='auth.Group', related_name='user_set', blank=True, related_query_name='user')),
             ],
             options={
                 'abstract': False,
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='modulos',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True)),
                 ('descripcion', models.CharField(max_length=100)),
                 ('padre', models.IntegerField()),
                 ('url', models.CharField(max_length=150)),
@@ -71,6 +71,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='user_permissions',
-            field=models.ManyToManyField(help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', blank=True, verbose_name='user permissions'),
+            field=models.ManyToManyField(verbose_name='user permissions', help_text='Specific permissions for this user.', to='auth.Permission', related_name='user_set', blank=True, related_query_name='user'),
         ),
     ]

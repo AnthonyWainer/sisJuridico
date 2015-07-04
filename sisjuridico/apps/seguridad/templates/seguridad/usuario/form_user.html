@@ -1,0 +1,81 @@
+{% csrf_token %}
+    <label for="usuario" 
+    {% if formu.usuario.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    "
+    {% endif %}
+    >Usuario:</label>
+    {{formu.usuario.errors}}
+    {{formu.usuario}}  
+
+
+    <label for="email" 
+    {% if formu.email.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    "
+    {% endif %}
+    >Email:</label>
+    {{formu.email.errors}}
+    {{formu.email}}
+
+
+    <label for="nombres" 
+    {% if formu.nombres.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    
+    "
+    {% endif %}
+    >Nombres:</label>
+    {{formu.nombres.errors}}
+    {{formu.nombres}}
+
+
+    <label for="apellidos"
+    {% if formu.apellidos.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    
+    "
+    {% endif %}
+    >Apellidos:</label>
+    {{formu.apellidos.errors}}
+    {{formu.apellidos}}
+
+
+
+    <label for="dni" 
+    {% if formu.dni.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    
+    "
+    {% endif %}
+    >DNI:</label>
+    {{ formu.dni.errors }}
+    {{formu.dni}}
+
+
+    <label for="telefono" 
+    {% if formu.telefono.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    
+    "
+    {% endif %}
+    >Telúfono:</label>
+    {{ formu.telefono.errors }}
+    {{formu.telefono}}
+
+    <label for="id_idperfil" 
+    {% if formu.idperfil.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> este campo es obligatorio </p>
+    
+    "
+    {% endif %}
+    >Perfil:</label>
+    {{ formu.idperfil.errors }}
+    {{formu.idperfil}}    

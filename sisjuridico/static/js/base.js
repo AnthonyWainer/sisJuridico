@@ -1,13 +1,31 @@
-//csrf_token = $("input[name='csrfmiddlewaretoken']").val();
+function vali(data,n,u){
+                    $('.modalP').append("<div id='h' ></div>");
+                $("#h").css("display","none");
+                $("#h").empty().html(data);
+                if($('#h ul').hasClass('errorlist')){
+                    $("#h").empty();
+                    $('#formulario'+n).empty().html(data);
+                    $('.errorlist').css("display","none");
+                    $('[data-toggle="popover"]').popover('show');
+                    $('.popover').css('border','1px dashed red');
+                    $('.popover-content').css('padding','2px 4px');
+                    AlDelete("error al guardar");
+                }else{
+                    $('#Modal'+n).modal('hide');
+                    $('#Modal'+n).on('hidden.bs.modal', function (e) {
+                        $("table ."+u).empty().html(data);
+                        AlSave("guardado con éxito");  
+                    });
+                }  
+}
+
 function guardar(url,n,u){
     $.post(url,$('#formulario'+n).serialize()+'&id='+$(".guar").attr('id'), function(data) {
-        $('#Modal'+n).modal('hide');
-        $('#Modal'+n).on('hidden.bs.modal', function (e) {
-            $("table ."+u).empty().html(data);
-            AlSave("guardado con éxito");  
-        });
+        vali(data,n,u);
     });
 }
+
+
 function actualizar(id,u,n){
     $.get(u,{'id':id}, function(data) {
         $(".modalP").empty().html(data);
@@ -52,25 +70,7 @@ function guardarF(url,n,u){
             processData: false,
 
             success: function(data){
-                $('.modalP').append("<div id='h' ></div>");
-                $("#h").css("display","none");
-                $("#h").empty().html(data);
-                if($('#h ul').hasClass('errorlist')){
-                    $("#h").empty();
-                    $('#formulario'+n).empty().html(data);
-                    $('.errorlist').css("display","none");
-                    $('[data-toggle="popover"]').popover('show');
-                    $('.popover').css('border','1px dashed red');
-                    $('.popover-content').css('padding','2px 4px');
-                    AlDelete("error al guardar");
-                }else{
-                    $('#Modal'+n).modal('hide');
-                    $('#Modal'+n).on('hidden.bs.modal', function (e) {
-                        $("table ."+u).empty().html(data);
-                        AlSave("guardado con éxito");  
-                    });
-                }
-
+                vali(data,n,u);
             }
 
         });

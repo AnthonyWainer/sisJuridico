@@ -13,17 +13,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='accion',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
                 ('accion', models.CharField(max_length=30)),
-                ('estado', models.BooleanField(default=True)),
             ],
         ),
         migrations.CreateModel(
             name='oficina',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
                 ('oficina', models.CharField(max_length=30)),
-                ('estado', models.BooleanField(default=True)),
             ],
         ),
     ]

@@ -1,17 +1,37 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
-from .models import modulos, permisos, perfil, User
 from django.contrib.auth.decorators import login_required
-from .forms import  formPerfil, LoginForm, formUsuario, formModulo,formSubModulo,formEditUsuario
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from django.db.models import Count,Max, Q
 from axes.models import AccessAttempt
 from apps.paginacion import paginacion
+from apps.reportes.models import historial
+from .forms import  formPerfil, LoginForm, formUsuario, formModulo,formSubModulo,formEditUsuario
+from .models import modulos, permisos, perfil, User
+import datetime, time
+today  = datetime.datetime.now()
+fecha  = today.strftime("%Y-%m-%d")
+hora   = time.strftime("%H:%M:%S") 
+
 #from django.utils.decorators import method_decorator
 
 # Crea tus vista aqui.
+def historiales(request,mod):
+    ip        = request.META['REMOTE_ADDR']
+    equipo    = request.META['HTTP_USER_AGENT']
+    a = historial()
+    a.idusuario_id  = request.user.id
+    a.fecha         = fecha
+    a.hora          = hora
+    a.equipo        = equipo
+    a.ip            = ip 
+    a.modulo        = mod[0]
+    a.accion        = mod[1]
+    a.idaccion      = mod[2]
+    a.save()
+
 
 def Login(request):
     u = request.user
@@ -73,7 +93,10 @@ def registrar_perfil(request):
                 m.idmodulo_id = x
                 m.idperfil_id = idp.id
                 m.save() 
-        return render(request,'seguridad/perfil/ajax_perfil.html',{'perfil':perfiles,'n':'perfilU','estado':estado})            
+            historiales(request,["perfil","registrar",idp.id])                
+            return render(request,'seguridad/perfil/ajax_perfil.html',{'perfil':perfiles,'n':'perfilU','estado':estado})            
+        else:
+            return render(request,'seguridad/perfil/form_per.html',{'formu':formu})         
     else:
         formu = formPerfil()
         return render(request,'seguridad/perfil/perfil.html',{'formu':formu,'perfil':perfiles, 'url':'registro_perfil/','n':'perfilU','estado':estado})
@@ -85,6 +108,7 @@ def eliminar_perfil(request):
     if request.method == 'GET' and request.is_ajax(): 
         idb = request.GET.get("id","")
         get_object_or_404(perfil,pk=idb).delete()
+        historiales(request,["perfil","eliminar",idb])
         return render(request,'seguridad/perfil/ajax_perfil.html',{'perfil':perfiles,'n':'perfilU','estado':estado})     
 
 @login_required(login_url='/')
@@ -97,7 +121,10 @@ def actualizar_perfil(request):
         form=formPerfil(request.POST, instance=a)
         if form.is_valid():
             form.save()
+            historiales(request,["perfil","actualizar",idp])
             return render(request,'seguridad/perfil/ajax_perfil.html',{'perfil':perfiles,'n':'perfilU','estado':estado}) 
+        else:
+            return render(request,'seguridad/perfil/form_per.html',{'formu':form})             
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(perfil,pk=idp)
@@ -112,8 +139,12 @@ def registro_usuario(request):
         formu = formUsuario(request.POST)
         if formu.is_valid():
             formu.save()
-        #else:
-        return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU','estado':estado})            
+            idp = User.objects.latest('id')
+            historiales(request,["usuario","registrar",idp.id])
+            return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU','estado':estado})            
+        else:
+            return render(request,'seguridad/usuario/form_user.html',{'formu':formu})
+        
     else:
         estado =  (permi(request, "registro_usuario"))
         formu = formUsuario()
@@ -126,6 +157,7 @@ def passDefault(request):
     u = User.objects.get(pk=idp)
     u.password = "pbkdf2_sha256$20000$63ijtCdaGIEx$Wcfn0iEAQfno+SMy1v1ttxd6WQZXyAkdjmOacuNHm/4="
     u.save()
+    historiales(request,["usuario","cambio contraseña",idp])
     usuarios = User.objects.all().order_by('id')
     return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU','estado':estado})            
 
@@ -137,6 +169,7 @@ def eliminar_usuario(request):
     if request.method == 'GET' and request.is_ajax(): 
         idb = request.GET.get("id","")
         get_object_or_404(User,pk=idb).delete()
+        historiales(request,["usuario","eliminar",idb])
         return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU','estado':estado})     
 
 @login_required(login_url='/')
@@ -149,7 +182,10 @@ def actualizar_usuario(request):
         form=formUsuario(request.POST, instance=a)
         if form.is_valid():
             form.save()
+            historiales(request,["usuario","actualizar",idp])
             return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU','estado':estado}) 
+        else:
+            return render(request,'seguridad/usuario/form_user.html',{'formu':form})            
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(User,pk=idp)
@@ -165,7 +201,10 @@ def actualizar_info_usuario(request):
         form=formEditUsuario(request.POST, instance=a)
         if form.is_valid():
             form.save()
+            historiales(request,["usuario","actualizar perfil",idp])
             return redirect('/') 
+        else:
+            return render(request,'seguridad/usuario/form_user.html',{'formu':form})             
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(User,pk=idp)
@@ -185,6 +224,8 @@ def registro_modulo(request):
         formu = formModulo(request.POST)
         if formu.is_valid():
             formu.save()
+            idp = modulos.objects.latest('id')
+            historiales(request,["modulo","registrar",idp.id])
         return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo,'n':'ModuloU','estado':estado})            
     else:
         formu = formModulo()
@@ -197,7 +238,8 @@ def eliminar_modulo(request):
     estado =  permi(request, "registro_modulo")
     if request.method == 'GET' and request.is_ajax(): 
         idb = request.GET.get("id","")
-        get_object_or_404(modulos,pk=idb).delete()
+        get_object_or_404(modulos,pk=idb).delete()            
+        historiales(request,["modulo","eliminar",idb])        
         return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo,'n':'ModuloU','estado':estado})     
 
 @login_required(login_url='/')
@@ -209,7 +251,8 @@ def actualizar_modulo(request):
         a=get_object_or_404(modulos,pk=idp)
         form=formModulo(request.POST, instance=a)
         if form.is_valid():
-            form.save()
+            form.save()            
+            historiales(request,["modulo","actualizar",idp])            
             return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo,'n':'ModuloU','estado':estado}) 
     else:
         idp = request.GET.get("id","")
@@ -227,7 +270,8 @@ def eliminar_submodulo(request):
         for i in modulos.objects.filter(pk=idb):
             padre = i.padre 
 
-        get_object_or_404(modulos,pk=idb).delete()
+        get_object_or_404(modulos,pk=idb).delete()                    
+        historiales(request,["submodulo","eliminar",idb])
         return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','padre':str(padre),'estado':estado})     
 
 @login_required(login_url='/')
@@ -239,7 +283,8 @@ def actualizar_submodulo(request):
         a=get_object_or_404(modulos,pk=idp)
         form=formSubModulo(request.POST, instance=a)
         if form.is_valid():
-            form.save()
+            form.save()            
+            historiales(request,["submodulo","actualizar",idp])            
             return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','estado':estado}) 
     else:
         idp = request.GET.get("id","")
@@ -256,6 +301,8 @@ def registro_submodulo(request):
         padre = request.POST.get("padre","")
         if formu.is_valid():
             formu.save()
+            idp = modulos.objects.latest('id')
+            historiales(request,["submodulo","registrar",idp.id])            
         #else:
         return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','padre':padre,'estado':estado}) 
     else:
@@ -280,14 +327,6 @@ def registro_permisos(request):
     #print(permiso.query)
     return render(request,'seguridad/permisos/permisos.html',{'permisos':permiso, 'permisos1':permiso1,'url':'registro_permisos/','n':'PermisosU'})
 
-
-@login_required(login_url='/')
-def eliminar_permisos(request):
-    permisos = permisos.objects.all().order_by('id')
-    if request.method == 'GET' and request.is_ajax(): 
-        idb = request.GET.get("id","")
-        get_object_or_404(permisos,pk=idb).delete()
-        return render(request,'seguridad/permisos/ajax_permisos.html',{'permisos':permisos,'n':'PermisosU'})     
 
 @login_required(login_url='/')
 def cambiarEstadoPermiso(request):
@@ -315,7 +354,8 @@ def cambiarEstadoPermiso(request):
         elif (u == "im"):
             a.imprimir = e            
 
-        a.save()
+        a.save()        
+        historiales(request,["permisos","modificar",idp])
         return HttpResponse('ok')
 
 @login_required(login_url='/')
@@ -338,6 +378,8 @@ def cambiarEstadoPermiso2(request):
         a.imprimir = e            
 
         a.save()
+        historiales(request,["permisos","modificar",idp])
+
         return HttpResponse('ok')
 
 @login_required(login_url='/')
@@ -348,7 +390,8 @@ def user_block(request):
         idp = request.POST.get("id","")
         u = AccessAttempt.objects.get(pk=idp)
         u.failures_since_start = request.POST["ni"]
-        u.save()
+        u.save()        
+        historiales(request,["userBlock","modificar",idp])        
         return render(request,'seguridad/userBlock/ajax_user_block.html',{'lista':userBlock,'estado':estado}) 
     else:
         modulo = {'estado':estado,'url':'user_block/'}
