@@ -31,6 +31,9 @@
                           <label>Hasta:</label>
                           <input type="date" id="fecha_ter" onblur="repor()" value="{{fecha}}"class="form-control input-sm">  
                           <input class="btn btn-sm btn-primary " onclick="repor()"  type="button" value= "Ver"/>
+                          <a id="imprime" href="#"title="Imprimir" >
+                            <i class="fa fa-print fa-2x"></i>
+                          </a>                             
                         </div>
                       </div>
                       <div class="col-md-2"></div>
@@ -50,4 +53,7 @@
 <script src="{%static 'js/plugins/flot/jquery.flot.js' %}"></script>
 <script src="{%static 'js/plugins/flot/jquery.flot.tooltip.min.js' %}"></script>
 <script src="{%static 'js/plugins/flot/jquery.flot.pie.js' %}"></script>
+<script src="{%static 'js/jquery.printarea.js' %}"></script>
+<script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+<script src="{%static 'js/html2canvas.js' %}"></script>
 <script src="{%static 'js/reportes.js' %}"></script>
