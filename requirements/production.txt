@@ -3,6 +3,7 @@ psycopg2
 PyMySQL
 Unipath
 
-django-axes
 pytz
-
+django-axes
+dj_static
+gunicorn
