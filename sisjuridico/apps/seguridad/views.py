@@ -407,3 +407,7 @@ def busq_ajax_us(request):
 
     modulo = {'lista':e,'estado':estado}
     return render(request,'seguridad/userBlock/ajax_user_block.html', modulo)
+
+
+def manual(request):
+    return render(request,'seguridad/manual/manual.html')

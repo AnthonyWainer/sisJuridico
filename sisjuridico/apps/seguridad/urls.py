@@ -51,4 +51,7 @@ urlpatterns = patterns('apps.seguridad.views',
     url(r'^registro_permisos/$', 'registro_permisos'),
     url(r'^cambiarEstadoPermiso/$', 'cambiarEstadoPermiso'),
     url(r'^cambiarEstadoPermiso2/$', 'cambiarEstadoPermiso2'),
+
+    #manual
+    url(r'^manual/$', 'manual'),    
 	)
