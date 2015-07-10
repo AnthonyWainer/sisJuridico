@@ -122,9 +122,9 @@ def registro_hoja_envio(request):
                 return render(request,'expediente/hoja_envio/form_hoj.html',{'formuH':formH})                
         else:
             idc = request.POST.get("idc","")  
-        
+
         hojaEnvios = hojaEnvio.objects.values('id','idaccion__accion','idoficina__oficina','asunto','observaciones','fecha_emision','fecha_recepcion','documento_adjun','num_follos').filter(idexpediente=idc).order_by('id')            
-        return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'hoja_envio':hojaEnvios,'n':'hoja_envioU','estado':estado})            
+        return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'lista':hojaEnvios,'n':'hoja_envioU','estado':estado})            
     else:
         idc = 1
         hojaEnvios = hojaEnvio.objects.values('id','idaccion__accion','idoficina__oficina','asunto','observaciones','fecha_emision','fecha_recepcion','documento_adjun','num_follos').filter(idexpediente=idc).order_by('id')            
@@ -143,7 +143,7 @@ def actualizar_hoja_envio(request):
         if form.is_valid():
             form.save()
             historiales(request,["hojaEnvio","actualizar",idp])
-            return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'hoja_envio':hojaEnvios,'n':'hoja_envioU','estado':estado})            
+            return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'lista':hojaEnvios,'n':'hoja_envioU','estado':estado})            
         else:
             return render(request,'expediente/hoja_envio/form_hoj.html',{'formuH':form})            
         
@@ -162,7 +162,7 @@ def eliminar_hoja_envio(request):
         idb = request.GET.get("id","")
         get_object_or_404(hojaEnvio,pk=idb).delete()
         historiales(request,["hojaEnvio","eliminar",idb])
-        return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'hoja_envio':hojaEnvios,'n':'hoja_envioU','estado':estado})     
+        return render(request,'expediente/hoja_envio/ajax_hoja_envio.html',{'lista':hojaEnvios,'n':'hoja_envioU','estado':estado})     
 
 
 
