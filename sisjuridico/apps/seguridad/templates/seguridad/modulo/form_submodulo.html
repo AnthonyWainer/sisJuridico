@@ -1,0 +1,31 @@
+{% csrf_token %}
+    <label for="descripcion" 
+    {% if formu.descripcion.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> Descripción es obligatorio </p>
+    "
+    {% endif %}
+    >Descripción:</label>
+    {{formu.descripcion.errors}}
+    {{formu.descripcion}}  
+
+
+    <label for="padre" 
+    {% if formu.padre.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> Módulo padre obligatorio </p>
+    "
+    {% endif %}
+    >Módulo padre:</label>
+    {{formu.padre.errors}}
+    {{formu.padre}}
+
+    <label for="url" 
+    {% if formu.url.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> Url es obligatorio  </p>
+    "
+    {% endif %}
+    >Url:</label>
+    {{formu.url.errors}}
+    {{formu.url}}    

@@ -1,5 +1,5 @@
 function sel(id){
-    $.post('registro_permisos/','csrfmiddlewaretoken='+$("[name='csrfmiddlewaretoken']").val()+'&id='+id, function(data) {
+  $.post('registro_permisos/','csrfmiddlewaretoken='+$("[name='csrfmiddlewaretoken']").val()+'&id='+id, function(data) {
         $(".PermisosU").empty().html(data);
     });
 }

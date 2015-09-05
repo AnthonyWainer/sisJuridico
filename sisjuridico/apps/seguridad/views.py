@@ -47,7 +47,7 @@ def Login(request):
                 if user is not None:
                     if user.is_active:
                         auth.login(request, user)
-                        return redirect('/sistema')
+                        return redirect("/sistema")
                     else: 
                         msm= "cuenta desactivada"  
 
@@ -69,13 +69,12 @@ def LogOut(request):
 @login_required(login_url='/')
 def index(request):
     idp = request.user.idperfil_id
-    mod = permisos.objects.filter(idperfil_id=idp).values('idmodulo_id','idmodulo__padre','idmodulo__descripcion','idmodulo__icon','idmodulo__url','idperfil_id','buscar','eliminar','editar','insertar','imprimir','ver')
-    #print(mod.query)
+    mod = permisos.objects.filter(idperfil_id=idp, idmodulo__estado=True).values('idmodulo_id','idmodulo__padre','idmodulo__descripcion','idmodulo__icon','idmodulo__url','idperfil_id','buscar','eliminar','editar','insertar','imprimir','ver')
     return render(request,'seguridad/index.html',{'mod':mod})
 
 def permi(request,url):
     idp = request.user.idperfil_id
-    mod = permisos.objects.filter(idmodulo__url=url, idperfil_id=idp).values('idmodulo__url','buscar','eliminar','editar','insertar','imprimir','ver')
+    mod = permisos.objects.filter(idmodulo__url=url, idperfil_id=idp, idmodulo__estado=True).values('idmodulo__url','buscar','eliminar','editar','insertar','imprimir','ver')
     return mod
 
 @login_required(login_url='/')
@@ -107,8 +106,9 @@ def eliminar_perfil(request):
     estado =  permi(request, "registro_perfil")
     if request.method == 'GET' and request.is_ajax(): 
         idb = request.GET.get("id","")
-        get_object_or_404(perfil,pk=idb).delete()
         historiales(request,["perfil","eliminar",idb])
+        get_object_or_404(perfil,pk=idb).delete()          
+        permisos.objects.filter(idperfil=idb).delete()          
         return render(request,'seguridad/perfil/ajax_perfil.html',{'perfil':perfiles,'n':'perfilU','estado':estado})     
 
 @login_required(login_url='/')
@@ -168,7 +168,9 @@ def eliminar_usuario(request):
     estado =  permi(request, "registro_usuario")
     if request.method == 'GET' and request.is_ajax(): 
         idb = request.GET.get("id","")
-        get_object_or_404(User,pk=idb).delete()
+        a= User.objects.get(pk=idb)
+        a.estado = False
+        a.save()    
         historiales(request,["usuario","eliminar",idb])
         return render(request,'seguridad/usuario/ajax_usuario.html',{'usuario':usuarios,'n':'UserU','estado':estado})     
 
@@ -196,7 +198,7 @@ def actualizar_usuario(request):
 def actualizar_info_usuario(request):
     usuarios = User.objects.all().order_by('id')
     if request.method == 'POST' and request.is_ajax(): 
-        idp = request.POST.get("id","")
+        idp = request.user.id
         a=get_object_or_404(User,pk=idp)
         form=formEditUsuario(request.POST, instance=a)
         if form.is_valid():
@@ -206,7 +208,7 @@ def actualizar_info_usuario(request):
         else:
             return render(request,'seguridad/usuario/form_user.html',{'formu':form})             
     else:
-        idp = request.GET.get("id","")
+        idp = request.user.id
         a=get_object_or_404(User,pk=idp)
         form= formEditUsuario(instance=a)
         return render(request,'seguridad/usuario/edit_info_user.html',{'form':form}) 
@@ -226,11 +228,15 @@ def registro_modulo(request):
             formu.save()
             idp = modulos.objects.latest('id')
             historiales(request,["modulo","registrar",idp.id])
-        return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo,'n':'ModuloU','estado':estado})            
+            return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo,'n':'ModuloU','estado':estado})            
+        else:
+            return render(request,'seguridad/modulo/form_modulo.html',{'formu':formu})                        
     else:
         formu = formModulo()
         formu2 = formSubModulo()
-        return render(request,'seguridad/modulo/modulo.html',{'formu':formu,'formu2':formu2,'modulo':modulo, 'url':'registro_modulo/','n':'ModuloU','nm':'SubModuloU','estado':estado})
+        return render(request,'seguridad/modulo/modulo.html',{'pa':'1','formu':formu,'formu2':formu2,'modulo':modulo, 'url':'registro_modulo/','n':'ModuloU','nm':'SubModuloU','estado':estado})
+
+
 
 @login_required(login_url='/')
 def eliminar_modulo(request):
@@ -238,7 +244,10 @@ def eliminar_modulo(request):
     estado =  permi(request, "registro_modulo")
     if request.method == 'GET' and request.is_ajax(): 
         idb = request.GET.get("id","")
-        get_object_or_404(modulos,pk=idb).delete()            
+        a= modulos.objects.get(pk=idb)
+        a.estado = False
+        a.save()  
+        #get_object_or_404(modulos,pk=idb).delete()            
         historiales(request,["modulo","eliminar",idb])        
         return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo,'n':'ModuloU','estado':estado})     
 
@@ -254,11 +263,14 @@ def actualizar_modulo(request):
             form.save()            
             historiales(request,["modulo","actualizar",idp])            
             return render(request,'seguridad/modulo/ajax_modulo.html',{'modulo':modulo,'n':'ModuloU','estado':estado}) 
+        else:
+            return render(request,'seguridad/modulo/form_modulo.html',{'formu':form})               
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(modulos,pk=idp)
         form= formModulo(instance=a)
-        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_modulo/','n':'ModuloU','estado':estado}) 
+        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_modulo/','n':'ModuloU','u':'ModuloU','estado':estado}) 
+
 
 @login_required(login_url='/')
 def eliminar_submodulo(request):
@@ -270,7 +282,10 @@ def eliminar_submodulo(request):
         for i in modulos.objects.filter(pk=idb):
             padre = i.padre 
 
-        get_object_or_404(modulos,pk=idb).delete()                    
+        a= modulos.objects.get(pk=idb)
+        a.estado = False
+        a.save() 
+       # get_object_or_404(modulos,pk=idb).delete()                    
         historiales(request,["submodulo","eliminar",idb])
         return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','padre':str(padre),'estado':estado})     
 
@@ -281,16 +296,18 @@ def actualizar_submodulo(request):
     if request.method == 'POST' and request.is_ajax(): 
         idp = request.POST.get("id","")
         a=get_object_or_404(modulos,pk=idp)
+        for i in modulos.objects.filter(pk=idp):
+            padre = i.padre        
         form=formSubModulo(request.POST, instance=a)
         if form.is_valid():
             form.save()            
             historiales(request,["submodulo","actualizar",idp])            
-            return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','estado':estado}) 
+            return render(request,'seguridad/modulo/ajax_submodulo.html',{'padre':str(padre),'modulo':modulo,'nm':'SubModuloU','estado':estado}) 
     else:
         idp = request.GET.get("id","")
         a=get_object_or_404(modulos,pk=idp)
         form= formSubModulo(instance=a)
-        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_submodulo/','n':'SubModuloU','estado':estado}) 
+        return render(request,'seguridad/modal.html',{'nombre':form,'url':'actualizar_submodulo/','n':'SubModuloU','u':'SubModuloU','estado':estado}) 
 
 @login_required(login_url='/')
 def registro_submodulo(request):
@@ -303,8 +320,9 @@ def registro_submodulo(request):
             formu.save()
             idp = modulos.objects.latest('id')
             historiales(request,["submodulo","registrar",idp.id])            
-        #else:
-        return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','padre':padre,'estado':estado}) 
+            return render(request,'seguridad/modulo/ajax_submodulo.html',{'modulo':modulo,'nm':'SubModuloU','padre':padre,'estado':estado}) 
+        else:
+            return render(request,'seguridad/modulo/form_submodulo.html',{'formu':formu})           
     else:
         idp = request.GET.get("id","")
         modulo = modulos.objects.filter(padre=idp)

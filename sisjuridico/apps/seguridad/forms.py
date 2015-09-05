@@ -29,7 +29,7 @@ class formUsuario(forms.ModelForm):
         self.fields['usuario'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'Usuario'})
         self.fields['password'].widget = forms.HiddenInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'Contraseña','value':'pbkdf2_sha256$20000$63ijtCdaGIEx$Wcfn0iEAQfno+SMy1v1ttxd6WQZXyAkdjmOacuNHm/4='})
         self.fields['idperfil'].widget = forms.Select( choices=listaPerfiles,attrs={'class':'form-control'})
-        
+        self.fields['estado'].widget = forms.HiddenInput(attrs={'value':1})
 
     class Meta:
         model = User
@@ -45,7 +45,7 @@ class formEditUsuario(forms.ModelForm):
         self.fields['email'].widget = forms.EmailInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'Email'})
         self.fields['telefono'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'Telefono'})
         self.fields['usuario'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'Usuario'})
-
+        self.fields['estado'].widget = forms.HiddenInput(attrs={'value':1})
     class Meta:
         model = User
         exclude = ['last_login','is_superuser','is_staff','is_active','groups','user_permissions','password','idperfil']    
@@ -54,11 +54,11 @@ class formModulo(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(formModulo, self).__init__(*args, **kwargs)
-        self.fields['descripcion'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'descripcion'})
+        self.fields['descripcion'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'nombre de módulo'})
         self.fields['padre'].widget = forms.HiddenInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'padre','value':0})
         self.fields['url'].widget = forms.HiddenInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'url','value':'#'})
         self.fields['icon'].widget = forms.EmailInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'icon'})
-
+        self.fields['estado'].widget = forms.HiddenInput(attrs={'value':1})
     class Meta:
         model = modulos
         exclude = ['']            
@@ -68,11 +68,11 @@ class formSubModulo(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(formSubModulo, self).__init__(*args, **kwargs)
-        self.fields['descripcion'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'descripcion'})
+        self.fields['descripcion'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'nombre de submódulo'})
         self.fields['padre'].widget = forms.Select( choices=listaSubMod,attrs={'class':'form-control'})
         self.fields['url'].widget = forms.TextInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'url'})
         self.fields['icon'].widget = forms.HiddenInput(attrs={'class':'form-control input-sm', 'required':'', 'placeholder':'icon','value':'#'})
-
+        self.fields['estado'].widget = forms.HiddenInput(attrs={'value':1})
     class Meta:
         model = modulos
         exclude = ['']    

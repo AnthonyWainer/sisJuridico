@@ -28,14 +28,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     email     = models.EmailField(max_length=50, unique=True)
     nombres   = models.CharField(max_length=100,null=True)
     apellidos = models.CharField(max_length=100,null=True)
-    dni       = models.CharField(max_length=20,null=True)  
+    dni       = models.CharField(max_length=8,null=True)  
     telefono  = models.IntegerField(null=True)
     idperfil  = models.ForeignKey(perfil,null=True)
 
     objects = UserManager()
 
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_staff  = models.BooleanField(default=False)
+    estado    = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'usuario'
     REQUIRED_FIELDS = ['email']
@@ -50,6 +51,7 @@ class modulos(models.Model):
     padre       = models.IntegerField()
     url         = models.CharField(max_length=150)
     icon        = models.CharField(max_length=150)
+    estado      = models.BooleanField(default=True)
 
 class permisos(models.Model):
     ver         = models.BooleanField(default=True)

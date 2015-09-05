@@ -33,7 +33,7 @@
                             <thead>
                                 <tr>
                                     <th>padre</th>
-                                    <th>descripcion</th>
+                                    <th>modulo</th>
                                     {% for i in  estado %}
                                     {% if i.editar == 1 %}
                                     <th>Editar</th>
@@ -61,7 +61,7 @@
                        <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>descripcion</th>
+                                    <th>Submódulo</th>
                                     <th>url</th>
                                     {% for i in  estado %}
                                     {% if i.editar == 1 %}
@@ -74,7 +74,7 @@
                                 </tr>
                             </thead>
                             <tbody class="{{nm}}">
-                            {% with padre='1' %}
+                            {% with padre=pa %}
                               {% include "seguridad/modulo/ajax_submodulo.html" %}
                             {% endwith %}
                             </tbody>

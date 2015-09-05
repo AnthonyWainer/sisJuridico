@@ -1,0 +1,21 @@
+{% csrf_token %}
+    <label for="descripcion" 
+    {% if formu.descripcion.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> Descripción es obligatorio </p>
+    "
+    {% endif %}
+    >Descripción:</label>
+    {{formu.descripcion.errors}}
+    {{formu.descripcion}}  
+
+
+    <label for="icon" 
+    {% if formu.icon.errors %}
+    data-html="true" data-toggle="popover" data-content="
+        <p style='color:red; font-size: 13px; margin: 0 0 0px;'> Icono obligatorio Buscar Icono en fontawesome.io/icons/  </p>
+    "
+    {% endif %}
+    >Icono:</label>
+    {{formu.icon.errors}}
+    {{formu.icon}}

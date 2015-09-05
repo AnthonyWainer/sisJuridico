@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block titulo %}UNSM | JURIDICO{% endblock%}
+{% block titulo %}FISI | INVESTIGACION{% endblock%}
 
 {% block estilos %}
     {% load static from  staticfiles %}
@@ -87,7 +87,7 @@
         </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Bienvenido a Sistema Jurídico</span>
+                    <span class="m-r-sm text-muted welcome-message">Bienvenido a Sistema De Investigación</span>
                 </li>
 
                 <li>
@@ -159,9 +159,8 @@
     <script src="{% static 'js/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
 
 
-
     <!--  plugin javascript -->
-    <script src="{% static 'js/sisjuridico.js' %}"></script>
+    <script src="{% static 'js/sisinvestigacion.js' %}"></script>
 
     <script src="{% static 'js/plugins/pace/pace.min.js' %}"></script>
            
@@ -179,7 +178,7 @@
                     showMethod: 'slideDown',
                     timeOut: 4000
                 };
-                toastr.success('UNSM -TARAPOTO', 'Bienvenido a SISJURÍDICO');
+                toastr.success('UNSM -TARAPOTO', 'Bienvenido a SISINVESTIGACION');
 
             }, 1300);
 
